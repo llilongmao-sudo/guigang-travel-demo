@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>贵港旅游智能助手</title>
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#4a90d9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="贵港旅游">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+    <style>
+        /* ── Reset & Base ── */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f0f2f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── App Container ── */
+        .app {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, #2d8a4e, #1a6b3c);
+            color: #fff;
+            padding: 16px 16px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
+        }
+        .header .menu-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+        }
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            flex: 1;
+        }
+        .header .subtitle {
+            font-size: 12px;
+            opacity: 0.85;
+        }
+        .header .header-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .header .icon-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .header .icon-btn:hover { background: rgba(255,255,255,0.15); }
+        .weather-panel {
+            position: fixed;
+            top: 60px;
+            right: 10px;
+            background: linear-gradient(135deg, #4a90d9, #357abd);
+            color: #fff;
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 100;
+            display: none;
+            min-width: 220px;
+        }
+        .weather-panel.show { display: block; }
+        .weather-panel .temp { font-size: 36px; font-weight: 700; }
+        .weather-panel .desc { font-size: 14px; opacity: 0.9; margin-top: 4px; }
+        .weather-panel .suggestion {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+        .header .status {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.2);
+        }
+        .header .status.online { background: rgba(255,255,255,0.25); }
+        .header .status.offline { background: rgba(255,80,80,0.4); }
+
+        /* ── Chat Area ── */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f8f9fa;
+        }
+        .chat-area::-webkit-scrollbar { width: 4px; }
+        .chat-area::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+
+        /* Welcome Card */
+        .welcome-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+        .welcome-card .icon { font-size: 40px; margin-bottom: 8px; }
+        .welcome-card h2 { font-size: 18px; color: #1a6b3c; margin-bottom: 8px; }
+        .welcome-card p { font-size: 14px; color: #666; line-height: 1.6; }
+        .welcome-card .quick-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 14px;
+        }
+        .welcome-card .quick-tags button {
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1px solid #2d8a4e;
+            background: #fff;
+            color: #2d8a4e;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .welcome-card .quick-tags button:hover {
+            background: #2d8a4e;
+            color: #fff;
+        }
+
+        /* Message Bubbles */
+        .message {
+            display: flex;
+            gap: 8px;
+            max-width: 85%;
+            animation: msgIn 0.3s ease;
+        }
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        .message.bot { align-self: flex-start; }
+
+        .message .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .message.user .avatar { background: #2d8a4e; color: #fff; }
+        .message.bot .avatar { background: #e8f5e9; color: #2d8a4e; }
+
+        .message .bubble {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.7;
+            word-break: break-word;
+            position: relative;
+        }
+        .message.user .bubble {
+            background: #2d8a4e;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .message.bot .bubble {
+            background: #fff;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .message.bot .bubble a {
+            color: #2d8a4e;
+            text-decoration: none;
+        }
+        .message.bot .bubble a:hover {
+            text-decoration: underline;
+        }
+
+        /* Spot Card in Chat */
+        .spot-card {
+            background: #f0faf3;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            border-left: 3px solid #2d8a4e;
+            transition: box-shadow 0.2s;
+        }
+        .spot-card:hover { box-shadow: 0 2px 8px rgba(45,138,78,0.15); }
+        .spot-card .spot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .spot-card .spot-name {
+            font-weight: 600;
+            color: #1a6b3c;
+            font-size: 15px;
+        }
+        .spot-card .spot-district {
+            font-size: 11px;
+            color: #888;
+            background: #e8f5e9;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .spot-card .spot-info {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .spot-card .spot-info span { margin-right: 12px; }
+        .spot-card .spot-img {
+            width: 100%;
+            max-height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+        .spot-card .spot-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .spot-card .spot-actions button {
+            padding: 4px 12px;
+            border-radius: 14px;
+            border: 1px solid #2d8a4e;
+            background: #fff;
+            color: #2d8a4e;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .spot-card .spot-actions button:hover {
+            background: #2d8a4e;
+            color: #fff;
+        }
+        .spot-card .spot-actions button.active {
+            background: #2d8a4e;
+            color: #fff;
+        }
+
+        /* Feedback Buttons */
+        .feedback-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .message.bot:hover .feedback-row { opacity: 1; }
+        .feedback-btn {
+            background: none;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 2px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.2s;
+        }
+        .feedback-btn:hover { border-color: #2d8a4e; color: #2d8a4e; }
+        .feedback-btn.selected { border-color: #2d8a4e; color: #fff; background: #2d8a4e; }
+
+        /* Map Buttons */
+        .map-btn-container {
+            margin-top: 8px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            text-decoration: none;
+            -webkit-appearance: none;
+            appearance: none;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        .map-btn.amap {
+            background: #fff3e0;
+            color: #e65100;
+            border: 1px solid #ffcc80;
+        }
+        .map-btn.amap:active {
+            background: #e65100;
+            color: #fff;
+        }
+        .map-btn.baidu {
+            background: #e8f5e9;
+            color: #2d8a4e;
+            border: 1px solid #a5d6a7;
+        }
+        .map-btn.baidu:active {
+            background: #2d8a4e;
+            color: #fff;
+        }
+
+        .typing {
+            display: flex;
+            gap: 4px;
+            padding: 8px 14px;
+        }
+        .typing span {
+            width: 6px;
+            height: 6px;
+            background: #aaa;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+        .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+        }
+
+        /* ── Input Area ── */
+        .input-area {
+            padding: 10px 16px;
+            background: #fff;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .input-area .voice-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #666;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .input-area .voice-btn:hover { border-color: #2d8a4e; color: #2d8a4e; }
+        .input-area .voice-btn.recording {
+            background: #f44336;
+            border-color: #f44336;
+            color: #fff;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(244,67,54,0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(244,67,54,0); }
+        }
+        .input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-area input:focus {
+            border-color: #2d8a4e;
+        }
+        .input-area input::placeholder {
+            color: #aaa;
+        }
+        .input-area .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #2d8a4e;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .input-area .send-btn:hover { background: #1a6b3c; }
+        .input-area .send-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+        /* ── Side Panel (景点列表) ── */
+        .side-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        .side-panel.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .side-panel .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+        .side-panel .drawer {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 80%;
+            max-width: 340px;
+            height: 100%;
+            background: #fff;
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+            overflow-y: auto;
+        }
+        .side-panel.active .drawer {
+            transform: translateX(0);
+        }
+        .drawer-header {
+            background: linear-gradient(135deg, #2d8a4e, #1a6b3c);
+            color: #fff;
+            padding: 20px 16px;
+        }
+        .drawer-header h2 { font-size: 18px; margin-bottom: 4px; }
+        .drawer-header p { font-size: 13px; opacity: 0.85; }
+        .drawer-list { padding: 12px; }
+        .drawer-item {
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 4px;
+        }
+        .drawer-item:hover { background: #f5faf6; }
+        .drawer-item .emoji { font-size: 24px; flex-shrink: 0; }
+        .drawer-item .info h3 { font-size: 15px; color: #333; margin-bottom: 2px; }
+        .drawer-item .info p { font-size: 12px; color: #999; }
+        .drawer-item .tag {
+            display: inline-block;
+            font-size: 11px;
+            padding: 1px 8px;
+            border-radius: 8px;
+            margin-top: 3px;
+        }
+        .tag.nature { background: #e8f5e9; color: #2d8a4e; }
+        .tag.culture { background: #fff3e0; color: #e65100; }
+        .tag.park { background: #e3f2fd; color: #1565c0; }
+        .tag.free { background: #fce4ec; color: #c62828; }
+
+        .drawer-item .spot-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        /* ── Right Panel (History) ── */
+        .right-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        .right-panel.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .right-panel .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+        .right-panel .drawer {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 80%;
+            max-width: 340px;
+            height: 100%;
+            background: #fff;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+            overflow-y: auto;
+        }
+        .right-panel.active .drawer {
+            transform: translateX(0);
+        }
+        .history-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .history-item:hover { background: #f5faf6; }
+        .history-item .history-q { font-size: 14px; color: #333; font-weight: 500; }
+        .history-item .history-a { font-size: 12px; color: #888; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .history-item .history-time { font-size: 11px; color: #bbb; margin-top: 4px; }
+        .history-empty { padding: 40px 20px; text-align: center; color: #999; font-size: 14px; }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+
+        /* ── Modal (for feedback detail) ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
+        .modal-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            width: 85%;
+            max-width: 360px;
+        }
+        .modal-box h3 { font-size: 16px; margin-bottom: 12px; color: #1a6b3c; }
+        .modal-box textarea {
+            width: 100%;
+            height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+        }
+        .modal-box textarea:focus { border-color: #2d8a4e; }
+        .modal-box .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            justify-content: flex-end;
+        }
+        .modal-box .modal-actions button {
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .modal-box .modal-actions .btn-cancel { background: #eee; color: #666; }
+        .modal-box .modal-actions .btn-submit { background: #2d8a4e; color: #fff; }
+
+        /* ── Responsive ── */
+        @media (min-width: 768px) {
+            .app { height: 100vh; border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="app" id="app">
+    <!-- Header -->
+    <div class="header">
+        <button class="menu-btn" onclick="togglePanel()">☰</button>
+        <div>
+            <h1>贵港旅游智能助手</h1>
+            <div class="subtitle">AI 带你畅游贵港</div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="showWeather()" title="天气查询">🌤️</button>
+            <button class="icon-btn" onclick="toggleHistory()" title="对话历史">📜</button>
+            <button class="icon-btn" onclick="clearHistory()" title="清除历史">🗑️</button>
+        </div>
+        <span class="status" id="statusBadge">连接中...</span>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area" id="chatArea">
+        <div class="welcome-card" id="welcomeCard">
+            <div class="icon">🏞️</div>
+            <h2>欢迎来到贵港</h2>
+            <p>
+                我是你的 AI 旅游助手！<br>
+                可以问我景点信息、行程规划、美食推荐……<br>
+                支持语音输入 🎤，点击位置可跳转地图 🗺️<br>
+                试试下面的快速提问👇
+            </p>
+            <div class="quick-tags" id="quickTags">
+                <button onclick="quickAsk('西山风景区有什么好玩的？')">🏔️ 西山景点</button>
+                <button onclick="quickAsk('推荐一日游行程')">🗺️ 一日游</button>
+                <button onclick="quickAsk('贵港有什么特色美食？')">🍜 美食推荐</button>
+                <button onclick="quickAsk('从广州怎么去贵港？')">🚄 交通指南</button>
+                <button onclick="quickAsk('桂平市有哪些景点？')">🏔️ 桂平景点</button>
+                <button onclick="quickAsk('平南县有什么好玩的？')">🌿 平南景点</button>
+                <button onclick="quickAsk('贵港有哪些免费景点？')">🆓 免费景点</button>
+                <button onclick="quickAsk('推荐五日全景游')">📅 五日游</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input -->
+    <div class="input-area">
+        <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="语音输入">🎤</button>
+        <input type="text" id="inputBox" placeholder="输入你的问题，或点击🎤语音输入..." 
+               onkeydown="if(event.key==='Enter') sendMessage()">
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+    </div>
+</div>
+
+<!-- Side Panel (Spots) -->
+<div class="side-panel" id="sidePanel">
+    <div class="overlay" onclick="togglePanel()"></div>
+    <div class="drawer">
+        <div class="drawer-header">
+            <h2>🏕️ 贵港景点一览</h2>
+            <p>点击查看详情，位置可跳转地图</p>
+        </div>
+        <div class="drawer-list" id="spotList"></div>
+    </div>
+</div>
+
+<!-- Right Panel (History) -->
+<div class="right-panel" id="historyPanel">
+    <div class="overlay" onclick="toggleHistory()"></div>
+    <div class="drawer">
+        <div class="drawer-header">
+            <h2>📜 对话历史</h2>
+            <p>点击可重新加载对话</p>
+        </div>
+        <div id="historyList"></div>
+    </div>
+</div>
+
+<!-- Feedback Modal -->
+<div class="modal-overlay" id="feedbackModal">
+    <div class="modal-box">
+        <h3>📝 反馈详情</h3>
+        <textarea id="feedbackText" placeholder="请描述问题或建议..."></textarea>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeFeedbackModal()">取消</button>
+            <button class="btn-submit" onclick="submitFeedback()">提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Weather Panel -->
+<div class="weather-panel" id="weatherPanel">
+    <div class="temp" id="weatherTemp">--°C</div>
+    <div class="desc" id="weatherDesc">加载中...</div>
+    <div class="suggestion" id="weatherSuggest">正在获取天气数据...</div>
+</div>
+
+<script>
+    // ── State ──
+    const spots = {{ spots | tojson | safe }};
+    let isWaiting = false;
+    
+    // 会话ID（用于多轮对话上下文）
+    let sessionId = localStorage.getItem('guigang_session_id') || generateSessionId();
+    localStorage.setItem('guigang_session_id', sessionId);
+    
+    // 对话历史（localStorage持久化）
+    let chatHistory = JSON.parse(localStorage.getItem('guigang_chat_history') || '[]');
+    
+    // 反馈记录
+    let feedbacks = JSON.parse(localStorage.getItem('guigang_feedbacks') || '[]');
+    
+    // 语音识别
+    let recognition = null;
+    let isRecording = false;
+    
+    function generateSessionId() {
+        return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // ── Init ──
+    document.addEventListener('DOMContentLoaded', () => {
+        renderSpotList();
+        checkConnection();
+        loadChatHistory();
+        initVoice();
+    });
+
+    // ── Side Panel ──
+    function togglePanel() {
+        document.getElementById('sidePanel').classList.toggle('active');
+    }
+
+    // ── History Panel ──
+    function toggleHistory() {
+        document.getElementById('historyPanel').classList.toggle('active');
+        renderHistoryList();
+    }
+
+    function renderHistoryList() {
+        const container = document.getElementById('historyList');
+        if (chatHistory.length === 0) {
+            container.innerHTML = '<div class="history-empty">暂无对话历史</div>';
+            return;
+        }
+        container.innerHTML = chatHistory.slice().reverse().map((item, idx) => `
+            <div class="history-item" onclick="reloadChat(${chatHistory.length - 1 - idx})">
+                <div class="history-q">${item.question}</div>
+                <div class="history-a">${item.answer.slice(0, 60)}...</div>
+                <div class="history-time">${item.time}</div>
+            </div>
+        `).join('');
+    }
+
+    function reloadChat(idx) {
+        const item = chatHistory[idx];
+        if (!item) return;
+        addMessage(item.question, 'user');
+        addMessage(formatReply(item.answer), 'bot');
+        toggleHistory();
+    }
+
+    function clearHistory() {
+        if (!confirm('确定清除所有对话历史吗？')) return;
+        chatHistory = [];
+        localStorage.setItem('guigang_chat_history', '[]');
+        // 清除聊天区域（保留欢迎卡片）
+        const area = document.getElementById('chatArea');
+        const welcome = document.getElementById('welcomeCard');
+        area.innerHTML = '';
+        if (welcome) area.appendChild(welcome);
+        welcome.style.display = '';
+        showToast('对话历史已清除');
+    }
+
+    function loadChatHistory() {
+        // 加载最近的对话（最多显示最近20条）
+        const recent = chatHistory.slice(-20);
+        const welcome = document.getElementById('welcomeCard');
+        if (recent.length > 0 && welcome) {
+            welcome.style.display = 'none';
+            recent.forEach(item => {
+                // 不用 addMessage 避免重复保存
+                appendMessageDOM(item.question, 'user');
+                appendMessageDOM(formatReply(item.answer), 'bot');
+            });
+        }
+    }
+
+    function appendMessageDOM(content, role) {
+        const area = document.getElementById('chatArea');
+        const div = document.createElement('div');
+        div.className = `message ${role}`;
+        const avatar = role === 'user' ? '👤' : '🤖';
+        div.innerHTML = `
+            <div class="avatar">${avatar}</div>
+            <div class="bubble">${content}</div>
+        `;
+        area.appendChild(div);
+        area.scrollTop = area.scrollHeight;
+    }
+
+    function renderSpotList() {
+        const container = document.getElementById('spotList');
+        const categoryEmoji = {
+            '自然景观': '🏔️',
+            '人文景观': '🏛️',
+            '城市公园': '🌳',
+            '主题乐园': '🎢',
+            '科普教育': '🔬',
+            '农业观光': '🌾'
+        };
+        const categoryClass = {
+            '自然景观': 'nature',
+            '人文景观': 'culture',
+            '城市公园': 'park',
+            '主题乐园': 'park',
+            '科普教育': 'culture',
+            '农业观光': 'nature'
+        };
+
+        // 按行政区划分组
+        const districtOrder = ['港北区', '港南区', '覃塘区', '桂平市', '平南县'];
+        const districtEmoji = {'港北区': '🏙️', '港南区': '🏛️', '覃塘区': '⛰️', '桂平市': '🏔️', '平南县': '🌿'};
+        const grouped = {};
+        districtOrder.forEach(d => grouped[d] = []);
+        spots.forEach(s => {
+            const d = s.district || '港北区';
+            if (!grouped[d]) grouped[d] = [];
+            grouped[d].push(s);
+        });
+
+        let html = '';
+        districtOrder.forEach(district => {
+            const districtSpots = grouped[district] || [];
+            if (districtSpots.length === 0) return;
+            html += `<div style="padding:8px 12px 4px;font-weight:700;font-size:14px;color:#1a6b3c;border-bottom:1px solid #e8f5e9;margin-bottom:4px;">${districtEmoji[district] || '📍'} ${district}（${districtSpots.length}个）</div>`;
+            districtSpots.forEach(s => {
+                html += `
+                <div class="drawer-item" onclick="quickAsk('${s.name}有什么特色？')">
+                    ${s.image_url ? `<img class="spot-img" src="${s.image_url}" alt="${s.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="emoji" style="display:none;width:60px;height:60px;align-items:center;justify-content:center;background:#f5f5f5;border-radius:8px;">${categoryEmoji[s.category] || '📍'}</div>` : `<div class="emoji">${categoryEmoji[s.category] || '📍'}</div>`}
+                    <div class="info">
+                        <h3>${s.name}</h3>
+                        <p>${(s.description || '').slice(0, 30)}...</p>
+                        <span class="tag ${categoryClass[s.category] || 'nature'}">${s.category}</span>
+                        ${(s.ticket_price && s.ticket_price.includes('免费')) ? '<span class="tag free">免费</span>' : ''}
+                    </div>
+                </div>`;
+            });
+        });
+
+        container.innerHTML = html;
+    }
+
+    // ── Chat ──
+    let messageCounter = 0;
+    
+    function addMessage(content, role) {
+        const area = document.getElementById('chatArea');
+        const div = document.createElement('div');
+        div.className = `message ${role}`;
+        const msgId = 'msg_' + (++messageCounter);
+
+        const avatar = role === 'user' ? '👤' : '🤖';
+        let feedbackHtml = '';
+        if (role === 'bot') {
+            feedbackHtml = `
+                <div class="feedback-row" id="fb_${msgId}">
+                    <button class="feedback-btn" onclick="handleFeedback('${msgId}', 'like')" title="有帮助">👍</button>
+                    <button class="feedback-btn" onclick="handleFeedback('${msgId}', 'dislike')" title="没帮助">👎</button>
+                    <button class="feedback-btn" onclick="openFeedbackModal('${msgId}')" title="详细反馈">📝</button>
+                    <button class="feedback-btn" onclick="speakText(\'${content.replace(/'/g, "\\'").replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()}\')" title="语音播报">🔊</button>
+                </div>
+            `;
+        }
+        div.innerHTML = `
+            <div class="avatar">${avatar}</div>
+            <div class="bubble">${content}${feedbackHtml}</div>
+        `;
+        div.dataset.msgId = msgId;
+
+        // Hide welcome card after first message
+        const welcome = document.getElementById('welcomeCard');
+        if (welcome && role === 'user') {
+            welcome.style.display = 'none';
+        }
+
+        area.appendChild(div);
+        area.scrollTop = area.scrollHeight;
+        return msgId;
+    }
+
+    function showTyping() {
+        const area = document.getElementById('chatArea');
+        const div = document.createElement('div');
+        div.className = 'message bot';
+        div.id = 'typingIndicator';
+        div.innerHTML = `
+            <div class="avatar">🤖</div>
+            <div class="bubble typing">
+                <span></span><span></span><span></span>
+            </div>
+        `;
+        area.appendChild(div);
+        area.scrollTop = area.scrollHeight;
+    }
+
+    function removeTyping() {
+        const el = document.getElementById('typingIndicator');
+        if (el) el.remove();
+    }
+
+    function formatReply(text) {
+        let html = text;
+        
+        // 1. 先处理图片URL → 缩略图（在HTML转义之前）
+        html = html.replace(
+            /🖼️\s*图片[\uFF1A:]\s*(https?:\/\/[^\s\n]+)/g,
+            '[[IMG:$1]]'
+        );
+        
+        // 2. 隐藏顶部的 [点击查看景点图片](URL) 行
+        html = html.replace(
+            /📷\s*\[点击查看景点图片\][\r\n]*\([^)]+\)[\r\n]*/g,
+            ''
+        );
+        
+        // 3. 标记位置信息行 & 隐藏重复的地图URL行（在HTML转义之前）
+        html = html.replace(
+            /🗺️\s*\[在地图中查看\]\([^)]+\)[\r\n]*/g,
+            ''
+        );
+        html = html.replace(
+            /📍\s*位置[\uFF1A:]?\s*(.+?)(\n|$)/g,
+            '[[LOC:$1]]$2'
+        );
+        
+        // 4. 通用 HTML 转义
+        html = html
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        
+        // 5. Markdown 格式化
+        html = html
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n- /g, '<br>• ')
+            .replace(/^\d+\. /gm, '<br>$&');
+        
+        // 6. 还原图片标记 → 图片轮播容器
+        html = html.replace(
+            /\[\[IMG:(https?:\/\/[^\]]+?)\]\]/g,
+            (match, url) => {
+                return `<div class="image-carousel" data-imgs="${url}"><img src="${url}" onload="this.parentElement.dataset.loaded='true'"><span class="carousel-counter">1/1</span></div>`;
+            }
+        );
+        
+        // 7. 还原位置标记 → 位置文本 + 地图按钮
+        html = html.replace(
+            /\[\[LOC:(.+?)\]\]/g,
+            (match, location) => {
+                const loc = location.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').trim();
+                const encodedLoc = encodeURIComponent('贵港市' + loc);
+                return `📍 位置：${location}<div class="map-btn-container"><button class="map-btn amap" onclick="window.open('https://uri.amap.com/search?keyword=${encodedLoc}', '_blank')">🗺️ 高德导航</button><button class="map-btn baidu" onclick="window.open('https://map.baidu.com/search/${encodedLoc}', '_blank')">📍 百度地图</button></div>`;
+            }
+        );
+        
+        return html;
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('inputBox');
+        const text = input.value.trim();
+        if (!text || isWaiting) return;
+
+        input.value = '';
+        addMessage(text, 'user');
+        showTyping();
+        isWaiting = true;
+        document.getElementById('sendBtn').disabled = true;
+
+        try {
+            const resp = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text, session_id: sessionId })
+            });
+            const data = await resp.json();
+            removeTyping();
+            
+            // 更新会话ID（如果后端返回了新的）
+            if (data.session_id) {
+                sessionId = data.session_id;
+                localStorage.setItem('guigang_session_id', sessionId);
+            }
+
+            if (data.reply) {
+                const formattedReply = formatReply(data.reply);
+                addMessage(formattedReply, 'bot');
+                
+                // 保存对话历史
+                saveChatHistory(text, data.reply);
+            } else {
+                addMessage('抱歉，暂时无法回答，请稍后再试。', 'bot');
+            }
+        } catch (e) {
+            removeTyping();
+            addMessage('网络连接失败，请检查服务是否启动。', 'bot');
+        }
+
+        isWaiting = false;
+        document.getElementById('sendBtn').disabled = false;
+        document.getElementById('inputBox').focus();
+    }
+
+    function saveChatHistory(question, answer) {
+        chatHistory.push({
+            question: question,
+            answer: answer,
+            time: new Date().toLocaleString('zh-CN'),
+            timestamp: Date.now()
+        });
+        // 最多保留100条
+        if (chatHistory.length > 100) chatHistory = chatHistory.slice(-100);
+        localStorage.setItem('guigang_chat_history', JSON.stringify(chatHistory));
+    }
+
+    // ── Map Links ──
+    function enrichWithMapLinks(formattedHtml, rawText) {
+        // 在位置信息行后面插入地图按钮（兼容移动端）
+        formattedHtml = formattedHtml.replace(
+            /(📍\s*位置[：:]?\s*.+?)(<br>|$)/gi,
+            (match, location, end) => {
+                // 从位置文本中提取地名用于搜索
+                const locText = location.replace(/📍/g, '').replace(/位置[：:]/gi, '').trim();
+                const encodedLoc = encodeURIComponent('贵港市' + locText);
+                // 使用 button 元素替代 a 标签，移动端兼容性更好
+                return `${location}${end}<div class="map-btn-container"><button class="map-btn amap" onclick="window.open('https://uri.amap.com/search?keyword=${encodedLoc}', '_blank')">🗺️ 高德导航</button><button class="map-btn baidu" onclick="window.open('https://map.baidu.com/search/${encodedLoc}', '_blank')">📍 百度地图</button></div>`;
+            }
+        );
+        return formattedHtml;
+    }
+
+    function openMap(spotName, location) {
+        const query = encodeURIComponent(location || ('贵港市' + spotName));
+        // 优先使用高德地图
+        window.open(`https://uri.amap.com/search?keyword=${query}`, '_blank');
+    }
+
+    // ── Voice Input ──
+    function initVoice() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            console.log('当前浏览器不支持语音识别');
+            document.getElementById('voiceBtn').style.display = 'none';
+            return;
+        }
+        
+        recognition = new SpeechRecognition();
+        recognition.lang = 'zh-CN';
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        
+        recognition.onresult = (event) => {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            document.getElementById('inputBox').value = transcript;
+            
+            // 如果是最终结果，自动发送
+            if (event.results[event.results.length - 1].isFinal) {
+                stopVoice();
+                sendMessage();
+            }
+        };
+        
+        recognition.onerror = (event) => {
+            console.error('语音识别错误:', event.error);
+            stopVoice();
+            if (event.error === 'not-allowed') {
+                showToast('请允许浏览器使用麦克风');
+            } else {
+                showToast('语音识别出错，请重试');
+            }
+        };
+        
+        recognition.onend = () => {
+            stopVoice();
+        };
+    }
+
+    function toggleVoice() {
+        if (isRecording) {
+            stopVoice();
+        } else {
+            startVoice();
+        }
+    }
+
+    function startVoice() {
+        if (!recognition) {
+            showToast('当前浏览器不支持语音识别，请使用Chrome');
+            return;
+        }
+        try {
+            recognition.start();
+            isRecording = true;
+            const btn = document.getElementById('voiceBtn');
+            btn.classList.add('recording');
+            btn.textContent = '⏹';
+            document.getElementById('inputBox').placeholder = '正在听你说...';
+            showToast('正在录音，请说话...');
+        } catch (e) {
+            showToast('语音识别启动失败，请重试');
+        }
+    }
+
+    function stopVoice() {
+        if (recognition && isRecording) {
+            recognition.stop();
+        }
+        isRecording = false;
+        const btn = document.getElementById('voiceBtn');
+        btn.classList.remove('recording');
+        btn.textContent = '🎤';
+        document.getElementById('inputBox').placeholder = '输入你的问题，或点击🎤语音输入...';
+    }
+
+    function quickAsk(text) {
+        // 关闭侧边栏
+        document.getElementById('sidePanel').classList.remove('active');
+        document.getElementById('inputBox').value = text;
+        sendMessage();
+    }
+
+    // ── Feedback ──
+    function handleFeedback(msgId, type) {
+        const row = document.getElementById('fb_' + msgId);
+        if (!row) return;
+        
+        // 切换选中状态
+        const btns = row.querySelectorAll('.feedback-btn');
+        btns.forEach(b => b.classList.remove('selected'));
+        
+        if (type === 'like') {
+            btns[0].classList.add('selected');
+            showToast('感谢你的反馈！👍');
+        } else {
+            btns[1].classList.add('selected');
+            openFeedbackModal(msgId);
+        }
+        
+        // 保存反馈
+        feedbacks.push({
+            msgId: msgId,
+            type: type,
+            time: new Date().toLocaleString('zh-CN')
+        });
+        localStorage.setItem('guigang_feedbacks', JSON.stringify(feedbacks));
+        
+        // 发送到后端
+        fetch('/api/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ msg_id: msgId, feedback_type: type })
+        }).catch(() => {});
+    }
+
+    let currentFeedbackMsgId = null;
+    
+    function openFeedbackModal(msgId) {
+        currentFeedbackMsgId = msgId;
+        document.getElementById('feedbackText').value = '';
+        document.getElementById('feedbackModal').classList.add('active');
+    }
+
+    function closeFeedbackModal() {
+        document.getElementById('feedbackModal').classList.remove('active');
+        currentFeedbackMsgId = null;
+    }
+
+    function submitFeedback() {
+        const text = document.getElementById('feedbackText').value.trim();
+        if (!text) {
+            showToast('请输入反馈内容');
+            return;
+        }
+        
+        feedbacks.push({
+            msgId: currentFeedbackMsgId,
+            type: 'detail',
+            text: text,
+            time: new Date().toLocaleString('zh-CN')
+        });
+        localStorage.setItem('guigaw_feedbacks', JSON.stringify(feedbacks));
+        
+        // 发送到后端
+        fetch('/api/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ msg_id: currentFeedbackMsgId, feedback_type: 'detail', text: text })
+        }).catch(() => {});
+        
+        closeFeedbackModal();
+        showToast('感谢你的详细反馈！我们会持续改进 🙏');
+    }
+
+    // ── Connection Check ──
+    async function checkConnection() {
+        const badge = document.getElementById('statusBadge');
+        try {
+            const resp = await fetch('/api/status');
+            const data = await resp.json();
+            if (data.llm_available) {
+                badge.textContent = '🤖 AI模式';
+                badge.className = 'status online';
+            } else {
+                badge.textContent = '📖 本地模式';
+                badge.className = 'status online';
+            }
+        } catch (e) {
+            badge.textContent = '⚠️ 无法连接';
+            badge.className = 'status offline';
+        }
+    }
+
+    // ── Toast ──
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── Weather ──
+    async function showWeather() {
+        const panel = document.getElementById('weatherPanel');
+        if (panel.classList.contains('show')) {
+            panel.classList.remove('show');
+            return;
+        }
+        panel.classList.add('show');
+        
+        try {
+            // 使用免费天气API（高德开放天气或mock数据）
+            const resp = await fetch('/api/weather');
+            if (!resp.ok) throw new Error('API error');
+            const data = await resp.json();
+            
+            document.getElementById('weatherTemp').textContent = data.temp + '°C';
+            document.getElementById('weatherDesc').textContent = data.weather + ' | ' + data.wind;
+            document.getElementById('weatherSuggest').textContent = data.suggestion;
+        } catch (e) {
+            // 模拟数据（贵港夏季典型天气）
+            const mockData = {
+                temp: '28~33',
+                weather: '多云转晴',
+                wind: '东南风2级',
+                suggestion: '☀️ 天气炎热，建议上午或傍晚出行，注意防晒补水。推荐南山寺、东湖公园等室内外结合景点。'
+            };
+            document.getElementById('weatherTemp').textContent = mockData.temp + '°C';
+            document.getElementById('weatherDesc').textContent = mockData.weather + ' | ' + mockData.wind;
+            document.getElementById('weatherSuggest').textContent = mockData.suggestion;
+        }
+    }
+
+    // ── Voice Output (TTS) ──
+    let currentUtterance = null;
+    let isSpeaking = false;
+
+    function speakText(text) {
+        if (!('speechSynthesis' in window)) {
+            showToast('当前浏览器不支持语音播报');
+            return;
+        }
+        
+        if (isSpeaking) {
+            window.speechSynthesis.cancel();
+            isSpeaking = false;
+            return;
+        }
+        
+        // 清理文本：移除emoji、HTML标签、多余换行
+        const cleanText = text
+            .replace(/[\u{1F300}-\u{1F9FF}]/gu, '')
+            .replace(/<[^>]+>/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+        
+        if (!cleanText) return;
+        
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        
+        // 查找中文语音
+        const voices = window.speechSynthesis.getVoices();
+        const zhVoice = voices.find(v => v.lang.includes('zh')) || voices[0];
+        if (zhVoice) utterance.voice = zhVoice;
+        
+        utterance.onstart = () => { isSpeaking = true; };
+        utterance.onend = () => { isSpeaking = false; };
+        utterance.onerror = () => { isSpeaking = false; };
+        
+        window.speechSynthesis.speak(utterance);
+        currentUtterance = utterance;
+        showToast('🔊 正在播报...');
+    }
+
+    // 预加载语音
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+    }
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/static/sw.js').then(() => {
+    console.log('SW registered');
+  });
+}
+</script>
+</body>
+</html>
