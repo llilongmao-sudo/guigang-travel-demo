@@ -52,12 +52,28 @@ def get_llm_client():
 # ── 知识检索（RAG） ───────────────────────────────
 
 def extract_spot_from_query(query):
-    """从用户查询中提取明确提到的景点（名称或别名匹配）"""
+    """从用户查询中提取明确提到的景点（支持完整名、别名、部分名匹配）"""
     for spot in SCENIC_SPOTS:
+        # 完整名称匹配
         if spot["name"] in query:
             return spot
+        # 别名精确匹配
         for alias in spot["alias"]:
             if alias and alias in query:
+                return spot
+    # 部分匹配：查询中包含景点名的核心词（如"平天山"匹配"平天山国家森林公园"）
+    for spot in SCENIC_SPOTS:
+        # 取景点名去掉"国家森林公园"等常见后缀后的核心词
+        core_name = spot["name"]
+        for suffix in ["国家森林公园", "旅游区", "风景区", "国家湿地公园", "公园"]:
+            if core_name.endswith(suffix):
+                core_name = core_name[:-len(suffix)]
+                break
+        if core_name and len(core_name) >= 3 and core_name in query:
+            return spot
+        # 别名也做部分匹配
+        for alias in spot["alias"]:
+            if alias and len(alias) >= 3 and alias in query:
                 return spot
     return None
 
@@ -124,8 +140,8 @@ def search_scenic_spots(query):
     return [r[1] for r in results[:5]]  # 增加到5个结果
 
 def get_travel_tips(query):
-    """检索旅游贴士"""
-    return [(k, v) for k, v in TRAVEL_TIPS.items() if any(w in query for w in k)]
+    """检索旅游贴士——整键匹配，避免单字符误匹配"""
+    return [(k, v) for k, v in TRAVEL_TIPS.items() if k in query]
 
 def build_context(spots, tips):
     """组装知识上下文"""
@@ -170,6 +186,10 @@ def _build_free_spots_reply():
 def generate_local_reply(query, spots, tips, current_topic=None):
     """纯本地模式：不依赖 LLM，直接根据知识库生成回答"""
     lines = []
+    explicit_spot = None  # 初始化，防止未定义
+    
+    # 函数入口处统一计算 explicit_spot，供后续分支复用
+    explicit_spot = extract_spot_from_query(query)
     
     # 处理模糊查询（如"怎么去"、"门票多少"）
     fuzzy_keywords = ["怎么去", "怎么去那里", "怎么去啊", "怎么去呢", "怎么去这个地方", 
@@ -179,7 +199,9 @@ def generate_local_reply(query, spots, tips, current_topic=None):
                       "附近有什么", "周边", "附近景点", "旁边有什么",
                       "有什么好吃的", "吃什么", "附近美食", "周边美食",
                       "住哪里", "住宿", "酒店", "民宿",
-                      "拍照", "摄影", "打卡", "哪里好看", "哪里拍照"]
+                      "拍照", "摄影", "打卡", "哪里好看", "哪里拍照",
+                      "有什么玩的", "玩什么", "好玩吗", "怎么样", "值得去吗",
+                      "有什么特色", "特色", "推荐", "介绍", "简介", "亮点"]
     
     is_fuzzy = any(kw in query for kw in fuzzy_keywords)
 
@@ -327,24 +349,73 @@ def generate_local_reply(query, spots, tips, current_topic=None):
     
     # 有匹配景点 → 生成推荐
     if spots:
-        # 如果是按行政区划查询，列出该区所有景点
-        district_map = {"港北": "港北区", "港南区": "港南区", "港南区": "港南区", "覃塘": "覃塘区", "覃塘区": "覃塘区", "桂平": "桂平市", "桂平市": "桂平市", "平南": "平南县", "平南县": "平南县"}
-        target_district = None
-        for kw, district in district_map.items():
-            if kw in query:
-                target_district = district
-                break
-        
-        if target_district and len(spots) > 1:
-            # 列出该区所有景点
-            lines.append(f"## {target_district}景点推荐\n")
-            for s in spots:
-                img_icon = " 🖼️" if s.get('image_url') else ""
-                lines.append(f"### {s['name']}{img_icon}")
-                lines.append(f"📍 {s['location']} | 💰 {s['ticket_price']} | 🕐 {s['open_time']}")
-                lines.append(f"{s['description'][:80]}...")
+        # ★ 关键修复：如果用户明确提到了某个具体景点名，强制走单景点详情模式
+        # 即使查询中包含区县名（如"平南古镇"包含"平南"），也不应列出全区所有景点
+        explicit_spot = extract_spot_from_query(query)
+        if explicit_spot:
+            s = explicit_spot
+            img_hint = f"\n📷 [点击查看景点图片]({s.get('image_url', '')})\n" if s.get('image_url') else ""
+            lines.append(f"## {s['name']}{img_hint}")
+            lines.append("")
+            lines.append(s['description'])
+            lines.append("")
+            lines.append(f"📍 位置：{s['location']}")
+            lines.append(f"🗺️ 行政区：{s.get('district', '贵港市')}")
+            lines.append(f"💰 票价：{s['ticket_price']}")
+            lines.append(f"🕐 开放时间：{s['open_time']}")
+            if s.get('image_url'):
+                lines.append(f"🖼️ 图片：{s['image_url']}")
+            lines.append("")
+            lines.append("**亮点：**")
+            for h in s['highlights']:
+                lines.append(f"• {h}")
+            lines.append("")
+            lines.append(f"🗺️ 推荐路线：{s['recommended_route']}")
+            lines.append(f"💡 {s['tips']}")
+            if s.get("nearby_spots"):
+                lines.append(f"\n附近景点：{'、'.join(s['nearby_spots'])}")
+        # 如果是按行政区划查询（且用户没有明确提到具体景点），列出该区所有景点
+        elif True:
+            district_map = {"港北": "港北区", "港南区": "港南区", "港南区": "港南区", "覃塘": "覃塘区", "覃塘区": "覃塘区", "桂平": "桂平市", "桂平市": "桂平市", "平南": "平南县", "平南县": "平南县"}
+            target_district = None
+            for kw, district in district_map.items():
+                if kw in query:
+                    target_district = district
+                    break
+            
+            if target_district and len(spots) > 1:
+                # 列出该区所有景点
+                lines.append(f"## {target_district}景点推荐\n")
+                for s in spots:
+                    img_icon = " 🖼️" if s.get('image_url') else ""
+                    lines.append(f"### {s['name']}{img_icon}")
+                    lines.append(f"📍 {s['location']} | 💰 {s['ticket_price']} | 🕐 {s['open_time']}")
+                    lines.append(f"{s['description'][:80]}...")
+                    lines.append("")
+                lines.append(f"💡 输入具体景点名称可查看详细信息，如「{spots[0]['name']}」")
+            else:
+                # 单个景点详情（区县查询只匹配到一个，或无区县关键词）
+                s = spots[0]
+                img_hint = f"\n📷 [点击查看景点图片]({s.get('image_url', '')})\n" if s.get('image_url') else ""
+                lines.append(f"## {s['name']}{img_hint}")
                 lines.append("")
-            lines.append(f"💡 输入具体景点名称可查看详细信息，如「{spots[0]['name']}」")
+                lines.append(s['description'])
+                lines.append("")
+                lines.append(f"📍 位置：{s['location']}")
+                lines.append(f"🗺️ 行政区：{s.get('district', '贵港市')}")
+                lines.append(f"💰 票价：{s['ticket_price']}")
+                lines.append(f"🕐 开放时间：{s['open_time']}")
+                if s.get('image_url'):
+                    lines.append(f"🖼️ 图片：{s['image_url']}")
+                lines.append("")
+                lines.append("**亮点：**")
+                for h in s['highlights']:
+                    lines.append(f"• {h}")
+                lines.append("")
+                lines.append(f"🗺️ 推荐路线：{s['recommended_route']}")
+                lines.append(f"💡 {s['tips']}")
+                if s.get("nearby_spots"):
+                    lines.append(f"\n附近景点：{'、'.join(s['nearby_spots'])}")
         else:
             # 单个景点详情
             s = spots[0]
@@ -375,7 +446,8 @@ def generate_local_reply(query, spots, tips, current_topic=None):
             if s.get("nearby_spots"):
                 lines.append(f"\n附近景点：{'、'.join(s['nearby_spots'])}")
 
-    if tips:
+    # 只有在用户问的是"具体景点"时才附加 tips；区县/主题类查询已足够完整，无需 tips
+    if tips and explicit_spot:
         lines.append("")
         for k, v in tips:
             lines.append(f"**{k}**：{v}")
