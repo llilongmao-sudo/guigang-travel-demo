@@ -40,6 +40,21 @@ desktop.ini
 *.pem
 *.key
 
-# Test files (if any)
-test_*.py
+# Test files
 *_test.py
+_test*.py
+test_*.py
+fix_*.py
+cleanup_*.py
+delete_*.py
+validate_*.py
+verify_*.py
+check_*.py
+self_delete.py
+
+# Project artifacts (keep repo clean)
+*.docx
+完成报告*.md
+知识库扩充*.md
+README-doc.md
+ChatGPT Image*
