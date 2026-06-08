@@ -27,7 +27,6 @@ LLM_MODEL = os.environ.get("LLM_MODEL", None)
 _llm_available = False
 _llm_client = None
 
-
 def get_llm_client():
     global _llm_available, _llm_client
     if _llm_client is not None:
@@ -50,15 +49,22 @@ def get_llm_client():
         print(f"  LLM API 未连接（使用纯本地模式）: {e}")
     return _llm_client
 
-
 # ── 知识检索（RAG） ───────────────────────────────
 
+def extract_spot_from_query(query):
+    """从用户查询中提取明确提到的景点（名称或别名匹配）"""
+    for spot in SCENIC_SPOTS:
+        if spot["name"] in query:
+            return spot
+        for alias in spot["alias"]:
+            if alias and alias in query:
+                return spot
+    return None
 
 def search_scenic_spots(query):
     """根据用户输入检索相关景点"""
     results = []
     query_lower = query.lower()
-    
     # 行政区划关键词映射
     district_map = {
         "港北": "港北区", "港北区": "港北区",
@@ -90,25 +96,26 @@ def search_scenic_spots(query):
         if target_district and spot.get("district") == target_district:
             score += 15  # 高优先级匹配行政区划
         
-        # 喜好匹配
-        pref_map = {
-            "自然": "自然景观", "爬山": "自然景观", "风景": "自然景观",
-            "山水": "自然景观", "人文": "人文景观", "历史": "人文景观",
-            "文化": "人文景观", "寺庙": "人文景观", "公园": "城市公园",
-            "免费": "免费", "小孩": "城市公园", "亲子": "城市公园",
-            "峡谷": "自然景观", "瀑布": "自然景观", "森林": "自然景观",
-            "广场": "城市公园", "民族": "人文景观", "登山": "自然景观",
-            "日出": "自然景观", "氧吧": "自然景观", "徒步": "自然景观",
-            "夜景": "城市公园", "拍照": "城市公园", "摄影": "自然景观",
-            "博物馆": "人文景观", "展馆": "人文景观", "历史": "人文景观",
-            "老街": "人文景观", "古镇": "人文景观", "步行街": "人文景观",
-            "动物": "主题乐园", "动物园": "主题乐园", "玻璃": "自然景观",
-            "湿地": "自然景观", "荷花": "农业观光", "湖": "自然景观",
-            "道教": "人文景观", "起义": "人文景观", "北回归线": "科普教育",
-        }
-        for kw, cat in pref_map.items():
-            if kw in query_lower and (spot["category"] == cat or "免费" in spot.get("ticket_price", "")):
-                score += 3
+        # 喜好匹配（只在已有匹配分数时生效，避免误匹配）
+        if score > 0:
+            pref_map = {
+                "自然": "自然景观", "爬山": "自然景观", "风景": "自然景观",
+                "山水": "自然景观", "人文": "人文景观", "历史": "人文景观",
+                "文化": "人文景观", "寺庙": "人文景观", "公园": "城市公园",
+                "免费": "免费", "小孩": "城市公园", "亲子": "城市公园",
+                "峡谷": "自然景观", "瀑布": "自然景观", "森林": "自然景观",
+                "广场": "城市公园", "民族": "人文景观", "登山": "自然景观",
+                "日出": "自然景观", "氧吧": "自然景观", "徒步": "自然景观",
+                "夜景": "城市公园", "拍照": "城市公园", "摄影": "自然景观",
+                "博物馆": "人文景观", "展馆": "人文景观", "历史": "人文景观",
+                "老街": "人文景观", "古镇": "人文景观", "步行街": "人文景观",
+                "动物": "主题乐园", "动物园": "主题乐园", "玻璃": "自然景观",
+                "湿地": "自然景观", "荷花": "农业观光", "湖": "自然景观",
+                "道教": "人文景观", "起义": "人文景观", "北回归线": "科普教育",
+            }
+            for kw, cat in pref_map.items():
+                if kw in query_lower and (spot["category"] == cat or "免费" in spot.get("ticket_price", "")):
+                    score += 3
 
         if score > 0:
             results.append((score, spot))
@@ -116,11 +123,9 @@ def search_scenic_spots(query):
     results.sort(key=lambda x: -x[0])
     return [r[1] for r in results[:5]]  # 增加到5个结果
 
-
 def get_travel_tips(query):
     """检索旅游贴士"""
     return [(k, v) for k, v in TRAVEL_TIPS.items() if any(w in query for w in k)]
-
 
 def build_context(spots, tips):
     """组装知识上下文"""
@@ -140,7 +145,6 @@ def build_context(spots, tips):
         parts.extend(f"{k}：{v}" for k, v in tips)
     return "\n".join(parts)
 
-
 def generate_local_reply(query, spots, tips, current_topic=None):
     """纯本地模式：不依赖 LLM，直接根据知识库生成回答"""
     lines = []
@@ -156,40 +160,40 @@ def generate_local_reply(query, spots, tips, current_topic=None):
                       "拍照", "摄影", "打卡", "哪里好看", "哪里拍照"]
     
     is_fuzzy = any(kw in query for kw in fuzzy_keywords)
-    
-    # 如果是模糊查询且有当前话题，直接回答关于该话题的问题
-    if is_fuzzy and current_topic and not any(spot["name"] in query for spot in SCENIC_SPOTS):
-        # 找到当前话题对应的景点
-        target_spot = None
-        for spot in SCENIC_SPOTS:
-            if spot["name"] == current_topic or current_topic in spot.get("alias", []):
-                target_spot = spot
-                break
-        
+
+    # 模糊查询：优先用明确提到的景点，其次用当前话题
+    if is_fuzzy:
+        target_spot = extract_spot_from_query(query)
+        if not target_spot and current_topic:
+            for spot in SCENIC_SPOTS:
+                if spot["name"] == current_topic or current_topic in spot.get("alias", []):
+                    target_spot = spot
+                    break
+
         if target_spot:
-            # 根据问题类型返回针对性回答
+            # 根据问题类型返回精准回答，不输出景点全量信息
             if any(kw in query for kw in ["怎么去", "怎么走", "怎么去方便"]):
                 return (f"去{target_spot['name']}的交通方式：\n\n"
                         f"📍 位置：{target_spot['location']}\n"
                         f"🚗 自驾：导航至「{target_spot['name']}」\n"
                         f"🚌 公交：{target_spot.get('tips', '建议查询实时公交').split('；')[0] if '公交' in target_spot.get('tips', '') else '市区可乘公交或打车前往'}\n\n"
-                        f"💡 {target_spot['tips'][:100]}...")
-            
+                        f"💡 {target_spot['tips'][:100]}")
+
             if any(kw in query for kw in ["门票", "多少钱", "票价"]):
                 return (f"{target_spot['name']}的门票信息：\n\n"
                         f"💰 票价：{target_spot['ticket_price']}\n"
                         f"🕐 开放时间：{target_spot['open_time']}\n\n"
                         f"💡 {target_spot['tips'][:100]}...")
-            
+
             if any(kw in query for kw in ["附近", "周边", "旁边"]):
                 nearby = target_spot.get('nearby_spots', [])
                 if nearby:
-                    return (f"{target_spot['name']}附近的景点：\n\n" + 
-                            '\n'.join(f"• {spot}" for spot in nearby) + 
+                    return (f"{target_spot['name']}附近的景点：\n\n" +
+                            '\n'.join(f"• {s}" for s in nearby) +
                             f"\n\n可以安排在同一天游览，节省时间~")
                 else:
                     return f"{target_spot['name']}周边还有其他景点，建议查看旅游攻略规划路线~"
-            
+
             if any(kw in query for kw in ["吃", "美食", "好吃的"]):
                 return (f"{target_spot['name']}附近的美食推荐：\n\n"
                         f"• 贵港米粉：当地特色，汤鲜粉滑\n"
@@ -197,12 +201,59 @@ def generate_local_reply(query, spots, tips, current_topic=None):
                         f"• 郁江鱼鲜：新鲜河鱼\n"
                         f"• 壮乡糯米饭：香甜软糯\n\n"
                         f"建议去老街夜市或当地餐厅品尝，人均30-80元。")
-            
+
+            if any(kw in query for kw in ["住", "住宿", "酒店", "民宿", "住哪里"]):
+                nearby_hotels = target_spot.get('nearby_hotels', [])
+                if nearby_hotels:
+                    lines = [f"{target_spot['name']}附近的住宿推荐（按距离由近到远）：\n"]
+                    for i, hotel in enumerate(nearby_hotels, 1):
+                        lines.append(f"{i}. **{hotel['name']}**")
+                        lines.append(f"   🏷️ {hotel['type']} | 💰 {hotel['price']}")
+                        lines.append(f"   📍 {hotel['distance']}")
+                        lines.append(f"   💡 {hotel['note']}")
+                    return "\n".join(lines)
+                else:
+                    district = target_spot.get('district', '')
+                    if district == "覃塘区":
+                        return (f"{target_spot['name']}附近的住宿推荐（先近后远）：\n\n"
+                                f"🏨 覃塘镇商务酒店（最近，约15分钟车程）：120-200元/晚\n"
+                                f"🏡 蒙公农家乐（约20分钟）：100-180元/晚\n"
+                                f"🏨 贵港市区酒店（约30-40分钟）：200-350元/晚\n\n"
+                                f"💡 建议优先选覃塘镇或蒙公镇，距离更近。")
+                    elif district == "桂平市":
+                        return (f"{target_spot['name']}附近的住宿推荐（先近后远）：\n\n"
+                                f"🏡 西山脚下民宿群（最近）：280-450元/晚\n"
+                                f"🏨 桂平市区酒店：150-250元/晚（经济型）\n\n"
+                                f"💡 游览西山建议住西山脚下，其他景点住市区更方便。")
+                    elif district == "平南县":
+                        return (f"{target_spot['name']}附近的住宿推荐（先近后远）：\n\n"
+                                f"🏡 大鹏镇民宿（北帝山附近，最近）：150-300元/晚\n"
+                                f"🏨 平南县城酒店：150-220元/晚（经济型）\n\n"
+                                f"💡 游览北帝山建议住大鹏镇，其他情况住县城。")
+                    else:
+                        return (f"{target_spot['name']}附近的住宿推荐（先近后远）：\n\n"
+                                f"🏨 港北区市中心（最近）：200-350元/晚\n"
+                                f"🏨 港南区（近南山寺）：各档次均有\n\n"
+                                f"💡 建议根据行程选择，市区选择最多。")
+
             if any(kw in query for kw in ["拍照", "摄影", "打卡"]):
                 return (f"{target_spot['name']}的拍照打卡点：\n\n" +
                         '\n'.join(f"📷 {h}" for h in target_spot.get('highlights', [])[:3]) +
                         f"\n\n💡 {target_spot['tips'][:80]}...")
-    
+
+        else:
+            if any(kw in query for kw in ["住", "住宿", "酒店", "民宿", "住哪里"]):
+                return "你想了解哪个景点的住宿信息？请告诉我景点名称，比如「平天山」、「西山」等。"
+            elif any(kw in query for kw in ["吃", "美食", "好吃的"]):
+                return "你想了解哪个景点附近的美食？请告诉我景点名称，比如「平天山」、「西山」等。"
+            elif any(kw in query for kw in ["怎么去", "怎么走"]):
+                return "你想去哪个景点？请告诉我景点名称，比如「平天山」、「西山」等。"
+
+    # 以下是非模糊查询的正常流程
+    # 注意：模糊查询已在上面的分支中 return，不会走到这里
+
+    # 原代码中的这部分已被上面处理，以下保留原有逻辑
+    pass  # 占位，实际会被后面的代码替换
     # 问候类
     greetings = ["你好", "您好", "hi", "hello", "在吗", "在不在"]
     if any(g in query.lower() for g in greetings):
@@ -307,14 +358,30 @@ def generate_local_reply(query, spots, tips, current_topic=None):
     
     return "\n".join(lines)
 
-
 # ── API 路由 ──────────────────────────────────────
-
 
 @app.route("/")
 def index():
     return render_template("index.html", spots=SCENIC_SPOTS)
 
+@app.route("/api/debug_search")
+def debug_search():
+    q = request.args.get("q", "")
+    results = search_scenic_spots(q)
+    return jsonify({
+        "query": q,
+        "matched_count": len(results),
+        "matched_names": [s["name"] for s in results],
+        "matched_aliases": {s["name"]: s["alias"] for s in results}
+    })
+
+@app.route("/api/test_extract")
+def test_extract():
+    q = request.args.get("q", "")
+    spot = extract_spot_from_query(q)
+    if spot:
+        return jsonify({"query": q, "found": True, "name": spot["name"], "alias": spot["alias"]})
+    return jsonify({"query": q, "found": False})
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
@@ -357,14 +424,15 @@ def chat():
                       "有什么好吃的", "吃什么", "附近美食", "周边美食",
                       "住哪里", "住宿", "酒店", "民宿",
                       "拍照", "摄影", "打卡", "哪里好看"]
-    
     is_fuzzy = any(kw in user_message for kw in fuzzy_keywords)
-    
-    if is_fuzzy and current_topic and not any(spot["name"] in user_message for spot in SCENIC_SPOTS):
-        # 用户问的是模糊问题，且没有明确提到景点 → 自动关联当前话题
-        search_query = f"{current_topic} {user_message}"
-        print(f"[上下文推理] 用户问'{user_message}'，自动关联当前话题'{current_topic}'")
-    
+
+    # 修复：模糊查询时，优先用明确提到的景点，其次用当前话题
+    if is_fuzzy:
+        explicit_spot = extract_spot_from_query(user_message)
+        if explicit_spot:
+            search_query = explicit_spot["name"]
+        elif current_topic:
+            search_query = f"{current_topic} {user_message}"
     matched_spots = search_scenic_spots(search_query)
     matched_tips = get_travel_tips(search_query)
     
@@ -378,14 +446,34 @@ def chat():
     # 2. 尝试调用 LLM，失败则降级到本地模式
     client = get_llm_client()
     if client:
-        context = build_context(matched_spots, matched_tips)
+        # 只传用户明确提到的景点（如有），避免 LLM 拿到多个景点信息后输出冗余内容
+        explicit_spot = extract_spot_from_query(user_message)
+        if explicit_spot:
+            llm_spots = [explicit_spot]
+            print(f"[LLM上下文] 用户明确提到景点：{explicit_spot['name']}，只传该景点信息")
+        else:
+            llm_spots = matched_spots
+
+        context = build_context(llm_spots, matched_tips)
+        # 检查是否有 nearby_hotels 信息，如果有则加入上下文
+        hotels_context = ""
+        if llm_spots:
+            spot = matched_spots[0]
+            nearby_hotels = spot.get('nearby_hotels', [])
+            if nearby_hotels:
+                hotels_lines = ["\n【该景点附近住宿（按距离排序）】"]
+                for hotel in nearby_hotels:
+                    hotels_lines.append(f"• {hotel['name']}（{hotel['type']}，{hotel['price']}，{hotel['distance']}）- {hotel['note']}")
+                hotels_context = "\n".join(hotels_lines)
+        
         system_prompt = (
             "你是一个专业的贵港市旅游智能助手。\n\n回答规则：\n"
             "- 优先使用下方提供的景点信息回答问题\n"
             "- 如果知识库中没有相关信息，请诚实告知，不要编造\n"
             "- 回答亲切、热情、简洁，控制在300字以内\n"
             "- 如果用户问'怎么去'、'门票多少'等模糊问题，结合上下文理解用户指的是哪个景点\n"
-            f"\n{context}"
+            "- 推荐住宿时遵循'先近后远'原则：优先推荐距离景点最近的住宿，再推荐稍远的备选\n"
+            f"\n{context}{hotels_context}"
         )
         messages = [{"role": "system", "content": system_prompt}]
         # 加入历史对话（最近3轮）
@@ -417,7 +505,6 @@ def chat():
     
     return jsonify({"reply": local_reply, "session_id": session_id, "context_topic": current_topic})
 
-
 @app.route("/api/feedback", methods=["POST"])
 def feedback():
     """接收用户反馈"""
@@ -429,14 +516,12 @@ def feedback():
     # 这里可以扩展：写入文件或数据库
     return jsonify({"status": "ok", "message": "感谢反馈！"})
 
-
 @app.route("/api/spot/<spot_id>")
 def get_spot_detail(spot_id):
     for spot in SCENIC_SPOTS:
         if spot["id"] == spot_id:
             return jsonify(spot)
     return jsonify({"error": "未找到该景点"}), 404
-
 
 @app.route("/api/spots")
 def list_spots():
@@ -451,7 +536,6 @@ def list_spots():
         "lat": s.get("lat", 0),
         "lng": s.get("lng", 0),
     } for s in SCENIC_SPOTS])
-
 
 @app.route("/api/weather")
 def weather():
@@ -496,7 +580,6 @@ def weather():
     
     return jsonify(weather_data)
 
-
 @app.route("/api/status")
 def status():
     """返回系统状态"""
@@ -507,7 +590,6 @@ def status():
         "mode": "llm" if _llm_available else "local",
         "spots_count": len(SCENIC_SPOTS),
     })
-
 
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 5001))
