@@ -145,6 +145,28 @@ def build_context(spots, tips):
         parts.extend(f"{k}：{v}" for k, v in tips)
     return "\n".join(parts)
 
+def _build_free_spots_reply():
+    """生成免费景点推荐列表"""
+    free_spots = [s for s in SCENIC_SPOTS if "免费" in s.get("ticket_price", "")]
+    district_order = ["港北区", "港南区", "覃塘区", "桂平市", "平南县"]
+    grouped = {d: [] for d in district_order}
+    for s in free_spots:
+        d = s.get("district", "")
+        if d in grouped:
+            grouped[d].append(s)
+    lines = [f"贵港市免费景点共 **{len(free_spots)}** 个\n"]
+    for d in district_order:
+        ds = grouped[d]
+        if not ds:
+            continue
+        lines.append(f"**{d}（{len(ds)}个）**")
+        for s in ds:
+            lines.append(f"• {s['name']} — {s['description'][:50]}...")
+        lines.append("")
+    lines.append("💡 免费景点性价比超高，适合周末休闲、亲子出游！")
+    return "\n".join(lines)
+
+
 def generate_local_reply(query, spots, tips, current_topic=None):
     """纯本地模式：不依赖 LLM，直接根据知识库生成回答"""
     lines = []
@@ -252,8 +274,10 @@ def generate_local_reply(query, spots, tips, current_topic=None):
     # 以下是非模糊查询的正常流程
     # 注意：模糊查询已在上面的分支中 return，不会走到这里
 
-    # 原代码中的这部分已被上面处理，以下保留原有逻辑
-    pass  # 占位，实际会被后面的代码替换
+    # 免费景点查询（优先拦截，不走景点详情分支）
+    if "免费" in query:
+        return _build_free_spots_reply()
+
     # 问候类
     greetings = ["你好", "您好", "hi", "hello", "在吗", "在不在"]
     if any(g in query.lower() for g in greetings):
@@ -507,13 +531,31 @@ def chat():
 
 @app.route("/api/feedback", methods=["POST"])
 def feedback():
-    """接收用户反馈"""
+    """接收用户反馈并保存到文件"""
     data = request.get_json()
     msg_id = data.get("msg_id", "")
     feedback_type = data.get("feedback_type", "")
     text = data.get("text", "")
     print(f"[反馈] msg_id={msg_id}, type={feedback_type}, text={text}")
-    # 这里可以扩展：写入文件或数据库
+    # 保存到 feedback.json
+    import datetime
+    fb_record = {
+        "time": datetime.datetime.now().isoformat(),
+        "msg_id": msg_id,
+        "type": feedback_type,
+        "text": text,
+    }
+    fb_file = os.path.join(os.path.dirname(__file__), "feedback.json")
+    try:
+        existing = []
+        if os.path.exists(fb_file):
+            with open(fb_file, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+        existing.append(fb_record)
+        with open(fb_file, "w", encoding="utf-8") as f:
+            json.dump(existing, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"[反馈] 保存失败: {e}")
     return jsonify({"status": "ok", "message": "感谢反馈！"})
 
 @app.route("/api/spot/<spot_id>")
@@ -539,46 +581,57 @@ def list_spots():
 
 @app.route("/api/weather")
 def weather():
-    """返回贵港天气（模拟数据或真实 API）"""
-    # 模拟天气数据（可接入真实天气 API）
+    """返回贵港真实天气（wttr.in API）"""
     import datetime
-    month = datetime.datetime.now().month
-    
-    # 贵港季节性天气模拟
-    if month in [12, 1, 2]:
-        weather_data = {
-            "temp": "10~18",
-            "weather": "多云转晴",
-            "wind": "北风2级",
-            "humidity": "65%",
-            "suggestion": "❄️ 冬季气温较低，建议穿着保暖外套。适合游览西山风景区（可拜佛祈福）、南山寺，或参观贵港博物馆了解本地历史。"
-        }
-    elif month in [3, 4, 5]:
-        weather_data = {
-            "temp": "18~26",
-            "weather": "晴转多云",
-            "wind": "东南风2级",
-            "humidity": "75%",
-            "suggestion": "🌸 春季气候宜人，适合户外活动！推荐大藤峡、龙潭国家森林公园踏青，或去平天山登山看日出。"
-        }
-    elif month in [6, 7, 8]:
-        weather_data = {
-            "temp": "28~35",
-            "weather": "多云转晴",
-            "wind": "东南风2级",
-            "humidity": "80%",
-            "suggestion": "☀️ 夏季炎热，建议上午或傍晚出行。推荐北帝山漂流、龙潭瀑布戏水，或去东湖公园、园博园等室内外结合景点。"
-        }
-    else:
-        weather_data = {
-            "temp": "22~30",
-            "weather": "晴",
-            "wind": "东风1级",
-            "humidity": "70%",
-            "suggestion": "🍂 秋季凉爽，是最佳旅游季节！推荐西山看日落、大藤峡游船，或去平南雄鹰动物乐园亲子游。"
-        }
-    
-    return jsonify(weather_data)
+    import urllib.request
+    try:
+        req = urllib.request.Request(
+            'https://wttr.in/Guigang?format=j1',
+            headers={'User-Agent': 'curl/7.68.0'}
+        )
+        resp = urllib.request.urlopen(req, timeout=5)
+        data = json.loads(resp.read())
+        cc = data['current_condition'][0]
+        temp = cc['temp_C']
+        feels = cc['FeelsLikeC']
+        desc = cc['weatherDesc'][0]['value']
+        humidity = cc['humidity']
+        wind = cc['windspeedKmph']
+
+        # 根据天气生成旅游建议
+        t = int(temp)
+        if t <= 15:
+            suggest = "❄️ 气温较低，建议穿着保暖外套。适合游览西山风景区（可拜佛祈福）、南山寺，或参观贵港博物馆了解本地历史。"
+        elif t <= 25:
+            suggest = "🌸 气候宜人，适合户外活动！推荐大藤峡、龙潭国家森林公园踏青，或去平天山登山看日出。"
+        elif t <= 32:
+            suggest = "☀️ 天气较热，建议上午或傍晚出行，注意防晒补水。推荐东湖公园、园博园等室内外结合景点，或去龙潭瀑布戏水。"
+        else:
+            suggest = "🔥 高温预警！建议避开正午，选择室内或水上景点：龙潭瀑布、东湖公园（树荫多）、贵港博物馆。注意防暑降温。"
+        if 'rain' in desc.lower() or 'drizzle' in desc.lower():
+            suggest += " 当前有雨，建议携带雨具，优先选择室内或近市区的景点。"
+
+        return jsonify({
+            "temp": f"{feels}°C（体感）",
+            "weather": desc,
+            "wind": f"{wind}km/h",
+            "humidity": f"{humidity}%",
+            "suggestion": suggest,
+            "source": "wttr.in",
+        })
+    except Exception as e:
+        print(f"[天气] wttr.in 请求失败: {e}")
+        # 降级到季节性模拟数据
+        month = datetime.datetime.now().month
+        if month in [12, 1, 2]:
+            fallback = {"temp": "10~18", "weather": "多云转晴", "wind": "北风2级", "humidity": "65%", "suggestion": "❄️ 冬季气温较低，建议穿着保暖外套。适合游览西山风景区、南山寺，或参观贵港博物馆。", "source": "模拟"}
+        elif month in [3, 4, 5]:
+            fallback = {"temp": "18~26", "weather": "晴转多云", "wind": "东南风2级", "humidity": "75%", "suggestion": "🌸 春季气候宜人，适合户外活动！推荐大藤峡、龙潭国家森林公园踏青。", "source": "模拟"}
+        elif month in [6, 7, 8]:
+            fallback = {"temp": "28~35", "weather": "多云转晴", "wind": "东南风2级", "humidity": "80%", "suggestion": "☀️ 夏季炎热，建议上午或傍晚出行。推荐龙潭瀑布戏水或东湖公园。", "source": "模拟"}
+        else:
+            fallback = {"temp": "22~30", "weather": "晴", "wind": "东风1级", "humidity": "70%", "suggestion": "🍂 秋季凉爽，最佳旅游季节！推荐西山看日落、大藤峡游船。", "source": "模拟"}
+        return jsonify(fallback)
 
 @app.route("/api/status")
 def status():
