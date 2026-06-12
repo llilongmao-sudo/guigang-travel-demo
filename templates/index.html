@@ -1743,20 +1743,18 @@
     
     // Constants
     const categoryEmoji = {
-        '自然景观': '🏔️',
-        '人文景观': '🏛️',
-        '城市公园': '🌳',
-        '荷塘泛舟': '🛶',
-        '科普教育': '🔬',
-        '农业观光': '🌾'
+        '自然风光': '🏔️',
+        '古郡探幽': '🏯',
+        '公园休闲': '🌳',
+        '荷塘泛舟': '🪷',
+        '科普教育': '🔬'
     };
     const categoryColors = {
-        '自然景观': ['#66bb6a','#388e3c'],
-        '人文景观': ['#42a5f5','#1565c0'],
-        '城市公园': ['#66bb6a','#2e7d32'],
-        '荷塘泛舟': ['#26a69a','#00897b'],
-        '科普教育': ['#ab47bc','#7b1fa2'],
-        '农业观光': ['#ffcc02','#f9a825']
+        '自然风光': ['#66bb6a','#388e3c'],
+        '古郡探幽': ['#8d6e63','#5d4037'],
+        '公园休闲': ['#66bb6a','#2e7d32'],
+        '荷塘泛舟': ['#e91e63','#c2185b'],
+        '科普教育': ['#29b6f6','#0288d1']
     };
     
     function generateSessionId() {
@@ -1766,7 +1764,7 @@
     // ── Init ──
     document.addEventListener('DOMContentLoaded', () => {
         initHero();
-        initDistricts();
+        loadCategories(); loadRoutes(); initDistricts();
         initSpotList();
         checkConnection();
         loadChatHistory();
@@ -1997,6 +1995,33 @@
     }
 
     // ── Districts (kept for backward compat, no-op on welcome card) ──
+    
+    // 从新 API 加载分类数据
+    async function loadCategories() {
+        try {
+            const resp = await fetch('/api/categories');
+            const data = await resp.json();
+            window.CATEGORIES_DATA = data.categories || [];
+            return window.CATEGORIES_DATA;
+        } catch (e) {
+            console.error('加载分类数据失败:', e);
+            return [];
+        }
+    }
+    
+    // 从新 API 加载路线数据
+    async function loadRoutes() {
+        try {
+            const resp = await fetch('/api/routes');
+            const data = await resp.json();
+            window.ROUTES_DATA = data.routes || [];
+            return window.ROUTES_DATA;
+        } catch (e) {
+            console.error('加载路线数据失败:', e);
+            return [];
+        }
+    }
+
     function initDistricts() {}
     function switchDistrict(district, btnEl) { togglePanel(); }
     function renderSpotGrid(district) {}
