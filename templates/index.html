@@ -1055,6 +1055,53 @@
         .modal-box .modal-actions .btn-cancel { background: #eee; color: #666; }
         .modal-box .modal-actions .btn-submit { background: #2d8a4e; color: #fff; }
 
+        /* ── Recommend Cards ── */
+        .recommend-section {
+            padding: 14px 16px 0;
+        }
+        .recommend-section h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+        }
+        .recommend-row {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .recommend-row::-webkit-scrollbar { display: none; }
+        .recommend-card {
+            flex: 0 0 100px;
+            height: 80px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            font-family: inherit;
+            color: #fff;
+        }
+        .recommend-card:active {
+            transform: scale(0.93);
+        }
+        .recommend-card .rec-icon {
+            font-size: 28px;
+            line-height: 1;
+        }
+        .recommend-card .rec-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
+
         /* ── Responsive ── */
         @media (min-width: 768px) {
             .app { height: 100vh; border-radius: 0; }
@@ -1096,6 +1143,33 @@
             <!-- Category Row -->
             <div class="category-row" id="categoryRow">
                 <!-- JS 动态生成 -->
+            </div>
+
+            <!-- Recommend Cards -->
+            <div class="recommend-section">
+                <h3>🎯 智能推荐</h3>
+                <div class="recommend-row">
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#FF6B6B,#FF8E8E);" onclick="quickAsk('今天去贵港哪里玩比较好？')">
+                        <span class="rec-icon">🌟</span>
+                        <span class="rec-label">今日推荐</span>
+                    </button>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#4ECDC4,#45B7AA);" onclick="quickAsk('推荐贵港周末游玩的地方')">
+                        <span class="rec-icon">🏖️</span>
+                        <span class="rec-label">周末推荐</span>
+                    </button>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#667EEA,#764BA2);" onclick="quickAsk('下雨天贵港适合去哪里？')">
+                        <span class="rec-icon">🌧️</span>
+                        <span class="rec-label">雨天推荐</span>
+                    </button>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#F093FB,#F5576C);" onclick="quickAsk('推荐贵港适合摄影的地方')">
+                        <span class="rec-icon">📸</span>
+                        <span class="rec-label">摄影路线</span>
+                    </button>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#FFA726,#FF7043);" onclick="quickAsk('推荐贵港适合亲子游的地方')">
+                        <span class="rec-icon">👨‍👩‍👧</span>
+                        <span class="rec-label">亲子路线</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Featured Spots -->
