@@ -13,6 +13,10 @@ from knowledge_base_v4 import SCENIC_SPOTS, TRAVEL_TIPS, CATEGORY_INDEX, DISTRIC
 from data_loader import DataLoader
 
 app = Flask(__name__)
+# ── SVG MIME 类型支持 ─────────────────────────────────────
+import mimetypes
+mimetypes.add_type('image/svg+xml', '.svg')
+
 
 # ── 对话上下文存储（内存存储，重启后清空） ───────────────
 # 格式: {session_id: [ {"role": "user", "content": "..."}, {"role": "assistant", "content": "..."} ] }
@@ -891,9 +895,17 @@ if __name__ == "__main__":
     print(f"  启动地址: http://localhost:{PORT}")
     print("=" * 50)
     get_llm_client()  # 启动时检测并提示
-    app.run(host="0.0.0.0", port=PORT, debug=True)
+    app.run(host="0.0.0.0", port=PORT, debug=False, use_reloader=False)
 
 # ── 美食 API 端点 ────────────────────────────────────────
+
+# ── 测试路由 ─────────────────────────────────────
+@app.route("/api/test")
+def test_route():
+    """测试路由"""
+    return jsonify({"status": "ok", "message": "test route works"})
+
+# ── 美食 API（注意顺序：具体路由必须放在 <food_id> 泛型路由之前）────────────────────────────────────
 
 @app.route("/api/foods")
 def get_foods_list():
@@ -903,20 +915,7 @@ def get_foods_list():
         "foods": DataLoader.get_foods()
     })
 
-@app.route("/api/foods/<food_id>")
-def get_food_detail(food_id):
-    """获取单个美食详情"""
-    food = DataLoader.get_food_by_id(food_id)
-    if food:
-        return jsonify(food)
-    return jsonify({"error": "未找到该美食"}), 404
-
-@app.route("/api/foods/category/<category>")
-def get_foods_by_category(category):
-    """按分类获取美食"""
-    foods = DataLoader.get_foods_by_category(category)
-    return jsonify({"category": category, "foods": foods, "count": len(foods)})
-
+# ⚠️ 以下具体路由必须在 <food_id> 之前，否则会被拦截
 @app.route("/api/foods/must-try")
 def get_must_try_foods():
     """获取必吃美食列表"""
@@ -935,6 +934,21 @@ def search_foods():
         return jsonify({"error": "请提供搜索关键词"}), 400
     results = DataLoader.search_food(query)
     return jsonify(results)
+
+@app.route("/api/foods/category/<category>")
+def get_foods_by_category(category):
+    """按分类获取美食"""
+    foods = DataLoader.get_foods_by_category(category)
+    return jsonify({"category": category, "foods": foods, "count": len(foods)})
+
+# ⚠️ 泛型路由放最后
+@app.route("/api/foods/<food_id>")
+def get_food_detail(food_id):
+    """获取单个美食详情"""
+    food = DataLoader.get_food_by_id(food_id)
+    if food:
+        return jsonify(food)
+    return jsonify({"error": "未找到该美食"}), 404
 
 
 
