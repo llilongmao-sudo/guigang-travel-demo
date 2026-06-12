@@ -132,49 +132,18 @@
             </div>
         </div>
 
-        <!-- 附近景点 -->
-        {%- if spot.nearby_spots -%}
-        <div class="section-title"><span class="st-icon">🏘️</span> 附近景点</div>
+        <!-- 附近推荐（Tab切换） -->
+        <div class="section-title"><span class="st-icon">📌</span> 附近推荐</div>
         <div class="info-card">
-            <div class="nearby-grid" id="nearbyGrid">
-                {%- for nearby_name in spot.nearby_spots -%}
-                <div class="nearby-card" onclick="navigateToSpot('{{ nearby_name }}')">
-                    <div class="nbc-img">
-                        {%- set nearby_emoji_map = {'西山风景区':'🏔️','东湖公园':'🌳','南山寺':'🏛️','贵港博物馆':'🏛️','民族公园':'🌳','新世纪广场':'🏛️','园博园':'🌳','平天山':'🏔️','龙潭':'🌳','大藤峡':'🏔️','北帝山':'🏔️','北回归线':'🗼','金田':'🏛️','白石山':'🏔️','雄森':'🦁','龚州':'🌳','老街':'🏘️','世纪广场':'🏛️','覃塘':'🌾','九凌湖':'🌊','马草江':'🌳','图书馆':'📚','莲藕':'🌾','东塔':'🗼','乳泉亭':'⛲','西山乳泉':'⛲','龙华寺':'⛩️','平坦水库':'🌊','起义':'🏛️','湿地公园':'🌳','古镇':'🏘️','大坦':'🌊','荷花基地':'🌸'} -%}
-                        {{ nearby_emoji_map.get(nearby_name.split(' ')[0] if ' ' in nearby_name else nearby_name[:3] if nearby_name|length > 2 else nearby_name, '📍') }}
-                    </div>
-                    <div class="nbc-body">
-                        <div class="nbc-name">{{ nearby_name }}</div>
-                        <div class="nbc-district">点击查看详情 →</div>
-                    </div>
-                </div>
-                {%- endfor -%}
+            <div class="nearby-tabs">
+                <div class="nearby-tab active" data-tab="spots" onclick="switchNearbyTab('spots')">📍 附近景点</div>
+                <div class="nearby-tab" data-tab="foods" onclick="switchNearbyTab('foods')">🍜 附近美食</div>
+                <div class="nearby-tab" data-tab="hotels" onclick="switchNearbyTab('hotels')">🏨 附近住宿</div>
+            </div>
+            <div class="nearby-tab-content" id="nearbyTabContent">
+                <div style="text-align:center;padding:20px;color:#999;">加载中...</div>
             </div>
         </div>
-        {%- endif -%}
-
-        <!-- 附近住宿 -->
-        {%- if spot.nearby_hotels -%}
-        <div class="section-title"><span class="st-icon">🏨</span> 附近住宿</div>
-        <div class="info-card">
-            <ul class="hotel-list">
-                {%- for hotel in spot.nearby_hotels -%}
-                <li class="hotel-item">
-                    <div class="hotel-icon">🏨</div>
-                    <div class="hotel-info">
-                        <div class="h-name">{{ hotel.name }}</div>
-                        <div class="h-meta">
-                            <span>🏷️ {{ hotel.type }}</span>
-                            <span>💰 {{ hotel.price }}</span>
-                            <span>📍 {{ hotel.distance }}</span>
-                        </div>
-                        <div class="h-note">{{ hotel.note }}</div>
-                    </div>
-                </li>
-                {%- endfor -%}
-            </ul>
-        </div>
-        {%- endif -%}
 
         <!-- 底部留白 -->
         <div style="height:16px;"></div>
@@ -353,6 +322,65 @@
 
     // 页面加载后渲染最近浏览
     renderRecentViews();
+
+    // ── 附近推荐数据与Tab切换 ──
+    let nearbyData = null;
+    let currentNearbyTab = 'spots';
+
+    function loadNearbyData() {
+        fetch('/api/spot/' + spotData.id + '/nearby')
+            .then(r => r.json())
+            .then(data => {
+                nearbyData = data;
+                renderNearbyTab(currentNearbyTab);
+            })
+            .catch(() => {
+                document.getElementById('nearbyTabContent').innerHTML = '<div style="text-align:center;padding:20px;color:#999;">加载失败，请刷新重试</div>';
+            });
+    }
+
+    function switchNearbyTab(tab) {
+        currentNearbyTab = tab;
+        document.querySelectorAll('.nearby-tab').forEach(t => {
+            t.classList.toggle('active', t.dataset.tab === tab);
+        });
+        renderNearbyTab(tab);
+    }
+
+    function renderNearbyTab(tab) {
+        const container = document.getElementById('nearbyTabContent');
+        if (!nearbyData) { container.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">加载中...</div>'; return; }
+
+        if (tab === 'spots') {
+            const spots = nearbyData.spots || [];
+            if (spots.length === 0) { container.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">暂无附近景点信息</div>'; return; }
+            const emojiMap = {'西山':'🏔️','东湖':'🌳','南山':'🏛️','博物馆':'🏛️','民族':'🌳','世纪':'🏛️','园博':'🌳','平天':'🏔️','龙潭':'🌳','大藤':'🏔️','北帝':'🏔️','北回归':'🗼','金田':'🏛️','白石':'🏔️','雄森':'🦁','龚州':'🌳','老街':'🏘️','覃塘':'🌾','九凌':'🌊','马草':'🌳','图书':'📚','莲藕':'🌾','东塔':'🗼','乳泉':'⛲','龙华':'⛩️','湿地':'🌳','古镇':'🏘️','荷花':'🌸'};
+            function getEmoji(name) {
+                for (const [k,v] of Object.entries(emojiMap)) { if (name.includes(k)) return v; }
+                return '📍';
+            }
+            container.innerHTML = '<div class="nearby-grid">' + spots.map(name =>
+                '<div class="nearby-card" onclick="navigateToSpot(\''+name.replace(/'/g,"\\'")+'\')">' +
+                '<div class="nbc-img">' + getEmoji(name) + '</div>' +
+                '<div class="nbc-body"><div class="nbc-name">' + name + '</div><div class="nbc-district">点击查看详情 →</div></div></div>'
+            ).join('') + '</div>';
+        } else if (tab === 'foods') {
+            const foods = nearbyData.foods || [];
+            if (foods.length === 0) { container.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">暂无附近美食信息</div>'; return; }
+            container.innerHTML = '<ul class="nearby-food-list">' + foods.map(f =>
+                '<li class="nearby-food-item"><div class="nf-icon">🍜</div><div class="nf-info"><div class="nf-name">' + f.name + '</div><div class="nf-meta"><span>🏷️ ' + f.type + '</span><span>📍 ' + f.distance + '</span></div></div></li>'
+            ).join('') + '</ul>';
+        } else if (tab === 'hotels') {
+            const hotels = nearbyData.hotels || [];
+            if (hotels.length === 0) { container.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">暂无附近住宿信息</div>'; return; }
+            container.innerHTML = '<ul class="hotel-list">' + hotels.map(h =>
+                '<li class="hotel-item"><div class="hotel-icon">🏨</div><div class="hotel-info"><div class="h-name">' + h.name + '</div><div class="h-meta"><span>🏷️ ' + h.type + '</span><span>💰 ' + h.price + '</span><span>📍 ' + h.distance + '</span></div><div class="h-note">' + h.note + '</div></div></li>'
+            ).join('') + '</ul>';
+        }
+    }
+
+    // 页面加载时获取附近推荐数据
+    loadNearbyData();
 
     // ── 返回 ──
     function goBack() {

@@ -671,6 +671,33 @@ def get_spot_detail(spot_id):
             return jsonify(spot)
     return jsonify({"error": "未找到该景点"}), 404
 
+@app.route("/api/spot/<spot_id>/nearby")
+def get_nearby(spot_id):
+    for spot in SCENIC_SPOTS:
+        if spot["id"] == spot_id:
+            result = {
+                "spots": spot.get("nearby_spots", []),
+                "hotels": spot.get("nearby_hotels", []),
+            }
+            district = spot.get("district", "")
+            food_map = {
+                "港北区": [{"name": "贵港老街夜市", "type": "夜市小吃", "distance": "市区内"},
+                           {"name": "郁江鱼鲜", "type": "河鲜", "distance": "1km"},
+                           {"name": "贵港米粉", "type": "本地特色", "distance": "市区内"}],
+                "港南区": [{"name": "南山寺素斋", "type": "素斋", "distance": "0.5km"},
+                           {"name": "桥圩米粉", "type": "本地特色", "distance": "3km"}],
+                "覃塘区": [{"name": "覃塘莲藕", "type": "农家菜", "distance": "2km"},
+                           {"name": "九凌湖鱼", "type": "河鲜", "distance": "5km"}],
+                "桂平市": [{"name": "桂平西山茶", "type": "茶饮", "distance": "0.5km"},
+                           {"name": "罗秀米粉", "type": "本地特色", "distance": "3km"},
+                           {"name": "桂平老街美食", "type": "街边小吃", "distance": "4km"}],
+                "平南县": [{"name": "平南石硖龙眼", "type": "特产水果", "distance": "2km"},
+                           {"name": "大鹏镇农家菜", "type": "农家菜", "distance": "5km"}],
+            }
+            result["foods"] = food_map.get(district, food_map["港北区"])
+            return jsonify(result)
+    return jsonify({"error": "未找到该景点"}), 404
+
 @app.route("/api/spots")
 def list_spots():
     return jsonify([{
@@ -771,6 +798,21 @@ def generate_itinerary():
     # 纯本地模式降级
     local_reply = generate_local_reply(prompt, SCENIC_SPOTS[:5], [])
     return jsonify({"type": route_type, "reply": local_reply})
+
+
+@app.route("/api/routes")
+def get_routes():
+    with open(os.path.join(os.path.dirname(__file__), 'data', 'routes.json'), 'r', encoding='utf-8') as f:
+        return jsonify(json.load(f))
+
+@app.route("/api/routes/<route_id>")
+def get_route_detail(route_id):
+    with open(os.path.join(os.path.dirname(__file__), 'data', 'routes.json'), 'r', encoding='utf-8') as f:
+        routes = json.load(f)
+    for r in routes["routes"]:
+        if r["id"] == route_id:
+            return jsonify(r)
+    return jsonify({"error": "未找到该路线"}), 404
 
 
 if __name__ == "__main__":

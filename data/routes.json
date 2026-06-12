@@ -1,0 +1,82 @@
+{
+    "routes": [
+        {
+            "id": "classic-1day",
+            "name": "贵港经典一日游",
+            "type": "经典",
+            "duration": "1天",
+            "spots": ["xishan", "longtan", "datengxia"],
+            "spot_names": ["西山风景区", "龙潭国家森林公园", "大藤峡"],
+            "description": "涵盖贵港最经典的三大景点，感受自然与人文的完美融合",
+            "cover": "https://picsum.photos/seed/guigang-classic/400/200",
+            "schedule": [
+                {"time": "08:00", "title": "出发", "desc": "从贵港市区出发"},
+                {"time": "09:00", "title": "西山风景区", "desc": "游览西山，祈福龙华寺，品乳泉", "spot_id": "xishan", "duration": "3小时"},
+                {"time": "12:00", "title": "午餐", "desc": "品尝桂平特色罗秀米粉"},
+                {"time": "13:30", "title": "龙潭国家森林公园", "desc": "原始森林徒步，观瀑布", "spot_id": "longtan", "duration": "3小时"},
+                {"time": "17:00", "title": "大藤峡", "desc": "峡谷风光，乘船游览", "spot_id": "datengxia", "duration": "2小时"},
+                {"time": "19:00", "title": "晚餐", "desc": "桂平市区品尝河鲜"},
+                {"time": "20:00", "title": "返程", "desc": "返回贵港市区"}
+            ]
+        },
+        {
+            "id": "photo-1day",
+            "name": "摄影爱好者路线",
+            "type": "摄影",
+            "duration": "1天",
+            "spots": ["pingtianshan", "donghu", "nanshan"],
+            "spot_names": ["平天山国家森林公园", "东湖公园", "南山寺"],
+            "description": "追光逐影，捕捉贵港最美瞬间",
+            "cover": "https://picsum.photos/seed/guigang-photo/400/200",
+            "schedule": [
+                {"time": "05:30", "title": "平天山日出", "desc": "登顶观日出云海", "spot_id": "pingtianshan", "duration": "3小时"},
+                {"time": "09:00", "title": "早餐", "desc": "覃塘镇品尝特色早餐"},
+                {"time": "10:00", "title": "九凌湖", "desc": "湖光山色，候鸟摄影", "spot_id": "jiulinghu", "duration": "2小时"},
+                {"time": "12:30", "title": "午餐", "desc": "贵港市区"},
+                {"time": "14:00", "title": "东湖公园", "desc": "湖景、桥影、城市风光", "spot_id": "donghu", "duration": "1.5小时"},
+                {"time": "16:00", "title": "南山寺", "desc": "古刹落日剪影", "spot_id": "nanshan", "duration": "1.5小时"},
+                {"time": "18:00", "title": "返程", "desc": "郁江沿岸拍夜景"}
+            ]
+        },
+        {
+            "id": "family-1day",
+            "name": "亲子欢乐路线",
+            "type": "亲子",
+            "duration": "1天",
+            "spots": ["donghu", "xiongsen", "nanshan"],
+            "spot_names": ["东湖公园", "雄森动物大世界", "南山寺"],
+            "description": "适合带娃的轻松路线，寓教于乐",
+            "cover": "https://picsum.photos/seed/guigang-family/400/200",
+            "schedule": [
+                {"time": "09:00", "title": "东湖公园", "desc": "划船、喂鱼、环湖步道", "spot_id": "donghu", "duration": "2小时"},
+                {"time": "11:30", "title": "午餐", "desc": "贵港老街品尝米粉"},
+                {"time": "13:00", "title": "贵港博物馆", "desc": "了解贵港历史文化", "spot_id": "guigang-museum", "duration": "1.5小时"},
+                {"time": "15:00", "title": "雄森动物大世界", "desc": "看动物表演，亲子互动", "spot_id": "xiongsen", "duration": "2.5小时"},
+                {"time": "18:00", "title": "晚餐", "desc": "平南品尝特色菜"},
+                {"time": "19:30", "title": "返程", "desc": "返回"}
+            ]
+        },
+        {
+            "id": "self-drive",
+            "name": "自驾深度游",
+            "type": "自驾",
+            "duration": "2天",
+            "spots": ["pingtianshan", "xishan", "longtan", "beidi"],
+            "spot_names": ["平天山", "西山", "龙潭", "北帝山"],
+            "description": "两天一夜，深度体验贵港山水精华",
+            "cover": "https://picsum.photos/seed/guigang-drive/400/200",
+            "schedule": [
+                {"time": "08:00", "title": "Day1: 平天山", "desc": "登山、观景", "spot_id": "pingtianshan", "duration": "3小时"},
+                {"time": "12:00", "title": "午餐", "desc": "覃塘镇"},
+                {"time": "14:00", "title": "前往桂平", "desc": "自驾约1.5小时"},
+                {"time": "15:30", "title": "西山风景区", "desc": "祈福、品茶", "spot_id": "xishan", "duration": "2.5小时"},
+                {"time": "19:00", "title": "入住桂平", "desc": "西山脚下民宿"},
+                {"time": "08:00", "title": "Day2: 龙潭", "desc": "原始森林", "spot_id": "longtan", "duration": "3小时"},
+                {"time": "12:00", "title": "午餐", "desc": "桂平市区"},
+                {"time": "14:00", "title": "前往北帝山", "desc": "自驾约2小时"},
+                {"time": "16:00", "title": "北帝山", "desc": "玻璃栈道、悬崖秋千", "spot_id": "beidi", "duration": "2.5小时"},
+                {"time": "19:00", "title": "返程", "desc": "回贵港"}
+            ]
+        }
+    ]
+}
