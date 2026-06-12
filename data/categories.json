@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated_at": "2026-06-12",
+    "city": "贵港",
+    "note": "替换首页 5 个分类：'主题乐园' → '荷塘泛舟'，'人文历史' → '古郡探幽'"
+  },
+  "categories": [
+    {
+      "id": "nature",
+      "name": "自然风光",
+      "short_name": "自然",
+      "icon_emoji": "🏔️",
+      "icon_lib": "material:landscape",
+      "color": "#2D5F3F",
+      "description": "山水林湖，贵港的自然宝藏",
+      "tags": ["自然", "山水", "户外", "徒步"],
+      "attraction_ids": ["pingtianshan", "jiulinghu", "longtoushan", "beidishan", "datengxia"]
+    },
+    {
+      "id": "ancient",
+      "name": "古郡探幽",
+      "short_name": "古郡",
+      "icon_emoji": "🏯",
+      "icon_lib": "material:temple-buddhist",
+      "color": "#8B4513",
+      "description": "2200 年建城史，千年古刹与历史遗迹",
+      "tags": ["人文", "历史", "古迹", "佛教"],
+      "attraction_ids": ["xishan", "nanshansi", "jintian", "datengxia", "guipin-laostreet"]
+    },
+    {
+      "id": "park",
+      "name": "公园休闲",
+      "short_name": "公园",
+      "icon_emoji": "🌳",
+      "icon_lib": "material:park",
+      "color": "#4A7C59",
+      "description": "城市绿洲，亲子慢生活",
+      "tags": ["亲子", "城市", "慢节奏", "免费"],
+      "attraction_ids": ["wuyuan", "donghu", "macaojiang", "xiongsen-animal"]
+    },
+    {
+      "id": "lotus",
+      "name": "荷塘泛舟",
+      "short_name": "荷塘",
+      "icon_emoji": "🪷",
+      "icon_lib": "custom:lotus",
+      "color": "#D44C7C",
+      "description": "6-8 月限定，泛舟千亩荷田",
+      "tags": ["季节限定", "6月主推", "摄影", "出片"],
+      "seasonal_note": "6-8月最佳",
+      "attraction_ids": ["hemeitantang", "jiulinghu"]
+    },
+    {
+      "id": "education",
+      "name": "科普教育",
+      "short_name": "科普",
+      "icon_emoji": "🔬",
+      "icon_lib": "material:microscope",
+      "color": "#3B7A8C",
+      "description": "博物馆与自然探索，孩子研学首选",
+      "tags": ["亲子", "室内", "研学", "雨天"],
+      "attraction_ids": ["museum", "nature-museum"]
+    }
+  ]
+}

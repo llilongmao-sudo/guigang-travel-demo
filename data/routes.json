@@ -1,82 +1,437 @@
 {
-    "routes": [
+  "meta": {
+    "version": "1.0",
+    "generated_at": "2026-06-12",
+    "city": "贵港",
+    "region": "广西壮族自治区",
+    "total_routes": 5,
+    "note": "价格为估算，请以景区/餐厅当时公示为准"
+  },
+  "routes": [
+    {
+      "id": "guigang-1d-lotus",
+      "name": "6月限定·荷塘仙境一日游",
+      "short_name": "荷塘仙境",
+      "theme": "荷花/田园/慢生活",
+      "days": 1,
+      "difficulty": "easy",
+      "difficulty_label": "轻松",
+      "suitable_for": ["情侣", "摄影党", "本地人重游"],
+      "best_season": "6-8月",
+      "best_season_note": "6月荷花正盛",
+      "budget_min": 150,
+      "budget_max": 250,
+      "budget_unit": "CNY/人",
+      "highlights": ["千亩荷田", "竹筏", "环湖骑行", "莲藕宴"],
+      "tags": ["季节限定", "摄影", "出片", "亲水", "6月主推"],
+      "itinerary": [
         {
-            "id": "classic-1day",
-            "name": "贵港经典一日游",
-            "type": "经典",
-            "duration": "1天",
-            "spots": ["xishan", "longtan", "datengxia"],
-            "spot_names": ["西山风景区", "龙潭国家森林公园", "大藤峡"],
-            "description": "涵盖贵港最经典的三大景点，感受自然与人文的完美融合",
-            "cover": "https://picsum.photos/seed/guigang-classic/400/200",
-            "schedule": [
-                {"time": "08:00", "title": "出发", "desc": "从贵港市区出发"},
-                {"time": "09:00", "title": "西山风景区", "desc": "游览西山，祈福龙华寺，品乳泉", "spot_id": "xishan", "duration": "3小时"},
-                {"time": "12:00", "title": "午餐", "desc": "品尝桂平特色罗秀米粉"},
-                {"time": "13:30", "title": "龙潭国家森林公园", "desc": "原始森林徒步，观瀑布", "spot_id": "longtan", "duration": "3小时"},
-                {"time": "17:00", "title": "大藤峡", "desc": "峡谷风光，乘船游览", "spot_id": "datengxia", "duration": "2小时"},
-                {"time": "19:00", "title": "晚餐", "desc": "桂平市区品尝河鲜"},
-                {"time": "20:00", "title": "返程", "desc": "返回贵港市区"}
-            ]
+          "step": 1,
+          "time": "09:00",
+          "title": "出发前往覃塘区",
+          "type": "transit",
+          "location": "贵港市区",
+          "description": "自驾或包车出发"
         },
         {
-            "id": "photo-1day",
-            "name": "摄影爱好者路线",
-            "type": "摄影",
-            "duration": "1天",
-            "spots": ["pingtianshan", "donghu", "nanshan"],
-            "spot_names": ["平天山国家森林公园", "东湖公园", "南山寺"],
-            "description": "追光逐影，捕捉贵港最美瞬间",
-            "cover": "https://picsum.photos/seed/guigang-photo/400/200",
-            "schedule": [
-                {"time": "05:30", "title": "平天山日出", "desc": "登顶观日出云海", "spot_id": "pingtianshan", "duration": "3小时"},
-                {"time": "09:00", "title": "早餐", "desc": "覃塘镇品尝特色早餐"},
-                {"time": "10:00", "title": "九凌湖", "desc": "湖光山色，候鸟摄影", "spot_id": "jiulinghu", "duration": "2小时"},
-                {"time": "12:30", "title": "午餐", "desc": "贵港市区"},
-                {"time": "14:00", "title": "东湖公园", "desc": "湖景、桥影、城市风光", "spot_id": "donghu", "duration": "1.5小时"},
-                {"time": "16:00", "title": "南山寺", "desc": "古刹落日剪影", "spot_id": "nanshan", "duration": "1.5小时"},
-                {"time": "18:00", "title": "返程", "desc": "郁江沿岸拍夜景"}
-            ]
+          "step": 2,
+          "time": "09:30",
+          "title": "荷美覃塘",
+          "type": "attraction",
+          "location": "覃塘区龙凤村",
+          "description": "千亩荷田、竹筏、拍照打卡"
         },
         {
-            "id": "family-1day",
-            "name": "亲子欢乐路线",
-            "type": "亲子",
-            "duration": "1天",
-            "spots": ["donghu", "xiongsen", "nanshan"],
-            "spot_names": ["东湖公园", "雄森动物大世界", "南山寺"],
-            "description": "适合带娃的轻松路线，寓教于乐",
-            "cover": "https://picsum.photos/seed/guigang-family/400/200",
-            "schedule": [
-                {"time": "09:00", "title": "东湖公园", "desc": "划船、喂鱼、环湖步道", "spot_id": "donghu", "duration": "2小时"},
-                {"time": "11:30", "title": "午餐", "desc": "贵港老街品尝米粉"},
-                {"time": "13:00", "title": "贵港博物馆", "desc": "了解贵港历史文化", "spot_id": "guigang-museum", "duration": "1.5小时"},
-                {"time": "15:00", "title": "雄森动物大世界", "desc": "看动物表演，亲子互动", "spot_id": "xiongsen", "duration": "2.5小时"},
-                {"time": "18:00", "title": "晚餐", "desc": "平南品尝特色菜"},
-                {"time": "19:30", "title": "返程", "desc": "返回"}
-            ]
+          "step": 3,
+          "time": "12:00",
+          "title": "午餐：覃塘莲藕宴",
+          "type": "food",
+          "location": "覃塘农家乐",
+          "description": "推荐：莲藕排骨汤、炸荷花、莲子羹"
         },
         {
-            "id": "self-drive",
-            "name": "自驾深度游",
-            "type": "自驾",
-            "duration": "2天",
-            "spots": ["pingtianshan", "xishan", "longtan", "beidi"],
-            "spot_names": ["平天山", "西山", "龙潭", "北帝山"],
-            "description": "两天一夜，深度体验贵港山水精华",
-            "cover": "https://picsum.photos/seed/guigang-drive/400/200",
-            "schedule": [
-                {"time": "08:00", "title": "Day1: 平天山", "desc": "登山、观景", "spot_id": "pingtianshan", "duration": "3小时"},
-                {"time": "12:00", "title": "午餐", "desc": "覃塘镇"},
-                {"time": "14:00", "title": "前往桂平", "desc": "自驾约1.5小时"},
-                {"time": "15:30", "title": "西山风景区", "desc": "祈福、品茶", "spot_id": "xishan", "duration": "2.5小时"},
-                {"time": "19:00", "title": "入住桂平", "desc": "西山脚下民宿"},
-                {"time": "08:00", "title": "Day2: 龙潭", "desc": "原始森林", "spot_id": "longtan", "duration": "3小时"},
-                {"time": "12:00", "title": "午餐", "desc": "桂平市区"},
-                {"time": "14:00", "title": "前往北帝山", "desc": "自驾约2小时"},
-                {"time": "16:00", "title": "北帝山", "desc": "玻璃栈道、悬崖秋千", "spot_id": "beidi", "duration": "2.5小时"},
-                {"time": "19:00", "title": "返程", "desc": "回贵港"}
-            ]
+          "step": 4,
+          "time": "14:00",
+          "title": "九凌湖",
+          "type": "attraction",
+          "location": "覃塘区石卡镇",
+          "description": "划船、看地下泉眼、环湖骑行（4A景区）"
+        },
+        {
+          "step": 5,
+          "time": "16:30",
+          "title": "返程",
+          "type": "transit",
+          "location": "九凌湖 → 贵港市区",
+          "description": "约40分钟车程"
         }
-    ]
+      ],
+      "food": [
+        {"name": "莲藕排骨汤", "category": "正餐", "must_try": true, "where": "覃塘农家乐"},
+        {"name": "炸荷花", "category": "特色菜", "must_try": true, "where": "覃塘农家乐"},
+        {"name": "九凌湖鱼", "category": "正餐", "must_try": false, "where": "九凌湖周边"}
+      ],
+      "tips": [
+        "防晒帽必带",
+        "晨雾中的荷田最出片，建议前一晚住覃塘",
+        "九凌湖划船约30元/小时"
+      ]
+    },
+    {
+      "id": "guigang-1d-buddha",
+      "name": "禅意山水一日游",
+      "short_name": "禅意山水",
+      "theme": "佛教/山水/人文",
+      "days": 1,
+      "difficulty": "medium",
+      "difficulty_label": "适中",
+      "suitable_for": ["带父母", "文艺青年", "避世向"],
+      "best_season": "3-5月、9-11月",
+      "best_season_note": "春秋气候宜人",
+      "budget_min": 200,
+      "budget_max": 300,
+      "budget_unit": "CNY/人",
+      "highlights": ["千年古刹", "林秀石奇泉甘茶香佛圣", "小三峡", "太平天国历史"],
+      "tags": ["人文", "佛教", "避世", "带父母"],
+      "itinerary": [
+        {
+          "step": 1,
+          "time": "08:00",
+          "title": "出发前往桂平",
+          "type": "transit",
+          "location": "贵港市区 → 桂平市",
+          "description": "车程约1小时"
+        },
+        {
+          "step": 2,
+          "time": "09:00",
+          "title": "桂平西山",
+          "type": "attraction",
+          "location": "桂平市",
+          "description": "4A景区，路线：龙华寺 → 乳泉 → 中山飞阁 → 洗石庵（需爬2-3h）"
+        },
+        {
+          "step": 3,
+          "time": "12:00",
+          "title": "午餐：西山素斋 / 罗秀米粉",
+          "type": "food",
+          "location": "桂平市区",
+          "description": "二选一：山上素斋体验禅意 / 下山吃桂平罗秀米粉"
+        },
+        {
+          "step": 4,
+          "time": "14:00",
+          "title": "大藤峡游船",
+          "type": "attraction",
+          "location": "桂平市大藤峡",
+          "description": "广西小三峡风光 + 太平天国历史讲解"
+        },
+        {
+          "step": 5,
+          "time": "17:30",
+          "title": "返程",
+          "type": "transit",
+          "location": "桂平 → 贵港市区",
+          "description": "约1小时车程"
+        }
+      ],
+      "food": [
+        {"name": "桂平罗秀米粉", "category": "正餐", "must_try": true, "where": "桂平罗秀镇"},
+        {"name": "西山素斋", "category": "正餐", "must_try": false, "where": "桂平西山"},
+        {"name": "绿豆沙", "category": "糖水", "must_try": false, "where": "桂平市区"},
+        {"name": "西山茶", "category": "特产", "must_try": true, "where": "桂平西山"}
+      ],
+      "tips": [
+        "西山需爬2-3小时，穿运动鞋",
+        "大藤峡游船需提前一天预订",
+        "带父母的可考虑买景区电瓶车票节省体力"
+      ]
+    },
+    {
+      "id": "guigang-1d-grassland",
+      "name": "云端草原日出日落一日游",
+      "short_name": "云端草原",
+      "theme": "徒步/出片/星空",
+      "days": 1,
+      "difficulty": "medium",
+      "difficulty_label": "适中",
+      "suitable_for": ["户外党", "年轻人", "摄影爱好者"],
+      "best_season": "5-10月",
+      "best_season_note": "避开暴雨和雷雨",
+      "budget_min": 100,
+      "budget_max": 200,
+      "budget_unit": "CNY/人",
+      "highlights": ["海拔1158m", "5000余亩草甸", "云海日出", "悬崖栈道"],
+      "tags": ["徒步", "出片", "星空", "云海", "小众"],
+      "itinerary": [
+        {
+          "step": 1,
+          "time": "04:00",
+          "title": "出发（看日出方案）",
+          "type": "transit",
+          "location": "贵港市区 → 港北区龙头山",
+          "description": "建议自驾/拼车；如看日落则14:00出发"
+        },
+        {
+          "step": 2,
+          "time": "06:00",
+          "title": "龙头山栈道徒步",
+          "type": "activity",
+          "location": "龙头山",
+          "description": "爱情天梯 → 悬崖栈道 → 高山草甸"
+        },
+        {
+          "step": 3,
+          "time": "11:00",
+          "title": "山顶野餐",
+          "type": "food",
+          "location": "龙头山山顶",
+          "description": "自带食物（山顶小卖部贵且选择少）"
+        },
+        {
+          "step": 4,
+          "time": "13:00",
+          "title": "草甸拍照 + 观云海",
+          "type": "activity",
+          "location": "龙头山草甸",
+          "description": "贵港版'云端阿勒泰'"
+        },
+        {
+          "step": 5,
+          "time": "15:30",
+          "title": "下山",
+          "type": "transit",
+          "location": "龙头山 → 贵港市区",
+          "description": "约1.5小时"
+        },
+        {
+          "step": 6,
+          "time": "18:00",
+          "title": "回市区晚餐",
+          "type": "food",
+          "location": "贵港市区",
+          "description": "推荐：桥圩鸭肉粉、港北夜市"
+        }
+      ],
+      "food": [
+        {"name": "桥圩鸭肉粉", "category": "正餐", "must_try": true, "where": "桥圩镇"},
+        {"name": "港北夜市小吃", "category": "小吃", "must_try": false, "where": "港北区"}
+      ],
+      "tips": [
+        "海拔1158米，山顶风大，必带外套",
+        "看日出需凌晨4点出发，提前查天气",
+        "晨雾概率约60%，遇雾也别有一番风味",
+        "目前免大门票，仅栈道观光免费"
+      ]
+    },
+    {
+      "id": "guigang-1d-family",
+      "name": "亲子不累一日游",
+      "short_name": "亲子不累",
+      "theme": "慢节奏/有吃有玩/推车友好",
+      "days": 1,
+      "difficulty": "easy",
+      "difficulty_label": "轻松",
+      "suitable_for": ["带3-10岁小孩", "不想爬山的家长", "老人"],
+      "best_season": "全年",
+      "best_season_note": "室内外结合，雨天也可调整",
+      "budget_min": 200,
+      "budget_max": 350,
+      "budget_unit": "CNY/人",
+      "highlights": ["苏式园林", "博物馆研学", "公园游乐", "郁江夜游"],
+      "tags": ["亲子", "室内", "无障碍", "美食", "慢节奏"],
+      "itinerary": [
+        {
+          "step": 1,
+          "time": "09:30",
+          "title": "吾园",
+          "type": "attraction",
+          "location": "贵港市区",
+          "description": "苏式园林，拍照 + 喂鱼（约1.5小时）"
+        },
+        {
+          "step": 2,
+          "time": "11:30",
+          "title": "午餐：贵港老字号粉店",
+          "type": "food",
+          "location": "贵港市区",
+          "description": "推荐：东龙米粽、酸料"
+        },
+        {
+          "step": 3,
+          "time": "13:30",
+          "title": "贵港博物馆",
+          "type": "attraction",
+          "location": "贵港市区",
+          "description": "免费，需预约，看2200年建城史"
+        },
+        {
+          "step": 4,
+          "time": "15:00",
+          "title": "东湖公园",
+          "type": "attraction",
+          "location": "贵港市区",
+          "description": "市区最大城市公园，划船/游乐场/放风筝"
+        },
+        {
+          "step": 5,
+          "time": "17:30",
+          "title": "晚餐：酸料+鸭肉粉",
+          "type": "food",
+          "location": "贵港市区",
+          "description": "必尝贵港酸料（灵魂美食）"
+        },
+        {
+          "step": 6,
+          "time": "19:00",
+          "title": "郁江夜游",
+          "type": "activity",
+          "location": "郁江沿岸",
+          "description": "看夜景、吹江风"
+        }
+      ],
+      "food": [
+        {"name": "贵港酸料", "category": "特色", "must_try": true, "where": "老城区酸料摊"},
+        {"name": "东龙米粽", "category": "主食", "must_try": true, "where": "东龙镇"},
+        {"name": "桥圩鸭肉粉", "category": "正餐", "must_try": true, "where": "桥圩镇/市区店"}
+      ],
+      "tips": [
+        "博物馆周一闭馆，别跑空",
+        "东湖划船约30元/小时",
+        "全程市区内移动，打车/步行可达",
+        "雨天可将户外改为博物馆+吾园"
+      ]
+    },
+    {
+      "id": "guigang-2d-beidi",
+      "name": "硬核山水两日游",
+      "short_name": "硬核山水",
+      "theme": "极限/自然/过夜/星空",
+      "days": 2,
+      "difficulty": "hard",
+      "difficulty_label": "进阶",
+      "suitable_for": ["体力好的户外党", "深度玩家", "朋友结伴"],
+      "best_season": "5-9月",
+      "best_season_note": "漂流季节限定",
+      "budget_min": 500,
+      "budget_max": 800,
+      "budget_unit": "CNY/人",
+      "highlights": ["北帝山玻璃栈道", "北帝山漂流", "星空露营", "平南美食"],
+      "tags": ["两日", "漂流", "过夜", "户外", "进阶", "出片"],
+      "itinerary": [
+        {
+          "step": 1,
+          "day": 1,
+          "time": "07:00",
+          "title": "出发前往平南北帝山",
+          "type": "transit",
+          "location": "贵港市区 → 平南县北帝山",
+          "description": "车程约2小时"
+        },
+        {
+          "step": 2,
+          "day": 1,
+          "time": "09:30",
+          "title": "北帝山主峰徒步",
+          "type": "activity",
+          "location": "平南北帝山",
+          "description": "玻璃栈道 + 祈福台（4A景区）"
+        },
+        {
+          "step": 3,
+          "day": 1,
+          "time": "12:00",
+          "title": "午餐：山下农家乐",
+          "type": "food",
+          "location": "北帝山脚下",
+          "description": "推荐：白切三黄鸡、五指毛桃汤"
+        },
+        {
+          "step": 4,
+          "day": 1,
+          "time": "14:00",
+          "title": "北帝山漂流",
+          "type": "activity",
+          "location": "北帝山漂流点",
+          "description": "夏季限定，超刺激；建议带替换衣物"
+        },
+        {
+          "step": 5,
+          "day": 1,
+          "time": "18:00",
+          "title": "入住山下民宿",
+          "type": "rest",
+          "location": "北帝山附近",
+          "description": "建议选带空调的民宿"
+        },
+        {
+          "step": 6,
+          "day": 1,
+          "time": "19:30",
+          "title": "晚餐",
+          "type": "food",
+          "location": "平南县",
+          "description": "推荐：白切狗肉、白切三黄鸡"
+        },
+        {
+          "step": 7,
+          "day": 1,
+          "time": "21:00",
+          "title": "看星空",
+          "type": "activity",
+          "location": "民宿附近",
+          "description": "光污染少，银河可见"
+        },
+        {
+          "step": 8,
+          "day": 2,
+          "time": "07:00",
+          "title": "早餐 + 出发",
+          "type": "transit",
+          "location": "民宿 → 平南县城",
+          "description": ""
+        },
+        {
+          "step": 9,
+          "day": 2,
+          "time": "09:00",
+          "title": "平南雄森动物大世界 / 浔江风光",
+          "type": "attraction",
+          "location": "平南县",
+          "description": "二选一：动物园（亲子）/ 浔江沿岸拍照"
+        },
+        {
+          "step": 10,
+          "day": 2,
+          "time": "13:00",
+          "title": "午餐：平南鱼生",
+          "type": "food",
+          "location": "平南县城",
+          "description": "平南鱼生是当地一绝"
+        },
+        {
+          "step": 11,
+          "day": 2,
+          "time": "14:30",
+          "title": "返程",
+          "type": "transit",
+          "location": "平南 → 贵港市区",
+          "description": "约2小时车程"
+        }
+      ],
+      "food": [
+        {"name": "平南白切三黄鸡", "category": "正餐", "must_try": true, "where": "平南县农家乐"},
+        {"name": "平南鱼生", "category": "正餐", "must_try": true, "where": "平南县城"},
+        {"name": "白切狗肉", "category": "特色", "must_try": false, "where": "平南县"},
+        {"name": "糍粑", "category": "小吃", "must_try": false, "where": "平南县"}
+      ],
+      "tips": [
+        "漂流仅5-9月开放",
+        "山上早晚凉，必带薄外套",
+        "自驾最佳；如不自驾建议拼车/包车",
+        "带替换衣物（漂流会湿）",
+        "民宿提前1-2周预订"
+      ]
+    }
+  ]
 }

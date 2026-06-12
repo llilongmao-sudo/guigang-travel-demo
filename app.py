@@ -10,6 +10,7 @@ import random
 from flask import Flask, request, jsonify, render_template
 
 from knowledge_base_v4 import SCENIC_SPOTS, TRAVEL_TIPS, CATEGORY_INDEX, DISTRICT_STATS
+from data_loader import DataLoader
 
 app = Flask(__name__)
 
@@ -813,6 +814,71 @@ def get_route_detail(route_id):
         if r["id"] == route_id:
             return jsonify(r)
     return jsonify({"error": "未找到该路线"}), 404
+
+
+
+
+# ── 新数据 API 端点（基于 DataLoader） ──────────────────────────────
+
+@app.route("/api/attractions")
+def get_attractions_list():
+    """获取所有景点数据"""
+    return jsonify({
+        "meta": DataLoader._load_json('attractions.json').get('meta', {}),
+        "attractions": DataLoader.get_attractions()
+    })
+
+@app.route("/api/attractions/<attraction_id>")
+def get_attraction_detail(attraction_id):
+    """获取单个景点详情"""
+    attraction = DataLoader.get_attraction_by_id(attraction_id)
+    if attraction:
+        return jsonify(attraction)
+    return jsonify({"error": "未找到该景点"}), 404
+
+@app.route("/api/categories")
+def get_categories_list():
+    """获取所有分类数据"""
+    return jsonify({
+        "meta": DataLoader._load_json('categories.json').get('meta', {}),
+        "categories": DataLoader.get_categories()
+    })
+
+@app.route("/api/categories/<category_id>/attractions")
+def get_attractions_by_category(category_id):
+    """获取某分类下的所有景点"""
+    attractions = DataLoader.get_attractions_by_category(category_id)
+    category = DataLoader.get_category_by_id(category_id)
+    return jsonify({
+        "category": category,
+        "attractions": attractions,
+        "count": len(attractions)
+    })
+
+@app.route("/api/data/stats")
+def get_data_stats():
+    """获取数据统计"""
+    return jsonify(DataLoader.get_stats())
+
+@app.route("/api/search")
+def global_search():
+    """全局搜索"""
+    query = request.args.get('q', '').strip()
+    if not query:
+        return jsonify({"error": "请提供搜索关键词"}), 400
+    results = DataLoader.search(query)
+    return jsonify(results)
+
+@app.route("/api/seasonal")
+def get_seasonal():
+    """获取季节性推荐（默认当前月份）"""
+    month = request.args.get('month', type=int)
+    routes = DataLoader.get_seasonal_routes(month)
+    return jsonify({
+        "month": month,
+        "routes": routes,
+        "count": len(routes)
+    })
 
 
 if __name__ == "__main__":
