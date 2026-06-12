@@ -1471,6 +1471,31 @@
         @media (min-width: 768px) {
             .app { height: 100vh; border-radius: 0; }
         }
+    
+        /* ── Food Cards ── */
+        .food-section { padding: 16px; }
+        .food-section h3 {
+            font-size: 15px; font-weight: 600; color: #333; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .food-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+        .food-scroll::-webkit-scrollbar { display: none; }
+        .food-card {
+            min-width: 140px; max-width: 140px; background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .food-card:active { transform: scale(0.97); }
+        .food-card-emoji { font-size: 36px; text-align: center; padding: 14px 0 8px; }
+        .food-card-info { padding: 0 10px 12px; }
+        .food-card-name { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 3px; }
+        .food-card-price { font-size: 11px; color: #888; }
+        .food-card-tag {
+            display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px;
+            margin-top: 4px; background: #fff3e0; color: #e65100;
+        }
+        .food-card-tag.must-try { background: #e8f5e9; color: #2e7d32; }
+
     </style>
 </head>
 <body>
@@ -1493,6 +1518,13 @@
 
     <!-- Chat Area -->
     <div class="chat-area" id="chatArea">
+
+        <!-- 美食推荐 -->
+        <div class="food-section" id="foodSection" style="display:none;">
+            <h3>🍜 贵港必吃美食 <span style="font-size:11px;color:#888;font-weight:400;">| 向左滑动查看更多</span></h3>
+            <div class="food-scroll" id="foodScroll"></div>
+        </div>
+
         <!-- Welcome Card v6 (新设计) -->
         <div class="welcome-card" id="welcomeCard">
             <!-- Hero Banner -->
@@ -1762,8 +1794,33 @@
     }
 
     // ── Init ──
+    
+    // ── Load Foods ──
+    async function loadFoods() {
+        try {
+            const resp = await fetch('/api/foods/must-try');
+            const foods = await resp.json();
+            const container = document.getElementById('foodScroll');
+            const section = document.getElementById('foodSection');
+            if (!foods.length) { section.style.display = 'none'; return; }
+            section.style.display = 'block';
+            container.innerHTML = foods.map(f => `
+                <div class="food-card" onclick="quickAsk('${f.name}有什么好吃的？怎么点？')">
+                    <div class="food-card-emoji">${f.emoji}</div>
+                    <div class="food-card-info">
+                        <div class="food-card-name">${f.name}</div>
+                        <div class="food-card-price">${f.price_range}</div>
+                        ${f.must_try ? '<span class="food-card-tag must-try">必吃</span>' : ''}
+                        <span class="food-card-tag">${f.flavor || f.tags[0] || ''}</span>
+                    </div>
+                </div>
+            `).join('');
+        } catch(e) { console.warn('Food load failed:', e); }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         initHero();
+        loadFoods();
         loadCategories(); loadRoutes(); initDistricts();
         initSpotList();
         checkConnection();
@@ -2399,7 +2456,7 @@
                 badge.textContent = '🤖 AI模式';
                 badge.className = 'status online';
             } else {
-                badge.textContent = '📱 本地模式 · 30景点';
+                badge.textContent = '📱 本地模式 · 30景点 · 14美食';
                 badge.className = 'status online';
             }
         } catch (e) {

@@ -892,3 +892,49 @@ if __name__ == "__main__":
     print("=" * 50)
     get_llm_client()  # 启动时检测并提示
     app.run(host="0.0.0.0", port=PORT, debug=True)
+
+# ── 美食 API 端点 ────────────────────────────────────────
+
+@app.route("/api/foods")
+def get_foods_list():
+    """获取所有美食"""
+    return jsonify({
+        "meta": DataLoader._load_json('food.json').get('meta', {}),
+        "foods": DataLoader.get_foods()
+    })
+
+@app.route("/api/foods/<food_id>")
+def get_food_detail(food_id):
+    """获取单个美食详情"""
+    food = DataLoader.get_food_by_id(food_id)
+    if food:
+        return jsonify(food)
+    return jsonify({"error": "未找到该美食"}), 404
+
+@app.route("/api/foods/category/<category>")
+def get_foods_by_category(category):
+    """按分类获取美食"""
+    foods = DataLoader.get_foods_by_category(category)
+    return jsonify({"category": category, "foods": foods, "count": len(foods)})
+
+@app.route("/api/foods/must-try")
+def get_must_try_foods():
+    """获取必吃美食列表"""
+    return jsonify(DataLoader.get_must_try_foods())
+
+@app.route("/api/foods/signature")
+def get_signature_foods():
+    """获取招牌美食列表"""
+    return jsonify(DataLoader.get_signature_foods())
+
+@app.route("/api/foods/search")
+def search_foods():
+    """搜索美食"""
+    query = request.args.get('q', '').strip()
+    if not query:
+        return jsonify({"error": "请提供搜索关键词"}), 400
+    results = DataLoader.search_food(query)
+    return jsonify(results)
+
+
+

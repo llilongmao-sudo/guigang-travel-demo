@@ -138,17 +138,75 @@ class DataLoader:
         return results
     
     @classmethod
+    
+
+    @classmethod
+    def get_foods(cls, reload: bool = False) -> List[Dict]:
+        """获取所有美食数据"""
+        if not hasattr(cls, '_foods') or cls._foods is None or reload:
+            data = cls._load_json('food.json')
+            cls._foods = data.get('foods', [])
+        return cls._foods
+
+    @classmethod
+    def get_food_by_id(cls, food_id: str) -> Optional[Dict]:
+        """根据ID获取美食"""
+        foods = cls.get_foods()
+        for f in foods:
+            if f.get('id') == food_id:
+                return f
+        return None
+
+    @classmethod
+    def get_foods_by_category(cls, category: str) -> List[Dict]:
+        """根据分类获取美食"""
+        foods = cls.get_foods()
+        return [f for f in foods if f.get('category') == category]
+
+    @classmethod
+    def get_must_try_foods(cls) -> List[Dict]:
+        """获取必吃美食"""
+        foods = cls.get_foods()
+        return [f for f in foods if f.get('must_try')]
+
+    @classmethod
+    def get_signature_foods(cls) -> List[Dict]:
+        """获取招牌美食"""
+        foods = cls.get_foods()
+        return [f for f in foods if f.get('signature')]
+
+    @classmethod
+    def search_food(cls, query: str) -> List[Dict]:
+        """搜索美食"""
+        query = query.lower()
+        foods = cls.get_foods()
+        results = []
+        for f in foods:
+            if query in f.get('name', '').lower():
+                results.append(f)
+            elif query in ' '.join(f.get('tags', [])).lower():
+                results.append(f)
+            elif query in f.get('area', '').lower():
+                results.append(f)
+        return results
+
+    @classmethod
     def get_stats(cls) -> Dict:
         """获取数据统计"""
+        all_tags = set()
+        for a in cls.get_attractions():
+            for tag in a.get('tags', []):
+                all_tags.add(tag)
+        for f in cls.get_foods():
+            for tag in f.get('tags', []):
+                all_tags.add(tag)
         return {
             'attractions': len(cls.get_attractions()),
+            'foods': len(cls.get_foods()),
             'categories': len(cls.get_categories()),
             'routes': len(cls.get_routes()),
-            'tags': len(set(
-                tag 
-                for a in cls.get_attractions() 
-                for tag in a.get('tags', [])
-            ))
+            'tags': len(all_tags),
+            'must_try_foods': len(cls.get_must_try_foods())
         }
 
 
