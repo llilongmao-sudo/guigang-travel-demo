@@ -1200,6 +1200,7 @@
 
             <!-- Quick Actions (inline) -->
             <div class="quick-actions-bar" id="quickActionsBar">
+                <button class="qa-btn" style="background:linear-gradient(135deg,#2d8a4e,#43a047);color:#fff;font-weight:600;box-shadow:0 2px 8px rgba(45,138,78,0.3);" onclick="openItineraryModal()">🗺️ AI一日游</button>
                 <button class="qa-btn" onclick="quickAsk('推荐一日游行程')">🗺️ 一日游</button>
                 <button class="qa-btn" onclick="quickAsk('贵港有什么特色美食？')">🍜 美食</button>
                 <button class="qa-btn" onclick="quickAsk('西山风景区有什么好玩的？')">🏔️ 景点</button>
@@ -1284,6 +1285,36 @@
     </div>
 </div>
 
+<!-- Itinerary Modal -->
+<div class="modal-overlay" id="itineraryModal">
+    <div class="modal-box">
+        <h3>🗺️ 选择一日游路线</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;">
+            <button onclick="ItineraryAPI.generate('photo');closeItineraryModal()" style="padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;transition:all .2s;" onmouseover="this.style.borderColor='#667EEA';this.style.background='#f5f7ff'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">
+                <div style="font-size:32px;margin-bottom:4px;">📸</div>
+                <div style="font-weight:600;color:#333;">摄影路线</div>
+                <div style="font-size:11px;color:#999;margin-top:2px;">捕捉贵港最美瞬间</div>
+            </button>
+            <button onclick="ItineraryAPI.generate('family');closeItineraryModal()" style="padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;transition:all .2s;" onmouseover="this.style.borderColor='#FFA726';this.style.background='#fff8f0'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">
+                <div style="font-size:32px;margin-bottom:4px;">👨‍👩‍👧</div>
+                <div style="font-weight:600;color:#333;">亲子路线</div>
+                <div style="font-size:11px;color:#999;margin-top:2px;">适合带娃的轻松行程</div>
+            </button>
+            <button onclick="ItineraryAPI.generate('food');closeItineraryModal()" style="padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;transition:all .2s;" onmouseover="this.style.borderColor='#FF6B6B';this.style.background='#fff5f5'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">
+                <div style="font-size:32px;margin-bottom:4px;">🍜</div>
+                <div style="font-weight:600;color:#333;">美食路线</div>
+                <div style="font-size:11px;color:#999;margin-top:2px;">吃遍贵港特色美食</div>
+            </button>
+            <button onclick="ItineraryAPI.generate('weekend');closeItineraryModal()" style="padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;transition:all .2s;" onmouseover="this.style.borderColor='#4ECDC4';this.style.background='#f0fffe'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">
+                <div style="font-size:32px;margin-bottom:4px;">🏖️</div>
+                <div style="font-weight:600;color:#333;">周末路线</div>
+                <div style="font-size:11px;color:#999;margin-top:2px;">放松身心的慢节奏</div>
+            </button>
+        </div>
+        <div style="text-align:right;"><button class="btn-cancel" onclick="closeItineraryModal()" style="padding:8px 20px;border-radius:8px;border:none;font-size:14px;cursor:pointer;background:#eee;color:#666;">取消</button></div>
+    </div>
+</div>
+
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
@@ -1296,6 +1327,7 @@
 
 <script src="/static/js/favorites.js"></script>
 <script src="/static/js/recent.js"></script>
+<script src="/static/js/itinerary.js"></script>
 <script>
     // ── State ──
     const spots = {{ spots | tojson | safe }};
@@ -1990,6 +2022,14 @@
         container.style.display = 'none';
         container.innerHTML = '';
         showToast('已清空浏览记录');
+    }
+
+    // ── Itinerary Modal ──
+    function openItineraryModal() {
+        document.getElementById('itineraryModal').classList.add('active');
+    }
+    function closeItineraryModal() {
+        document.getElementById('itineraryModal').classList.remove('active');
     }
 
     // ── 收藏功能：初始化徽章 ──

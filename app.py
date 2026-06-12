@@ -750,6 +750,29 @@ def status():
         "spots_count": len(SCENIC_SPOTS),
     })
 
+@app.route("/api/itinerary", methods=["POST"])
+def generate_itinerary():
+    data = request.get_json()
+    route_type = data.get("type", "周末路线")
+    type_prompts = {
+        "摄影路线": "请为贵港市规划一条摄影爱好者一日游行程。要求：时间08:00-20:00，3-4个景点，含午餐晚餐推荐，每个景点标注建议游玩时长，考虑景点间距离合理安排路线。按时间轴格式输出。",
+        "亲子路线": "请为贵港市规划一条亲子一日游行程。要求：时间08:00-20:00，3-4个适合儿童的景点，含午餐晚餐推荐。按时间轴格式输出。",
+        "美食路线": "请为贵港市规划一条美食探索一日游行程。要求：时间08:00-20:00，结合景点和美食推荐，每个景点附近推荐特色美食。按时间轴格式输出。",
+        "周末路线": "请为贵港市规划一条周末放松一日游行程。要求：时间08:00-20:00，3-4个休闲景点，节奏轻松。按时间轴格式输出。",
+    }
+    prompt = type_prompts.get(route_type, type_prompts["周末路线"])
+    # 复用现有 LLM 逻辑
+    context = build_context(SCENIC_SPOTS[:10], [])
+    client = get_llm_client()
+    if client:
+        messages = [{"role": "system", "content": f"你是贵港旅游规划师。{context}"}, {"role": "user", "content": prompt}]
+        reply = client.chat(messages)
+        return jsonify({"type": route_type, "reply": reply})
+    # 纯本地模式降级
+    local_reply = generate_local_reply(prompt, SCENIC_SPOTS[:5], [])
+    return jsonify({"type": route_type, "reply": local_reply})
+
+
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 5001))
     print("=" * 50)
