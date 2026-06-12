@@ -770,6 +770,241 @@
         }
         .toast.show { opacity: 1; }
 
+        /* ── Drawer Favorites Entry ── */
+        .drawer-fav-entry {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            margin: 4px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            background: #fafafa;
+            border: 1px solid #f0f0f0;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .drawer-fav-entry:hover {
+            background: #f0faf3;
+            border-color: #c8e6c9;
+        }
+        .drawer-fav-entry:active {
+            background: #e8f5e9;
+        }
+        .drawer-fav-entry .dfe-icon {
+            font-size: 20px;
+        }
+        .drawer-fav-entry .dfe-label {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        .drawer-fav-entry .dfe-badge {
+            background: #e53935;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6px;
+        }
+
+        /* ── Favorites Panel (Bottom Sheet) ── */
+        .fav-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 150;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 0.3s, opacity 0.3s;
+        }
+        .fav-panel.active {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+        .fav-panel .fav-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+        .fav-panel .fav-sheet {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            max-height: 60vh;
+            background: #fff;
+            border-radius: 20px 20px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .fav-panel.active .fav-sheet {
+            transform: translateY(0);
+        }
+        .fav-sheet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+        .fav-sheet-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #222;
+        }
+        .fav-close-btn {
+            background: #f0f0f0;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+        .fav-close-btn:hover { background: #e0e0e0; }
+        .fav-sheet-actions {
+            padding: 10px 20px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .fav-clear-all {
+            background: none;
+            border: none;
+            font-size: 12px;
+            color: #e53935;
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+        .fav-clear-all:hover { background: #fff0f0; }
+        .fav-sheet-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 16px 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .fav-empty {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .fav-empty .fav-empty-emoji {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .fav-empty p {
+            font-size: 14px;
+            color: #999;
+            line-height: 1.6;
+        }
+        .fav-empty .fav-empty-hint {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 8px;
+        }
+        .fav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: #fafafa;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .fav-item:hover { background: #f0faf3; }
+        .fav-item:active { background: #e8f5e9; }
+        .fav-item-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: #f0f0f0;
+            overflow: hidden;
+        }
+        .fav-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .fav-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .fav-item-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        .fav-item-meta {
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .fav-item-meta .fav-district {
+            background: #e8f5e9;
+            color: #2d8a4e;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+        .fav-item-meta .fav-price {
+            color: #e53935;
+            font-weight: 500;
+        }
+        .fav-item-meta .fav-price.free {
+            color: #43a047;
+        }
+        .fav-remove-btn {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: #fee;
+            color: #e53935;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+        .fav-remove-btn:hover { background: #fcc; }
+
         /* ── Modal ── */
         .modal-overlay {
             position: fixed;
@@ -900,6 +1135,12 @@
             <h2>🏕️ 贵港景点一览</h2>
             <p>点击查看详情，位置可跳转地图</p>
         </div>
+        <!-- 收藏入口 -->
+        <div class="drawer-fav-entry" onclick="openFavoritesPanel()">
+            <span class="dfe-icon">❤️</span>
+            <span class="dfe-label">我的收藏</span>
+            <span class="dfe-badge" id="favBadge">0</span>
+        </div>
         <div class="drawer-list" id="spotList"></div>
     </div>
 </div>
@@ -913,6 +1154,27 @@
             <p>点击可重新加载对话</p>
         </div>
         <div id="historyList"></div>
+    </div>
+</div>
+
+<!-- Favorites Panel (Bottom Sheet) -->
+<div class="fav-panel" id="favPanel">
+    <div class="fav-overlay" onclick="closeFavoritesPanel()"></div>
+    <div class="fav-sheet">
+        <div class="fav-sheet-header">
+            <h3>❤️ 我的收藏</h3>
+            <button class="fav-close-btn" onclick="closeFavoritesPanel()">✕</button>
+        </div>
+        <div class="fav-sheet-actions">
+            <button class="fav-clear-all" onclick="clearAllFavorites()">🗑️ 清空所有</button>
+        </div>
+        <div class="fav-sheet-body" id="favList">
+            <div class="fav-empty">
+                <div class="fav-empty-emoji">📭</div>
+                <p>收藏夹空空如也~</p>
+                <div class="fav-empty-hint">浏览景点时点击 ♡ 即可收藏</div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -938,6 +1200,7 @@
     <div class="suggestion" id="weatherSuggest">正在获取天气数据...</div>
 </div>
 
+<script src="/static/js/favorites.js"></script>
 <script>
     // ── State ──
     const spots = {{ spots | tojson | safe }};
@@ -1588,6 +1851,90 @@
 
     if ('speechSynthesis' in window) {
         window.speechSynthesis.getVoices();
+    }
+
+    // ── 收藏功能：初始化徽章 ──
+    function initFavorites() {
+        updateFavBadge();
+        // 监听 localStorage 变化（其他标签页的同步）
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'guigang_favorites') {
+                updateFavBadge();
+            }
+        });
+    }
+    initFavorites();
+
+    // ── 收藏面板 ──
+    function openFavoritesPanel() {
+        renderFavoritesList();
+        document.getElementById('favPanel').classList.add('active');
+    }
+
+    function closeFavoritesPanel() {
+        document.getElementById('favPanel').classList.remove('active');
+    }
+
+    function renderFavoritesList() {
+        const container = document.getElementById('favList');
+        const favs = FavoritesAPI.getAll();
+        
+        if (favs.length === 0) {
+            container.innerHTML = `
+                <div class="fav-empty">
+                    <div class="fav-empty-emoji">📭</div>
+                    <p>收藏夹空空如也~</p>
+                    <div class="fav-empty-hint">浏览景点时点击 ♡ 即可收藏</div>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = favs.map(f => {
+            const imgContent = f.image_url
+                ? `<img src="${f.image_url}" alt="${f.name}" onerror="this.parentElement.textContent='🏞️'">`
+                : '🏞️';
+            const priceClass = (f.ticket_price && f.ticket_price.includes('免费')) ? 'free' : '';
+            const priceText = f.ticket_price || '暂无信息';
+            
+            return `
+                <div class="fav-item" onclick="window.location.href='/spot/${f.id}'">
+                    <div class="fav-item-img">${imgContent}</div>
+                    <div class="fav-item-info">
+                        <div class="fav-item-name">${f.name}</div>
+                        <div class="fav-item-meta">
+                            ${f.district ? `<span class="fav-district">${f.district}</span>` : ''}
+                            <span class="fav-price ${priceClass}">💰 ${priceText}</span>
+                        </div>
+                    </div>
+                    <button class="fav-remove-btn" onclick="event.stopPropagation(); removeFavorite('${f.id}')" title="取消收藏">✕</button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function removeFavorite(spotId) {
+        FavoritesAPI.remove(spotId);
+        renderFavoritesList();
+        updateFavBadge();
+        showToast('已取消收藏');
+    }
+
+    function clearAllFavorites() {
+        if (!confirm('确定清空所有收藏吗？此操作不可撤销。')) return;
+        FavoritesAPI.clearAll();
+        renderFavoritesList();
+        updateFavBadge();
+        showToast('已清空所有收藏');
+    }
+
+    function updateFavBadge() {
+        const count = FavoritesAPI.count();
+        const badge = document.getElementById('favBadge');
+        if (badge) {
+            badge.textContent = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        }
     }
 </script>
 <script>

@@ -189,10 +189,10 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+<script src="/static/js/favorites.js"></script>
 <script>
     // ── 数据 ──
     const spotData = {{ spot | tojson | safe }};
-    const STORAGE_KEY = 'guigang_favorites';
 
     // ── 初始化 ──
     document.addEventListener('DOMContentLoaded', function() {
@@ -225,38 +225,24 @@
         container.innerHTML = html;
     }
 
-    // ── 收藏功能 ──
-    function getFavorites() {
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        } catch(e) { return []; }
-    }
-
-    function saveFavorites(favs) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(favs));
-    }
-
+    // ── 收藏功能（使用 FavoritesAPI） ──
     function isFavorited() {
-        const favs = getFavorites();
-        return favs.some(f => f.id === spotData.id);
+        return FavoritesAPI.isFavorited(spotData.id);
     }
 
     function toggleFavorite() {
-        const favs = getFavorites();
-        const idx = favs.findIndex(f => f.id === spotData.id);
-        if (idx > -1) {
-            favs.splice(idx, 1);
-            showToast('已取消收藏');
-        } else {
-            favs.push({
-                id: spotData.id,
-                name: spotData.name,
-                district: spotData.district || '',
-                added_at: new Date().toISOString()
-            });
+        const nowFav = FavoritesAPI.toggle({
+            id: spotData.id,
+            name: spotData.name,
+            image_url: spotData.image_url || '',
+            ticket_price: spotData.ticket_price || '',
+            district: spotData.district || ''
+        });
+        if (nowFav) {
             showToast('❤️ 已收藏');
+        } else {
+            showToast('已取消收藏');
         }
-        saveFavorites(favs);
         updateFavButton();
     }
 
