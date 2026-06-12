@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>贵港旅游智能助手 v5</title>
+    <title>璐垫腐鏃呮父鏅鸿兘鍔╂墜 v5</title>
     <link rel="manifest" href="/static/manifest.json">
     <meta name="theme-color" content="#2d8a4e">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="贵港旅游">
+    <meta name="apple-mobile-web-app-title" content="璐垫腐鏃呮父">
     <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
     <style>
-        /* ── Reset & Base ── */
+        /* 鈹€鈹€ Reset & Base 鈹€鈹€ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -20,7 +20,7 @@
             overflow: hidden;
         }
 
-        /* ── App Container ── */
+        /* 鈹€鈹€ App Container 鈹€鈹€ */
         .app {
             max-width: 480px;
             margin: 0 auto;
@@ -32,7 +32,7 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.05);
         }
 
-        /* ── Header ── */
+        /* 鈹€鈹€ Header 鈹€鈹€ */
         .header {
             background: linear-gradient(135deg, #2d8a4e, #1a6b3c);
             color: #fff;
@@ -87,7 +87,7 @@
         .header .status.online { background: rgba(255,255,255,0.25); }
         .header .status.offline { background: rgba(255,80,80,0.5); }
 
-        /* ── Weather Panel ── */
+        /* 鈹€鈹€ Weather Panel 鈹€鈹€ */
         .weather-panel {
             position: fixed;
             top: 60px;
@@ -112,7 +112,7 @@
             font-size: 13px;
         }
 
-        /* ── Chat Area ── */
+        /* 鈹€鈹€ Chat Area 鈹€鈹€ */
         .chat-area {
             flex: 1;
             overflow-y: auto;
@@ -125,7 +125,7 @@
         .chat-area::-webkit-scrollbar { width: 4px; }
         .chat-area::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
 
-        /* ── Welcome Card v6 (全新设计) ── */
+        /* 鈹€鈹€ Welcome Card v6 (鍏ㄦ柊璁捐) 鈹€鈹€ */
         .welcome-card {
             margin-bottom: 8px;
         }
@@ -369,7 +369,7 @@
             transform: scale(0.95);
         }
 
-        /* ── Message Bubbles (keep existing) ── */
+        /* 鈹€鈹€ Message Bubbles (keep existing) 鈹€鈹€ */
         .message {
             display: flex;
             gap: 8px;
@@ -582,7 +582,7 @@
             40% { transform: translateY(-6px); }
         }
 
-        /* ── Input Area ── */
+        /* 鈹€鈹€ Input Area 鈹€鈹€ */
         .input-area {
             padding: 10px 16px;
             background: #fff;
@@ -651,7 +651,7 @@
         .input-area .send-btn:hover { background: #1a6b3c; }
         .input-area .send-btn:disabled { background: #aaa; cursor: not-allowed; }
 
-        /* ── Side Panel ── */
+        /* 鈹€鈹€ Side Panel 鈹€鈹€ */
         .side-panel {
             position: fixed;
             top: 0;
@@ -720,7 +720,7 @@
         .tag.park { background: #e3f2fd; color: #1565c0; }
         .tag.free { background: #fce4ec; color: #c62828; }
 
-        /* ── Right Panel (History) ── */
+        /* 鈹€鈹€ Right Panel (History) 鈹€鈹€ */
         .right-panel {
             position: fixed;
             top: 0;
@@ -769,7 +769,7 @@
         .history-item .history-time { font-size: 11px; color: #bbb; margin-top: 4px; }
         .history-empty { padding: 40px 20px; text-align: center; color: #999; font-size: 14px; }
 
-        /* ── Toast ── */
+        /* 鈹€鈹€ Toast 鈹€鈹€ */
         .toast {
             position: fixed;
             bottom: 80px;
@@ -787,7 +787,7 @@
         }
         .toast.show { opacity: 1; }
 
-        /* ── Drawer Favorites Entry ── */
+        /* 鈹€鈹€ Drawer Favorites Entry 鈹€鈹€ */
         .drawer-fav-entry {
             display: flex;
             align-items: center;
@@ -832,7 +832,7 @@
             padding: 0 6px;
         }
 
-        /* ── Favorites Panel (Bottom Sheet) ── */
+        /* 鈹€鈹€ Favorites Panel (Bottom Sheet) 鈹€鈹€ */
         .fav-panel {
             position: fixed;
             top: 0;
@@ -1022,7 +1022,7 @@
         }
         .fav-remove-btn:hover { background: #fcc; }
 
-        /* ── Modal ── */
+        /* 鈹€鈹€ Modal 鈹€鈹€ */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -1072,7 +1072,7 @@
         .modal-box .modal-actions .btn-cancel { background: #eee; color: #666; }
         .modal-box .modal-actions .btn-submit { background: #2d8a4e; color: #fff; }
 
-        /* ── Recommend Cards ── */
+        /* 鈹€鈹€ Recommend Cards 鈹€鈹€ */
         .recommend-section {
             padding: 14px 16px 0;
         }
@@ -1119,7 +1119,7 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
 
-        /* ── Route Cards ── */
+        /* 鈹€鈹€ Route Cards 鈹€鈹€ */
         .routes-section {
             padding: 14px 16px 0;
         }
@@ -1187,7 +1187,7 @@
             opacity: 0.85;
         }
 
-        /* ── Route Modal ── */
+        /* 鈹€鈹€ Route Modal 鈹€鈹€ */
         .route-modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -1351,7 +1351,7 @@
         }
         .route-use-btn:active { opacity: 0.85; }
 
-        /* ── Preferences Modal ── */
+        /* 鈹€鈹€ Preferences Modal 鈹€鈹€ */
         .pref-modal {
             background: #fff;
             border-radius: 20px;
@@ -1467,7 +1467,7 @@
             cursor: not-allowed;
         }
 
-        /* ── Responsive ── */
+        /* 鈹€鈹€ Responsive 鈹€鈹€ */
         @media (min-width: 768px) {
             .app { height: 100vh; border-radius: 0; }
         }
@@ -1477,104 +1477,104 @@
 <div class="app" id="app">
     <!-- Header -->
     <div class="header">
-        <button class="menu-btn" onclick="togglePanel()">☰</button>
+        <button class="menu-btn" onclick="togglePanel()">鈽?/button>
         <div>
-            <h1>贵港旅游智能助手</h1>
-            <div class="subtitle">AI 带你畅游贵港</div>
+            <h1>璐垫腐鏃呮父鏅鸿兘鍔╂墜</h1>
+            <div class="subtitle">AI 甯︿綘鐣呮父璐垫腐</div>
         </div>
         <div class="header-actions">
-            <button class="icon-btn" onclick="showWelcome()" title="返回首页" id="homeBtn">🏠</button>
-            <button class="icon-btn" onclick="showWeather()" title="天气查询">🌤️</button>
-            <button class="icon-btn" onclick="toggleHistory()" title="对话历史">📜</button>
-            <button class="icon-btn" onclick="clearHistory()" title="清除历史">🗑️</button>
+            <button class="icon-btn" onclick="showWelcome()" title="杩斿洖棣栭〉" id="homeBtn">馃彔</button>
+            <button class="icon-btn" onclick="showWeather()" title="澶╂皵鏌ヨ">馃尋锔?/button>
+            <button class="icon-btn" onclick="toggleHistory()" title="瀵硅瘽鍘嗗彶">馃摐</button>
+            <button class="icon-btn" onclick="clearHistory()" title="娓呴櫎鍘嗗彶">馃棏锔?/button>
         </div>
-        <span class="status" id="statusBadge">连接中...</span>
+        <span class="status" id="statusBadge">杩炴帴涓?..</span>
     </div>
 
     <!-- Chat Area -->
     <div class="chat-area" id="chatArea">
-        <!-- Welcome Card v6 (新设计) -->
+        <!-- Welcome Card v6 (鏂拌璁? -->
         <div class="welcome-card" id="welcomeCard">
             <!-- Hero Banner -->
             <div class="welcome-hero">
-                <div class="greeting">🏕️ 畅游贵港</div>
-                <div class="greeting-sub" id="greetingSub">探索这座充满魅力的城市</div>
+                <div class="greeting">馃彆锔?鐣呮父璐垫腐</div>
+                <div class="greeting-sub" id="greetingSub">鎺㈢储杩欏骇鍏呮弧榄呭姏鐨勫煄甯?/div>
                 <div class="search-hint" onclick="document.getElementById('inputBox').focus()">
-                    <span>🔍</span>
-                    <span class="hint-text">搜索景点、美食、行程...</span>
+                    <span>馃攳</span>
+                    <span class="hint-text">鎼滅储鏅偣銆佺編椋熴€佽绋?..</span>
                 </div>
             </div>
 
             <!-- Category Row -->
             <div class="category-row" id="categoryRow">
-                <!-- JS 动态生成 -->
+                <!-- JS 鍔ㄦ€佺敓鎴?-->
             </div>
 
             <!-- Recommend Cards -->
             <div class="recommend-section">
-                <h3>🎯 智能推荐</h3>
+                <h3>馃幆 鏅鸿兘鎺ㄨ崘</h3>
                 <div class="recommend-row">
-                    <button class="recommend-card" style="background:linear-gradient(135deg,#FF6B6B,#FF8E8E);" onclick="quickAsk('今天去贵港哪里玩比较好？')">
-                        <span class="rec-icon">🌟</span>
-                        <span class="rec-label">今日推荐</span>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#2d8a4e,#1a6b3c);" onclick="quickAsk('浠婂ぉ鍘昏吹娓摢閲岀帺姣旇緝濂斤紵')">
+                        <span class="rec-icon">馃専</span>
+                        <span class="rec-label">浠婃棩鎺ㄨ崘</span>
                     </button>
-                    <button class="recommend-card" style="background:linear-gradient(135deg,#4ECDC4,#45B7AA);" onclick="quickAsk('推荐贵港周末游玩的地方')">
-                        <span class="rec-icon">🏖️</span>
-                        <span class="rec-label">周末推荐</span>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#43a047,#2e7d32);" onclick="quickAsk('鎺ㄨ崘璐垫腐鍛ㄦ湯娓哥帺鐨勫湴鏂?)">
+                        <span class="rec-icon">馃彇锔?/span>
+                        <span class="rec-label">鍛ㄦ湯鎺ㄨ崘</span>
                     </button>
-                    <button class="recommend-card" style="background:linear-gradient(135deg,#667EEA,#764BA2);" onclick="quickAsk('下雨天贵港适合去哪里？')">
-                        <span class="rec-icon">🌧️</span>
-                        <span class="rec-label">雨天推荐</span>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#66bb6a,#388e3c);" onclick="quickAsk('涓嬮洦澶╄吹娓€傚悎鍘诲摢閲岋紵')">
+                        <span class="rec-icon">馃導锔?/span>
+                        <span class="rec-label">闆ㄥぉ鎺ㄨ崘</span>
                     </button>
-                    <button class="recommend-card" style="background:linear-gradient(135deg,#F093FB,#F5576C);" onclick="quickAsk('推荐贵港适合摄影的地方')">
-                        <span class="rec-icon">📸</span>
-                        <span class="rec-label">摄影路线</span>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#81c784,#4caf50);" onclick="quickAsk('鎺ㄨ崘璐垫腐閫傚悎鎽勫奖鐨勫湴鏂?)">
+                        <span class="rec-icon">馃摳</span>
+                        <span class="rec-label">鎽勫奖璺嚎</span>
                     </button>
-                    <button class="recommend-card" style="background:linear-gradient(135deg,#FFA726,#FF7043);" onclick="quickAsk('推荐贵港适合亲子游的地方')">
-                        <span class="rec-icon">👨‍👩‍👧</span>
-                        <span class="rec-label">亲子路线</span>
+                    <button class="recommend-card" style="background:linear-gradient(135deg,#a5d6a7,#81c784);" onclick="quickAsk('鎺ㄨ崘璐垫腐閫傚悎浜插瓙娓哥殑鍦版柟')">
+                        <span class="rec-icon">馃懆鈥嶐煈┾€嶐煈?/span>
+                        <span class="rec-label">浜插瓙璺嚎</span>
                     </button>
                 </div>
             </div>
 
             <!-- Featured Spots -->
             <div class="section-header">
-                <h3>🔥 推荐景点</h3>
-                <button class="more-btn" onclick="togglePanel()">查看全部 →</button>
+                <h3>馃敟 鎺ㄨ崘鏅偣</h3>
+                <button class="more-btn" onclick="togglePanel()">鏌ョ湅鍏ㄩ儴 鈫?/button>
             </div>
             <div class="featured-row" id="featuredRow">
-                <!-- JS 动态生成 -->
+                <!-- JS 鍔ㄦ€佺敓鎴?-->
             </div>
 
             <!-- Routes Section -->
             <div class="routes-section" id="routesSection">
-                <h3>🗺️ 经典路线</h3>
+                <h3>馃椇锔?缁忓吀璺嚎</h3>
                 <div class="routes-row" id="routesRow">
-                    <!-- JS 动态生成 -->
+                    <!-- JS 鍔ㄦ€佺敓鎴?-->
                 </div>
             </div>
 
             <!-- Quick Actions (inline) -->
             <div class="quick-actions-bar" id="quickActionsBar">
-                <button class="qa-btn" style="background:linear-gradient(135deg,#2d8a4e,#43a047);color:#fff;font-weight:600;box-shadow:0 2px 8px rgba(45,138,78,0.3);" onclick="openItineraryModal()">🗺️ AI一日游</button>
-                <button class="qa-btn" onclick="quickAsk('推荐一日游行程')">🗺️ 一日游</button>
-                <button class="qa-btn" onclick="quickAsk('贵港有什么特色美食？')">🍜 美食</button>
-                <button class="qa-btn" onclick="quickAsk('西山风景区有什么好玩的？')">🏔️ 景点</button>
-                <button class="qa-btn" onclick="togglePanel()">📋 全部景点</button>
-                <button class="qa-btn" onclick="showWeather()">🌤️ 天气</button>
+                <button class="qa-btn" style="background:linear-gradient(135deg,#2d8a4e,#43a047);color:#fff;font-weight:600;box-shadow:0 2px 8px rgba(45,138,78,0.3);" onclick="openItineraryModal()">馃椇锔?AI涓€鏃ユ父</button>
+                <button class="qa-btn" onclick="quickAsk('鎺ㄨ崘涓€鏃ユ父琛岀▼')">馃椇锔?涓€鏃ユ父</button>
+                <button class="qa-btn" onclick="quickAsk('璐垫腐鏈変粈涔堢壒鑹茬編椋燂紵')">馃崪 缇庨</button>
+                <button class="qa-btn" onclick="quickAsk('瑗垮北椋庢櫙鍖烘湁浠€涔堝ソ鐜╃殑锛?)">馃彅锔?鏅偣</button>
+                <button class="qa-btn" onclick="togglePanel()">馃搵 鍏ㄩ儴鏅偣</button>
+                <button class="qa-btn" onclick="showWeather()">馃尋锔?澶╂皵</button>
             </div>
 
-            <!-- 最近浏览 -->
+            <!-- 鏈€杩戞祻瑙?-->
             <div id="recentSection" style="display:none;"></div>
         </div>
     </div>
 
     <!-- Input -->
     <div class="input-area">
-        <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="语音输入">🎤</button>
-        <input type="text" id="inputBox" placeholder="输入你的问题，或点击🎤语音输入..." 
+        <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="璇煶杈撳叆">馃帳</button>
+        <input type="text" id="inputBox" placeholder="杈撳叆浣犵殑闂锛屾垨鐐瑰嚮馃帳璇煶杈撳叆..." 
                onkeydown="if(event.key==='Enter') sendMessage()">
-        <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">鉃?/button>
     </div>
 </div>
 
@@ -1583,19 +1583,19 @@
     <div class="overlay" onclick="togglePanel()"></div>
     <div class="drawer">
         <div class="drawer-header">
-            <h2>🏕️ 贵港景点一览</h2>
-            <p>点击查看详情，位置可跳转地图</p>
+            <h2>馃彆锔?璐垫腐鏅偣涓€瑙?/h2>
+            <p>鐐瑰嚮鏌ョ湅璇︽儏锛屼綅缃彲璺宠浆鍦板浘</p>
         </div>
-        <!-- 收藏入口 -->
+        <!-- 鏀惰棌鍏ュ彛 -->
         <div class="drawer-fav-entry" onclick="openFavoritesPanel()">
-            <span class="dfe-icon">❤️</span>
-            <span class="dfe-label">我的收藏</span>
+            <span class="dfe-icon">鉂わ笍</span>
+            <span class="dfe-label">鎴戠殑鏀惰棌</span>
             <span class="dfe-badge" id="favBadge">0</span>
         </div>
-        <!-- 偏好入口 -->
+        <!-- 鍋忓ソ鍏ュ彛 -->
         <div class="drawer-fav-entry" onclick="openPreferencesPanel()" style="background: #f0f7ff; border-color: #bbdefb;">
-            <span class="dfe-icon">⚙️</span>
-            <span class="dfe-label">我的偏好</span>
+            <span class="dfe-icon">鈿欙笍</span>
+            <span class="dfe-label">鎴戠殑鍋忓ソ</span>
             <span class="dfe-badge" id="prefBadge" style="background: #1976d2;">0</span>
         </div>
         <div class="drawer-list" id="spotList"></div>
@@ -1607,8 +1607,8 @@
     <div class="overlay" onclick="toggleHistory()"></div>
     <div class="drawer">
         <div class="drawer-header">
-            <h2>📜 对话历史</h2>
-            <p>点击可重新加载对话</p>
+            <h2>馃摐 瀵硅瘽鍘嗗彶</h2>
+            <p>鐐瑰嚮鍙噸鏂板姞杞藉璇?/p>
         </div>
         <div id="historyList"></div>
     </div>
@@ -1619,17 +1619,17 @@
     <div class="fav-overlay" onclick="closeFavoritesPanel()"></div>
     <div class="fav-sheet">
         <div class="fav-sheet-header">
-            <h3>❤️ 我的收藏</h3>
-            <button class="fav-close-btn" onclick="closeFavoritesPanel()">✕</button>
+            <h3>鉂わ笍 鎴戠殑鏀惰棌</h3>
+            <button class="fav-close-btn" onclick="closeFavoritesPanel()">鉁?/button>
         </div>
         <div class="fav-sheet-actions">
-            <button class="fav-clear-all" onclick="clearAllFavorites()">🗑️ 清空所有</button>
+            <button class="fav-clear-all" onclick="clearAllFavorites()">馃棏锔?娓呯┖鎵€鏈?/button>
         </div>
         <div class="fav-sheet-body" id="favList">
             <div class="fav-empty">
-                <div class="fav-empty-emoji">📭</div>
-                <p>收藏夹空空如也~</p>
-                <div class="fav-empty-hint">浏览景点时点击 ♡ 即可收藏</div>
+                <div class="fav-empty-emoji">馃摥</div>
+                <p>鏀惰棌澶圭┖绌哄涔焴</p>
+                <div class="fav-empty-hint">娴忚鏅偣鏃剁偣鍑?鈾?鍗冲彲鏀惰棌</div>
             </div>
         </div>
     </div>
@@ -1638,11 +1638,11 @@
 <!-- Feedback Modal -->
 <div class="modal-overlay" id="feedbackModal">
     <div class="modal-box">
-        <h3>📝 反馈详情</h3>
-        <textarea id="feedbackText" placeholder="请描述问题或建议..."></textarea>
+        <h3>馃摑 鍙嶉璇︽儏</h3>
+        <textarea id="feedbackText" placeholder="璇锋弿杩伴棶棰樻垨寤鸿..."></textarea>
         <div class="modal-actions">
-            <button class="btn-cancel" onclick="closeFeedbackModal()">取消</button>
-            <button class="btn-submit" onclick="submitFeedback()">提交</button>
+            <button class="btn-cancel" onclick="closeFeedbackModal()">鍙栨秷</button>
+            <button class="btn-submit" onclick="submitFeedback()">鎻愪氦</button>
         </div>
     </div>
 </div>
@@ -1650,30 +1650,30 @@
 <!-- Itinerary Modal -->
 <div class="modal-overlay" id="itineraryModal">
     <div class="modal-box">
-        <h3>🗺️ 选择一日游路线</h3>
+        <h3>馃椇锔?閫夋嫨涓€鏃ユ父璺嚎</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;">
             <button onclick="ItineraryAPI.generate('photo');closeItineraryModal()" style="padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;transition:all .2s;" onmouseover="this.style.borderColor='#667EEA';this.style.background='#f5f7ff'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">
-                <div style="font-size:32px;margin-bottom:4px;">📸</div>
-                <div style="font-weight:600;color:#333;">摄影路线</div>
-                <div style="font-size:11px;color:#999;margin-top:2px;">捕捉贵港最美瞬间</div>
+                <div style="font-size:32px;margin-bottom:4px;">馃摳</div>
+                <div style="font-weight:600;color:#333;">鎽勫奖璺嚎</div>
+                <div style="font-size:11px;color:#999;margin-top:2px;">鎹曟崏璐垫腐鏈€缇庣灛闂?/div>
             </button>
             <button onclick="ItineraryAPI.generate('family');closeItineraryModal()" style="padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;transition:all .2s;" onmouseover="this.style.borderColor='#FFA726';this.style.background='#fff8f0'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">
-                <div style="font-size:32px;margin-bottom:4px;">👨‍👩‍👧</div>
-                <div style="font-weight:600;color:#333;">亲子路线</div>
-                <div style="font-size:11px;color:#999;margin-top:2px;">适合带娃的轻松行程</div>
+                <div style="font-size:32px;margin-bottom:4px;">馃懆鈥嶐煈┾€嶐煈?/div>
+                <div style="font-weight:600;color:#333;">浜插瓙璺嚎</div>
+                <div style="font-size:11px;color:#999;margin-top:2px;">閫傚悎甯﹀▋鐨勮交鏉捐绋?/div>
             </button>
             <button onclick="ItineraryAPI.generate('food');closeItineraryModal()" style="padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;transition:all .2s;" onmouseover="this.style.borderColor='#FF6B6B';this.style.background='#fff5f5'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">
-                <div style="font-size:32px;margin-bottom:4px;">🍜</div>
-                <div style="font-weight:600;color:#333;">美食路线</div>
-                <div style="font-size:11px;color:#999;margin-top:2px;">吃遍贵港特色美食</div>
+                <div style="font-size:32px;margin-bottom:4px;">馃崪</div>
+                <div style="font-weight:600;color:#333;">缇庨璺嚎</div>
+                <div style="font-size:11px;color:#999;margin-top:2px;">鍚冮亶璐垫腐鐗硅壊缇庨</div>
             </button>
             <button onclick="ItineraryAPI.generate('weekend');closeItineraryModal()" style="padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;transition:all .2s;" onmouseover="this.style.borderColor='#4ECDC4';this.style.background='#f0fffe'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">
-                <div style="font-size:32px;margin-bottom:4px;">🏖️</div>
-                <div style="font-weight:600;color:#333;">周末路线</div>
-                <div style="font-size:11px;color:#999;margin-top:2px;">放松身心的慢节奏</div>
+                <div style="font-size:32px;margin-bottom:4px;">馃彇锔?/div>
+                <div style="font-weight:600;color:#333;">鍛ㄦ湯璺嚎</div>
+                <div style="font-size:11px;color:#999;margin-top:2px;">鏀炬澗韬績鐨勬參鑺傚</div>
             </button>
         </div>
-        <div style="text-align:right;"><button class="btn-cancel" onclick="closeItineraryModal()" style="padding:8px 20px;border-radius:8px;border:none;font-size:14px;cursor:pointer;background:#eee;color:#666;">取消</button></div>
+        <div style="text-align:right;"><button class="btn-cancel" onclick="closeItineraryModal()" style="padding:8px 20px;border-radius:8px;border:none;font-size:14px;cursor:pointer;background:#eee;color:#666;">鍙栨秷</button></div>
     </div>
 </div>
 
@@ -1681,15 +1681,15 @@
 <div class="modal-overlay" id="prefModal" style="display:none; z-index: 400;">
     <div class="pref-modal">
         <div class="pref-header">
-            <h2>🎉 欢迎来到贵港旅游助手</h2>
-            <p>选择你感兴趣的类型，获取个性化推荐</p>
+            <h2>馃帀 娆㈣繋鏉ュ埌璐垫腐鏃呮父鍔╂墜</h2>
+            <p>閫夋嫨浣犳劅鍏磋叮鐨勭被鍨嬶紝鑾峰彇涓€у寲鎺ㄨ崘</p>
         </div>
         <div class="pref-grid" id="prefGrid">
-            <!-- JS 生成 6 个选项卡片 -->
+            <!-- JS 鐢熸垚 6 涓€夐」鍗＄墖 -->
         </div>
         <div class="pref-actions">
-            <button class="pref-btn-skip" onclick="skipPreferences()">稍后再说</button>
-            <button class="pref-btn-confirm" onclick="confirmPreferences()">开始探索</button>
+            <button class="pref-btn-skip" onclick="skipPreferences()">绋嶅悗鍐嶈</button>
+            <button class="pref-btn-confirm" onclick="confirmPreferences()">寮€濮嬫帰绱?/button>
         </div>
     </div>
 </div>
@@ -1698,19 +1698,19 @@
 <div class="route-modal-overlay" id="routeModal">
     <div class="route-modal-box">
         <div class="route-modal-header">
-            <div class="rmh-icon" id="rmhIcon">🗺️</div>
+            <div class="rmh-icon" id="rmhIcon">馃椇锔?/div>
             <div class="rmh-info">
                 <div class="rmh-name" id="rmhName"></div>
                 <div class="rmh-desc" id="rmhDesc"></div>
                 <div class="rmh-tags" id="rmhTags"></div>
             </div>
-            <button class="route-modal-close" onclick="closeRouteModal()">✕</button>
+            <button class="route-modal-close" onclick="closeRouteModal()">鉁?/button>
         </div>
         <div class="route-modal-body">
             <div class="timeline" id="routeTimeline"></div>
         </div>
         <div class="route-modal-footer">
-            <button class="route-use-btn" id="routeUseBtn">🚀 使用此路线</button>
+            <button class="route-use-btn" id="routeUseBtn">馃殌 浣跨敤姝よ矾绾?/button>
         </div>
     </div>
 </div>
@@ -1720,9 +1720,9 @@
 
 <!-- Weather Panel -->
 <div class="weather-panel" id="weatherPanel">
-    <div class="temp" id="weatherTemp">--°C</div>
-    <div class="desc" id="weatherDesc">加载中...</div>
-    <div class="suggestion" id="weatherSuggest">正在获取天气数据...</div>
+    <div class="temp" id="weatherTemp">--掳C</div>
+    <div class="desc" id="weatherDesc">鍔犺浇涓?..</div>
+    <div class="suggestion" id="weatherSuggest">姝ｅ湪鑾峰彇澶╂皵鏁版嵁...</div>
 </div>
 
 <script src="/static/js/preferences.js"></script>
@@ -1730,7 +1730,7 @@
 <script src="/static/js/recent.js"></script>
 <script src="/static/js/itinerary.js"></script>
 <script>
-    // ── State ──
+    // 鈹€鈹€ State 鈹€鈹€
     const spots = {{ spots | tojson | safe }};
     let isWaiting = false;
     let sessionId = localStorage.getItem('guigang_session_id') || generateSessionId();
@@ -1743,27 +1743,27 @@
     
     // Constants
     const categoryEmoji = {
-        '自然景观': '🏔️',
-        '人文景观': '🏛️',
-        '城市公园': '🌳',
-        '主题乐园': '🎢',
-        '科普教育': '🔬',
-        '农业观光': '🌾'
+        '鑷劧鏅': '馃彅锔?,
+        '浜烘枃鏅': '馃彌锔?,
+        '鍩庡競鍏洯': '馃尦',
+        '涓婚涔愬洯': '馃帰',
+        '绉戞櫘鏁欒偛': '馃敩',
+        '鍐滀笟瑙傚厜': '馃尵'
     };
     const categoryColors = {
-        '自然景观': ['#66bb6a','#388e3c'],
-        '人文景观': ['#42a5f5','#1565c0'],
-        '城市公园': ['#66bb6a','#2e7d32'],
-        '主题乐园': ['#ffa726','#f57c00'],
-        '科普教育': ['#ab47bc','#7b1fa2'],
-        '农业观光': ['#ffcc02','#f9a825']
+        '鑷劧鏅': ['#66bb6a','#388e3c'],
+        '浜烘枃鏅': ['#42a5f5','#1565c0'],
+        '鍩庡競鍏洯': ['#66bb6a','#2e7d32'],
+        '涓婚涔愬洯': ['#ffa726','#f57c00'],
+        '绉戞櫘鏁欒偛': ['#ab47bc','#7b1fa2'],
+        '鍐滀笟瑙傚厜': ['#ffcc02','#f9a825']
     };
     
     function generateSessionId() {
         return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
 
-    // ── Init ──
+    // 鈹€鈹€ Init 鈹€鈹€
     document.addEventListener('DOMContentLoaded', () => {
         initHero();
         initDistricts();
@@ -1774,8 +1774,8 @@
         renderRecentOnHome();
         renderRecentOnHome();
         renderRoutesSection();
-        initPreferences(); // 初始化偏好功能
-        // 自动提问（从详情页 AI 讲解跳转过来）
+        initPreferences(); // 鍒濆鍖栧亸濂藉姛鑳?
+        // 鑷姩鎻愰棶锛堜粠璇︽儏椤?AI 璁茶В璺宠浆杩囨潵锛?
         const autoAsk = '{{ auto_ask | e }}';
         if (autoAsk) {
             setTimeout(() => {
@@ -1785,22 +1785,22 @@
         }
     });
 
-    // ── Hero: Categories + Featured ──
+    // 鈹€鈹€ Hero: Categories + Featured 鈹€鈹€
     function initHero() {
         // Greeting based on time
         const h = new Date().getHours();
-        const greet = h < 6 ? '夜深了' : h < 9 ? '早上好' : h < 12 ? '上午好' : h < 14 ? '中午好' : h < 18 ? '下午好' : '晚上好';
-        document.getElementById('greetingSub').textContent = `${greet}！开始探索贵港吧 🌟`;
+        const greet = h < 6 ? '澶滄繁浜? : h < 9 ? '鏃╀笂濂? : h < 12 ? '涓婂崍濂? : h < 14 ? '涓崍濂? : h < 18 ? '涓嬪崍濂? : '鏅氫笂濂?;
+        document.getElementById('greetingSub').textContent = `${greet}锛佸紑濮嬫帰绱㈣吹娓惂 馃専`;
         
         // Category row
         const catRow = document.getElementById('categoryRow');
         const cats = [
-            {key:'自然景观',emoji:'🏔️',label:'自然风光'},
-            {key:'人文景观',emoji:'🏛️',label:'人文历史'},
-            {key:'城市公园',emoji:'🌳',label:'公园休闲'},
-            {key:'主题乐园',emoji:'🎢',label:'主题乐园'},
-            {key:'科普教育',emoji:'🔬',label:'科普教育'},
-            {key:'农业观光',emoji:'🌾',label:'乡村体验'}
+            {key:'鑷劧鏅',emoji:'馃彅锔?,label:'鑷劧椋庡厜'},
+            {key:'浜烘枃鏅',emoji:'馃彌锔?,label:'浜烘枃鍘嗗彶'},
+            {key:'鍩庡競鍏洯',emoji:'馃尦',label:'鍏洯浼戦棽'},
+            {key:'涓婚涔愬洯',emoji:'馃帰',label:'涓婚涔愬洯'},
+            {key:'绉戞櫘鏁欒偛',emoji:'馃敩',label:'绉戞櫘鏁欒偛'},
+            {key:'鍐滀笟瑙傚厜',emoji:'馃尵',label:'涔℃潙浣撻獙'}
         ];
         catRow.innerHTML = cats.map(c => `
             <button class="category-item" onclick="filterByCategory('${c.key}', this)">
@@ -1814,13 +1814,13 @@
         featuredRow.innerHTML = spots.slice(0, 8).map(s => {
             const c = s.category || '';
             const colors = categoryColors[c] || ['#66bb6a','#388e3c'];
-            const isFree = s.ticket_price && s.ticket_price.includes('免费');
+            const isFree = s.ticket_price && s.ticket_price.includes('鍏嶈垂');
             return `
                 <div class="featured-card" onclick="window.location.href='/spot/${s.id}'">
                     <div class="card-top" style="background:linear-gradient(135deg,${colors[0]},${colors[1]})">
-                        ${categoryEmoji[c] || '📍'}
-                        <span class="badge">${s.district || '贵港'}</span>
-                        ${isFree ? '<span class="free-badge">免费</span>' : ''}
+                        ${categoryEmoji[c] || '馃搷'}
+                        <span class="badge">${s.district || '璐垫腐'}</span>
+                        ${isFree ? '<span class="free-badge">鍏嶈垂</span>' : ''}
                     </div>
                     <div class="card-body">
                         <div class="fd-name">${s.name}</div>
@@ -1831,18 +1831,18 @@
         }).join('');
     }
     
-    // ── Preferences ──
+    // 鈹€鈹€ Preferences 鈹€鈹€
     let selectedPreferences = [];
     
     function initPreferences() {
-        // 检查是否已有偏好设置
+        // 妫€鏌ユ槸鍚﹀凡鏈夊亸濂借缃?
         if (!PreferencesAPI.hasSelected()) {
-            // 首次进入，显示偏好选择弹窗
+            // 棣栨杩涘叆锛屾樉绀哄亸濂介€夋嫨寮圭獥
             setTimeout(() => {
                 showPreferencesModal();
             }, 500);
         } else {
-            // 已有偏好，更新首页个性化内容
+            // 宸叉湁鍋忓ソ锛屾洿鏂伴椤典釜鎬у寲鍐呭
             updatePersonalizedContent();
         }
         updatePreferenceBadge();
@@ -1892,12 +1892,12 @@
     
     function skipPreferences() {
         hidePreferencesModal();
-        showToast('你可以随时在侧边栏设置偏好');
+        showToast('浣犲彲浠ラ殢鏃跺湪渚ц竟鏍忚缃亸濂?);
     }
     
     function confirmPreferences() {
         if (selectedPreferences.length === 0) {
-            showToast('请至少选择一个偏好');
+            showToast('璇疯嚦灏戦€夋嫨涓€涓亸濂?);
             return;
         }
         
@@ -1905,13 +1905,13 @@
         hidePreferencesModal();
         updatePreferenceBadge();
         updatePersonalizedContent();
-        showToast('✅ 偏好设置成功！已为你推荐个性化内容');
+        showToast('鉁?鍋忓ソ璁剧疆鎴愬姛锛佸凡涓轰綘鎺ㄨ崘涓€у寲鍐呭');
     }
     
     function openPreferencesPanel() {
-        // 关闭侧边栏
+        // 鍏抽棴渚ц竟鏍?
         document.getElementById('sidePanel').classList.remove('active');
-        // 打开偏好设置弹窗
+        // 鎵撳紑鍋忓ソ璁剧疆寮圭獥
         setTimeout(() => {
             showPreferencesModal();
         }, 300);
@@ -1933,40 +1933,40 @@
         const interestLabels = PreferencesAPI.getInterestLabels();
         const greetingSub = document.getElementById('greetingSub');
         
-        // 更新欢迎语
+        // 鏇存柊娆㈣繋璇?
         if (greetingSub) {
-            const prefText = interestLabels.join('、');
-            greetingSub.textContent = `为你推荐${prefText}相关内容 🎯`;
+            const prefText = interestLabels.join('銆?);
+            greetingSub.textContent = `涓轰綘鎺ㄨ崘${prefText}鐩稿叧鍐呭 馃幆`;
         }
         
-        // 根据偏好筛选推荐景点
+        // 鏍规嵁鍋忓ソ绛涢€夋帹鑽愭櫙鐐?
         const recommendedSpots = spots.filter(s => {
             const category = s.category || '';
             return interests.some(interest => {
-                if (interest === 'photo') return true; // 摄影推荐所有景点
-                if (interest === 'food') return s.description && s.description.includes('美食');
-                if (interest === 'family') return category === '主题乐园' || category === '城市公园';
-                if (interest === 'drive') return true; // 自驾推荐所有景点
-                if (interest === 'camping') return s.description && (s.description.includes('露营') || s.description.includes('户外'));
-                if (interest === 'culture') return category === '人文景观';
+                if (interest === 'photo') return true; // 鎽勫奖鎺ㄨ崘鎵€鏈夋櫙鐐?
+                if (interest === 'food') return s.description && s.description.includes('缇庨');
+                if (interest === 'family') return category === '涓婚涔愬洯' || category === '鍩庡競鍏洯';
+                if (interest === 'drive') return true; // 鑷┚鎺ㄨ崘鎵€鏈夋櫙鐐?
+                if (interest === 'camping') return s.description && (s.description.includes('闇茶惀') || s.description.includes('鎴峰'));
+                if (interest === 'culture') return category === '浜烘枃鏅';
                 return true;
             });
         }).slice(0, 8);
         
-        // 更新推荐景点展示
+        // 鏇存柊鎺ㄨ崘鏅偣灞曠ず
         if (recommendedSpots.length > 0) {
             const featuredRow = document.getElementById('featuredRow');
             if (featuredRow) {
                 featuredRow.innerHTML = recommendedSpots.map(s => {
                     const c = s.category || '';
                     const colors = categoryColors[c] || ['#66bb6a','#388e3c'];
-                    const isFree = s.ticket_price && s.ticket_price.includes('免费');
+                    const isFree = s.ticket_price && s.ticket_price.includes('鍏嶈垂');
                     return `
                         <div class="featured-card" onclick="window.location.href='/spot/${s.id}'">
                             <div class="card-top" style="background:linear-gradient(135deg,${colors[0]},${colors[1]})">
-                                ${categoryEmoji[c] || '📍'}
-                                <span class="badge">${s.district || '贵港'}</span>
-                                ${isFree ? '<span class="free-badge">免费</span>' : ''}
+                                ${categoryEmoji[c] || '馃搷'}
+                                <span class="badge">${s.district || '璐垫腐'}</span>
+                                ${isFree ? '<span class="free-badge">鍏嶈垂</span>' : ''}
                             </div>
                             <div class="card-body">
                                 <div class="fd-name">${s.name}</div>
@@ -1991,56 +1991,56 @@
         
         const filtered = spots.filter(s => s.category === category);
         if (filtered.length) {
-            const msg = filtered.slice(0, 3).map(s => s.name).join('、');
-            quickAsk(`推荐${category}景点`);
+            const msg = filtered.slice(0, 3).map(s => s.name).join('銆?);
+            quickAsk(`鎺ㄨ崘${category}鏅偣`);
         }
     }
 
-    // ── Districts (kept for backward compat, no-op on welcome card) ──
+    // 鈹€鈹€ Districts (kept for backward compat, no-op on welcome card) 鈹€鈹€
     function initDistricts() {}
     function switchDistrict(district, btnEl) { togglePanel(); }
     function renderSpotGrid(district) {}
 
-    // ── 返回首页 ──
+    // 鈹€鈹€ 杩斿洖棣栭〉 鈹€鈹€
     function showWelcome() {
         const welcome = document.getElementById('welcomeCard');
         const chatArea = document.getElementById('chatArea');
         const sidePanel = document.getElementById('sidePanel');
         if (welcome) {
-            // 把欢迎卡移到聊天区域最前面
+            // 鎶婃杩庡崱绉诲埌鑱婂ぉ鍖哄煙鏈€鍓嶉潰
             if (chatArea && chatArea.firstChild !== welcome) {
                 chatArea.insertBefore(welcome, chatArea.firstChild);
             }
             welcome.style.display = '';
         }
         renderRecentOnHome();
-        // 滚到顶部
+        // 婊氬埌椤堕儴
         if (chatArea) chatArea.scrollTop = 0;
-        // 关闭侧边栏
+        // 鍏抽棴渚ц竟鏍?
         if (sidePanel) sidePanel.classList.remove('active');
     }
 
-    // ── Side Panel ──
+    // 鈹€鈹€ Side Panel 鈹€鈹€
     function initSpotList() {
         const list = document.getElementById('spotList');
-        if (!list || list.children.length > 0) return; // 已初始化则跳过
+        if (!list || list.children.length > 0) return; // 宸插垵濮嬪寲鍒欒烦杩?
         
         const categoryEmoji = {
-            '自然景观': '🏔️',
-            '人文景观': '🏛️',
-            '城市公园': '🌳',
-            '主题乐园': '🎢',
-            '科普教育': '🔬',
-            '农业观光': '🌾'
+            '鑷劧鏅': '馃彅锔?,
+            '浜烘枃鏅': '馃彌锔?,
+            '鍩庡競鍏洯': '馃尦',
+            '涓婚涔愬洯': '馃帰',
+            '绉戞櫘鏁欒偛': '馃敩',
+            '鍐滀笟瑙傚厜': '馃尵'
         };
         
         list.innerHTML = spots.map(s => `
             <div class="drawer-item" onclick="window.location.href='/spot/${s.id}'">
-                <div class="emoji">${categoryEmoji[s.category] || '📍'}</div>
+                <div class="emoji">${categoryEmoji[s.category] || '馃搷'}</div>
                 <div class="info">
                     <h3>${s.name}</h3>
                     <p>${(s.description || '').slice(0, 30)}...</p>
-                    <span class="tag ${(s.category === '自然景观' ? 'nature' : s.category === '人文景观' ? 'culture' : s.category === '城市公园' ? 'park' : 'free')}">${s.category || '景点'}</span>
+                    <span class="tag ${(s.category === '鑷劧鏅' ? 'nature' : s.category === '浜烘枃鏅' ? 'culture' : s.category === '鍩庡競鍏洯' ? 'park' : 'free')}">${s.category || '鏅偣'}</span>
                     ${s.district ? `<span class="tag" style="background:#e3f2fd;color:#1565c0;">${s.district}</span>` : ''}
                 </div>
             </div>
@@ -2052,7 +2052,7 @@
         document.getElementById('sidePanel').classList.toggle('active');
     }
 
-    // ── History Panel ──
+    // 鈹€鈹€ History Panel 鈹€鈹€
     function toggleHistory() {
         document.getElementById('historyPanel').classList.toggle('active');
         renderHistoryList();
@@ -2061,7 +2061,7 @@
     function renderHistoryList() {
         const container = document.getElementById('historyList');
         if (chatHistory.length === 0) {
-            container.innerHTML = '<div class="history-empty">暂无对话历史</div>';
+            container.innerHTML = '<div class="history-empty">鏆傛棤瀵硅瘽鍘嗗彶</div>';
             return;
         }
         container.innerHTML = chatHistory.slice().reverse().map((item, idx) => `
@@ -2082,7 +2082,7 @@
     }
 
     function clearHistory() {
-        if (!confirm('确定清除所有对话历史吗？')) return;
+        if (!confirm('纭畾娓呴櫎鎵€鏈夊璇濆巻鍙插悧锛?)) return;
         chatHistory = [];
         localStorage.setItem('guigang_chat_history', '[]');
         const area = document.getElementById('chatArea');
@@ -2090,7 +2090,7 @@
         area.innerHTML = '';
         if (welcome) area.appendChild(welcome);
         welcome.style.display = '';
-        showToast('对话历史已清除');
+        showToast('瀵硅瘽鍘嗗彶宸叉竻闄?);
     }
 
     function loadChatHistory() {
@@ -2109,7 +2109,7 @@
         const area = document.getElementById('chatArea');
         const div = document.createElement('div');
         div.className = `message ${role}`;
-        const avatar = role === 'user' ? '👤' : '🤖';
+        const avatar = role === 'user' ? '馃懁' : '馃';
         div.innerHTML = `
             <div class="avatar">${avatar}</div>
             <div class="bubble">${content}</div>
@@ -2118,21 +2118,21 @@
         area.scrollTop = area.scrollHeight;
     }
 
-    // ── Chat ──
+    // 鈹€鈹€ Chat 鈹€鈹€
     function addMessage(content, role) {
         const area = document.getElementById('chatArea');
         const div = document.createElement('div');
         div.className = `message ${role}`;
         const msgId = 'msg_' + (++messageCounter);
 
-        const avatar = role === 'user' ? '👤' : '🤖';
+        const avatar = role === 'user' ? '馃懁' : '馃';
         let feedbackHtml = '';
         if (role === 'bot') {
             feedbackHtml = `
                 <div class="feedback-row" id="fb_${msgId}">
-                    <button class="feedback-btn" onclick="handleFeedback('${msgId}', 'like')" title="有帮助">👍</button>
-                    <button class="feedback-btn" onclick="handleFeedback('${msgId}', 'dislike')" title="没帮助">👎</button>
-                    <button class="feedback-btn" onclick="openFeedbackModal('${msgId}')" title="详细反馈">📝</button>
+                    <button class="feedback-btn" onclick="handleFeedback('${msgId}', 'like')" title="鏈夊府鍔?>馃憤</button>
+                    <button class="feedback-btn" onclick="handleFeedback('${msgId}', 'dislike')" title="娌″府鍔?>馃憥</button>
+                    <button class="feedback-btn" onclick="openFeedbackModal('${msgId}')" title="璇︾粏鍙嶉">馃摑</button>
                 </div>
             `;
         }
@@ -2158,7 +2158,7 @@
         div.className = 'message bot';
         div.id = 'typingIndicator';
         div.innerHTML = `
-            <div class="avatar">🤖</div>
+            <div class="avatar">馃</div>
             <div class="bubble typing">
                 <span></span><span></span><span></span>
             </div>
@@ -2176,21 +2176,21 @@
         let html = text;
         
         html = html.replace(
-            /🖼️\s*图片[\uFF1A:]\s*(https?:\/\/[^\s\n]+)/g,
+            /馃柤锔廫s*鍥剧墖[\uFF1A:]\s*(https?:\/\/[^\s\n]+)/g,
             '[[IMG:$1]]'
         );
         
         html = html.replace(
-            /📷\s*\[点击查看景点图片\]\([^)]+\)[\r\n]*/g,
+            /馃摲\s*\[鐐瑰嚮鏌ョ湅鏅偣鍥剧墖\]\([^)]+\)[\r\n]*/g,
             ''
         );
         
         html = html.replace(
-            /🗺️\s*\[在地图中查看\]\([^)]+\)[\r\n]*/g,
+            /馃椇锔廫s*\[鍦ㄥ湴鍥句腑鏌ョ湅\]\([^)]+\)[\r\n]*/g,
             ''
         );
         html = html.replace(
-            /📍\s*位置[\uFF1A:]?\s*(.+?)(\n|$)/g,
+            /馃搷\s*浣嶇疆[\uFF1A:]?\s*(.+?)(\n|$)/g,
             '[[LOC:$1]]$2'
         );
         
@@ -2202,8 +2202,8 @@
         html = html
             .replace(/\n/g, '<br>')
             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-            .replace(/⭐(\s*推荐指数[\uFF1A:]?\s*.*?)(<br>|$)/g, '<span class="star-rating">⭐$1</span>$2')
-            .replace(/\n- /g, '<br>• ')
+            .replace(/猸?\s*鎺ㄨ崘鎸囨暟[\uFF1A:]?\s*.*?)(<br>|$)/g, '<span class="star-rating">猸?1</span>$2')
+            .replace(/\n- /g, '<br>鈥?')
             .replace(/^\d+\. /gm, '<br>$&');
         
         html = html.replace(
@@ -2217,8 +2217,8 @@
             /\[\[LOC:(.+?)\]\]/g,
             (match, location) => {
                 const loc = location.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').trim();
-                const encodedLoc = encodeURIComponent('贵港市' + loc);
-                return `📍 位置：${location}<div class="map-btn-container"><button class="map-btn amap" onclick="window.open('https://uri.amap.com/search?keyword=${encodedLoc}', '_blank')">🗺️ 高德导航</button><button class="map-btn baidu" onclick="window.open('https://map.baidu.com/search/${encodedLoc}', '_blank')">📍 百度地图</button></div>`;
+                const encodedLoc = encodeURIComponent('璐垫腐甯? + loc);
+                return `馃搷 浣嶇疆锛?{location}<div class="map-btn-container"><button class="map-btn amap" onclick="window.open('https://uri.amap.com/search?keyword=${encodedLoc}', '_blank')">馃椇锔?楂樺痉瀵艰埅</button><button class="map-btn baidu" onclick="window.open('https://map.baidu.com/search/${encodedLoc}', '_blank')">馃搷 鐧惧害鍦板浘</button></div>`;
             }
         );
         
@@ -2255,11 +2255,11 @@
                 addMessage(formattedReply, 'bot');
                 saveChatHistory(text, data.reply);
             } else {
-                addMessage('抱歉，暂时无法回答，请稍后再试。', 'bot');
+                addMessage('鎶辨瓑锛屾殏鏃舵棤娉曞洖绛旓紝璇风◢鍚庡啀璇曘€?, 'bot');
             }
         } catch (e) {
             removeTyping();
-            addMessage('网络连接失败，请检查服务是否启动。', 'bot');
+            addMessage('缃戠粶杩炴帴澶辫触锛岃妫€鏌ユ湇鍔℃槸鍚﹀惎鍔ㄣ€?, 'bot');
         }
 
         isWaiting = false;
@@ -2285,7 +2285,7 @@
         sendMessage();
     }
 
-    // ── Feedback ──
+    // 鈹€鈹€ Feedback 鈹€鈹€
     function handleFeedback(msgId, type) {
         const row = document.getElementById('fb_' + msgId);
         if (!row) return;
@@ -2295,7 +2295,7 @@
         
         if (type === 'like') {
             btns[0].classList.add('selected');
-            showToast('感谢你的反馈！👍');
+            showToast('鎰熻阿浣犵殑鍙嶉锛侌煈?);
         } else {
             btns[1].classList.add('selected');
             openFeedbackModal(msgId);
@@ -2331,7 +2331,7 @@
     function submitFeedback() {
         const text = document.getElementById('feedbackText').value.trim();
         if (!text) {
-            showToast('请输入反馈内容');
+            showToast('璇疯緭鍏ュ弽棣堝唴瀹?);
             return;
         }
         
@@ -2350,29 +2350,29 @@
         }).catch(() => {});
         
         closeFeedbackModal();
-        showToast('感谢你的详细反馈！我们会持续改进 🙏');
+        showToast('鎰熻阿浣犵殑璇︾粏鍙嶉锛佹垜浠細鎸佺画鏀硅繘 馃檹');
     }
 
-    // ── Connection Check ──
+    // 鈹€鈹€ Connection Check 鈹€鈹€
     async function checkConnection() {
         const badge = document.getElementById('statusBadge');
         try {
             const resp = await fetch('/api/status');
             const data = await resp.json();
             if (data.llm_available) {
-                badge.textContent = '🤖 AI模式';
+                badge.textContent = '馃 AI妯″紡';
                 badge.className = 'status online';
             } else {
-                badge.textContent = '📖 本地模式';
+                badge.textContent = '馃摉 鏈湴妯″紡';
                 badge.className = 'status online';
             }
         } catch (e) {
-            badge.textContent = '⚠️ 无法连接';
+            badge.textContent = '鈿狅笍 鏃犳硶杩炴帴';
             badge.className = 'status offline';
         }
     }
 
-    // ── Toast ──
+    // 鈹€鈹€ Toast 鈹€鈹€
     function showToast(msg) {
         const t = document.getElementById('toast');
         t.textContent = msg;
@@ -2380,7 +2380,7 @@
         setTimeout(() => t.classList.remove('show'), 3000);
     }
 
-    // ── Weather ──
+    // 鈹€鈹€ Weather 鈹€鈹€
     async function showWeather() {
         const panel = document.getElementById('weatherPanel');
         if (panel.classList.contains('show')) {
@@ -2394,27 +2394,27 @@
             if (!resp.ok) throw new Error('API error');
             const data = await resp.json();
             
-            document.getElementById('weatherTemp').textContent = data.temp + '°C';
+            document.getElementById('weatherTemp').textContent = data.temp + '掳C';
             document.getElementById('weatherDesc').textContent = data.weather + ' | ' + data.wind;
             document.getElementById('weatherSuggest').textContent = data.suggestion;
         } catch (e) {
             const mockData = {
                 temp: '28~33',
-                weather: '多云转晴',
-                wind: '东南风2级',
-                suggestion: '☀️ 天气炎热，建议上午或傍晚出行，注意防晒补水。推荐南山寺、东湖公园等室内外结合景点。'
+                weather: '澶氫簯杞櫞',
+                wind: '涓滃崡椋?绾?,
+                suggestion: '鈽€锔?澶╂皵鐐庣儹锛屽缓璁笂鍗堟垨鍌嶆櫄鍑鸿锛屾敞鎰忛槻鏅掕ˉ姘淬€傛帹鑽愬崡灞卞銆佷笢婀栧叕鍥瓑瀹ゅ唴澶栫粨鍚堟櫙鐐广€?
             };
-            document.getElementById('weatherTemp').textContent = mockData.temp + '°C';
+            document.getElementById('weatherTemp').textContent = mockData.temp + '掳C';
             document.getElementById('weatherDesc').textContent = mockData.weather + ' | ' + mockData.wind;
             document.getElementById('weatherSuggest').textContent = mockData.suggestion;
         }
     }
 
-    // ── Voice Input ──
+    // 鈹€鈹€ Voice Input 鈹€鈹€
     function initVoice() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            console.log('当前浏览器不支持语音识别');
+            console.log('褰撳墠娴忚鍣ㄤ笉鏀寔璇煶璇嗗埆');
             document.getElementById('voiceBtn').style.display = 'none';
             return;
         }
@@ -2438,12 +2438,12 @@
         };
         
         recognition.onerror = (event) => {
-            console.error('语音识别错误:', event.error);
+            console.error('璇煶璇嗗埆閿欒:', event.error);
             stopVoice();
             if (event.error === 'not-allowed') {
-                showToast('请允许浏览器使用麦克风');
+                showToast('璇峰厑璁告祻瑙堝櫒浣跨敤楹﹀厠椋?);
             } else {
-                showToast('语音识别出错，请重试');
+                showToast('璇煶璇嗗埆鍑洪敊锛岃閲嶈瘯');
             }
         };
         
@@ -2462,7 +2462,7 @@
 
     function startVoice() {
         if (!recognition) {
-            showToast('当前浏览器不支持语音识别，请使用Chrome');
+            showToast('褰撳墠娴忚鍣ㄤ笉鏀寔璇煶璇嗗埆锛岃浣跨敤Chrome');
             return;
         }
         try {
@@ -2470,11 +2470,11 @@
             isRecording = true;
             const btn = document.getElementById('voiceBtn');
             btn.classList.add('recording');
-            btn.textContent = '⏹';
-            document.getElementById('inputBox').placeholder = '正在听你说...';
-            showToast('正在录音，请说话...');
+            btn.textContent = '鈴?;
+            document.getElementById('inputBox').placeholder = '姝ｅ湪鍚綘璇?..';
+            showToast('姝ｅ湪褰曢煶锛岃璇磋瘽...');
         } catch (e) {
-            showToast('语音识别启动失败，请重试');
+            showToast('璇煶璇嗗埆鍚姩澶辫触锛岃閲嶈瘯');
         }
     }
 
@@ -2485,17 +2485,17 @@
         isRecording = false;
         const btn = document.getElementById('voiceBtn');
         btn.classList.remove('recording');
-        btn.textContent = '🎤';
-        document.getElementById('inputBox').placeholder = '输入你的问题，或点击🎤语音输入...';
+        btn.textContent = '馃帳';
+        document.getElementById('inputBox').placeholder = '杈撳叆浣犵殑闂锛屾垨鐐瑰嚮馃帳璇煶杈撳叆...';
     }
 
-    // ── Voice Output (TTS) ──
+    // 鈹€鈹€ Voice Output (TTS) 鈹€鈹€
     let currentUtterance = null;
     let isSpeaking = false;
 
     function speakText(text) {
         if (!('speechSynthesis' in window)) {
-            showToast('当前浏览器不支持语音播报');
+            showToast('褰撳墠娴忚鍣ㄤ笉鏀寔璇煶鎾姤');
             return;
         }
         
@@ -2528,14 +2528,14 @@
         
         window.speechSynthesis.speak(utterance);
         currentUtterance = utterance;
-        showToast('🔊 正在播报...');
+        showToast('馃攰 姝ｅ湪鎾姤...');
     }
 
     if ('speechSynthesis' in window) {
         window.speechSynthesis.getVoices();
     }
 
-    // ── 首页最近浏览模块 ──
+    // 鈹€鈹€ 棣栭〉鏈€杩戞祻瑙堟ā鍧?鈹€鈹€
     function renderRecentOnHome() {
         const views = RecentAPI.getAll();
         const container = document.getElementById('recentSection');
@@ -2547,14 +2547,14 @@
         container.style.display = 'block';
         container.innerHTML = `
             <div style="display:flex;justify-content:space-between;align-items:center;padding:0 16px;">
-                <h3 style="font-size:15px;font-weight:700;color:#222;">🕐 最近浏览</h3>
-                <button onclick="clearRecentHome(this)" style="background:none;border:none;font-size:12px;color:#999;cursor:pointer;padding:2px 6px;font-family:inherit;">清空</button>
+                <h3 style="font-size:15px;font-weight:700;color:#222;">馃晲 鏈€杩戞祻瑙?/h3>
+                <button onclick="clearRecentHome(this)" style="background:none;border:none;font-size:12px;color:#999;cursor:pointer;padding:2px 6px;font-family:inherit;">娓呯┖</button>
             </div>
             <div class="featured-row" style="margin-top:4px;">
                 ${views.map(v => {
                     const imgContent = v.image_url
-                        ? `<img src="${v.image_url}" alt="${v.name}" style="width:100%;height:80px;object-fit:cover;border-radius:12px 12px 0 0;" onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:44px;\'>🏞️</div>'">`
-                        : `<div style="width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:44px;">🏞️</div>`;
+                        ? `<img src="${v.image_url}" alt="${v.name}" style="width:100%;height:80px;object-fit:cover;border-radius:12px 12px 0 0;" onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:44px;\'>馃彏锔?/div>'">`
+                        : `<div style="width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:44px;">馃彏锔?/div>`;
                     return `
                         <div class="featured-card" style="flex:0 0 120px;" onclick="window.location.href='/spot/${v.id}'">
                             <div class="card-top" style="padding:0;overflow:hidden;">${imgContent}</div>
@@ -2568,7 +2568,7 @@
         `;
     }
 
-    // ── Routes ──
+    // 鈹€鈹€ Routes 鈹€鈹€
     let _routesCache = null;
     async function loadRoutes() {
         if (_routesCache) return _routesCache;
@@ -2589,24 +2589,24 @@
         if (!container || routes.length === 0) return;
 
         const typeColors = {
-            '经典': { bg: 'linear-gradient(135deg,#2d8a4e,#43a047)', text: '#fff' },
-            '摄影': { bg: 'linear-gradient(135deg,#667EEA,#764BA2)', text: '#fff' },
-            '亲子': { bg: 'linear-gradient(135deg,#FFA726,#FF7043)', text: '#fff' },
-            '自驾': { bg: 'linear-gradient(135deg,#4ECDC4,#45B7AA)', text: '#fff' },
+            '缁忓吀': { bg: 'linear-gradient(135deg,#2d8a4e,#43a047)', text: '#fff' },
+            '鎽勫奖': { bg: 'linear-gradient(135deg,#66bb6a,#388e3c)', text: '#fff' },
+            '浜插瓙': { bg: 'linear-gradient(135deg,#a5d6a7,#81c784)', text: '#fff' },
+            '鑷┚': { bg: 'linear-gradient(135deg,#43a047,#2e7d32)', text: '#fff' },
         };
 
         container.innerHTML = routes.map(r => {
-            const colors = typeColors[r.type] || typeColors['经典'];
+            const colors = typeColors[r.type] || typeColors['缁忓吀'];
             return `
                 <div class="route-card" onclick="openRouteModal('${r.id}')">
                     <div class="route-cover" style="background:${colors.bg};display:flex;align-items:center;justify-content:center;font-size:48px;color:${colors.text};opacity:0.9;">
-                        ${r.type === '经典' ? '🏔️' : r.type === '摄影' ? '📸' : r.type === '亲子' ? '👨‍👩‍👧' : '🚗'}
+                        ${r.type === '缁忓吀' ? '馃彅锔? : r.type === '鎽勫奖' ? '馃摳' : r.type === '浜插瓙' ? '馃懆鈥嶐煈┾€嶐煈? : '馃殫'}
                     </div>
                     <div class="route-overlay">
                         <div class="route-name">${r.name}</div>
                         <div class="route-meta">
                             <span class="route-type-tag">${r.type}</span>
-                            <span class="route-duration">⏱ ${r.duration}</span>
+                            <span class="route-duration">鈴?${r.duration}</span>
                         </div>
                     </div>
                 </div>
@@ -2620,25 +2620,25 @@
         if (!route) return;
 
 
-        document.getElementById('rmhIcon').textContent = route.type === '经典' ? '🏔️' : route.type === '摄影' ? '📸' : route.type === '亲子' ? '👨‍👩‍👧' : '🚗';
+        document.getElementById('rmhIcon').textContent = route.type === '缁忓吀' ? '馃彅锔? : route.type === '鎽勫奖' ? '馃摳' : route.type === '浜插瓙' ? '馃懆鈥嶐煈┾€嶐煈? : '馃殫';
         document.getElementById('rmhName').textContent = route.name;
         document.getElementById('rmhDesc').textContent = route.description;
         document.getElementById('rmhTags').innerHTML = `
             <span class="rmh-tag">${route.type}</span>
-            <span class="rmh-tag">⏱ ${route.duration}</span>
-            <span class="rmh-tag">📍 ${route.spot_names.join(' · ')}</span>
+            <span class="rmh-tag">鈴?${route.duration}</span>
+            <span class="rmh-tag">馃搷 ${route.spot_names.join(' 路 ')}</span>
         `;
 
         const timeline = document.getElementById('routeTimeline');
         timeline.innerHTML = route.schedule.map(item => {
             const isSpot = !!item.spot_id;
             const spotClick = isSpot ? ` onclick="window.location.href='/spot/${item.spot_id}'"` : '';
-            const durHtml = item.duration ? `<div class="timeline-dur">⏱ ${item.duration}</div>` : '';
+            const durHtml = item.duration ? `<div class="timeline-dur">鈴?${item.duration}</div>` : '';
             return `
                 <div class="timeline-item${isSpot ? ' spot-dot' : ''}"${spotClick}>
                     <div class="timeline-dot"></div>
                     <div class="timeline-time">${item.time}</div>
-                    <div class="timeline-title">${item.title}${isSpot ? ' →' : ''}</div>
+                    <div class="timeline-title">${item.title}${isSpot ? ' 鈫? : ''}</div>
                     <div class="timeline-desc">${item.desc}</div>
                     ${durHtml}
                 </div>
@@ -2648,8 +2648,8 @@
 
         const useBtn = document.getElementById('routeUseBtn');
         useBtn.onclick = () => {
-            const spotsText = route.spot_names.join(' → ');
-            const msg = `我想走「${route.name}」，路线是：${spotsText}，请帮我规划详细行程。`;
+            const spotsText = route.spot_names.join(' 鈫?');
+            const msg = `鎴戞兂璧般€?{route.name}銆嶏紝璺嚎鏄細${spotsText}锛岃甯垜瑙勫垝璇︾粏琛岀▼銆俙;
             closeRouteModal();
             document.getElementById('inputBox').value = msg;
             sendMessage();
@@ -2667,10 +2667,10 @@
         const container = document.getElementById('recentSection');
         container.style.display = 'none';
         container.innerHTML = '';
-        showToast('已清空浏览记录');
+        showToast('宸叉竻绌烘祻瑙堣褰?);
     }
 
-    // ── Itinerary Modal ──
+    // 鈹€鈹€ Itinerary Modal 鈹€鈹€
     function openItineraryModal() {
         document.getElementById('itineraryModal').classList.add('active');
     }
@@ -2678,10 +2678,10 @@
         document.getElementById('itineraryModal').classList.remove('active');
     }
 
-    // ── 收藏功能：初始化徽章 ──
+    // 鈹€鈹€ 鏀惰棌鍔熻兘锛氬垵濮嬪寲寰界珷 鈹€鈹€
     function initFavorites() {
         updateFavBadge();
-        // 监听 localStorage 变化（其他标签页的同步）
+        // 鐩戝惉 localStorage 鍙樺寲锛堝叾浠栨爣绛鹃〉鐨勫悓姝ワ級
         window.addEventListener('storage', function(e) {
             if (e.key === 'guigang_favorites') {
                 updateFavBadge();
@@ -2690,7 +2690,7 @@
     }
     initFavorites();
 
-    // ── 收藏面板 ──
+    // 鈹€鈹€ 鏀惰棌闈㈡澘 鈹€鈹€
     function openFavoritesPanel() {
         renderFavoritesList();
         document.getElementById('favPanel').classList.add('active');
@@ -2707,9 +2707,9 @@
         if (favs.length === 0) {
             container.innerHTML = `
                 <div class="fav-empty">
-                    <div class="fav-empty-emoji">📭</div>
-                    <p>收藏夹空空如也~</p>
-                    <div class="fav-empty-hint">浏览景点时点击 ♡ 即可收藏</div>
+                    <div class="fav-empty-emoji">馃摥</div>
+                    <p>鏀惰棌澶圭┖绌哄涔焴</p>
+                    <div class="fav-empty-hint">娴忚鏅偣鏃剁偣鍑?鈾?鍗冲彲鏀惰棌</div>
                 </div>
             `;
             return;
@@ -2717,10 +2717,10 @@
         
         container.innerHTML = favs.map(f => {
             const imgContent = f.image_url
-                ? `<img src="${f.image_url}" alt="${f.name}" onerror="this.parentElement.textContent='🏞️'">`
-                : '🏞️';
-            const priceClass = (f.ticket_price && f.ticket_price.includes('免费')) ? 'free' : '';
-            const priceText = f.ticket_price || '暂无信息';
+                ? `<img src="${f.image_url}" alt="${f.name}" onerror="this.parentElement.textContent='馃彏锔?">`
+                : '馃彏锔?;
+            const priceClass = (f.ticket_price && f.ticket_price.includes('鍏嶈垂')) ? 'free' : '';
+            const priceText = f.ticket_price || '鏆傛棤淇℃伅';
             
             return `
                 <div class="fav-item" onclick="window.location.href='/spot/${f.id}'">
@@ -2729,10 +2729,10 @@
                         <div class="fav-item-name">${f.name}</div>
                         <div class="fav-item-meta">
                             ${f.district ? `<span class="fav-district">${f.district}</span>` : ''}
-                            <span class="fav-price ${priceClass}">💰 ${priceText}</span>
+                            <span class="fav-price ${priceClass}">馃挵 ${priceText}</span>
                         </div>
                     </div>
-                    <button class="fav-remove-btn" onclick="event.stopPropagation(); removeFavorite('${f.id}')" title="取消收藏">✕</button>
+                    <button class="fav-remove-btn" onclick="event.stopPropagation(); removeFavorite('${f.id}')" title="鍙栨秷鏀惰棌">鉁?/button>
                 </div>
             `;
         }).join('');
@@ -2742,15 +2742,15 @@
         FavoritesAPI.remove(spotId);
         renderFavoritesList();
         updateFavBadge();
-        showToast('已取消收藏');
+        showToast('宸插彇娑堟敹钘?);
     }
 
     function clearAllFavorites() {
-        if (!confirm('确定清空所有收藏吗？此操作不可撤销。')) return;
+        if (!confirm('纭畾娓呯┖鎵€鏈夋敹钘忓悧锛熸鎿嶄綔涓嶅彲鎾ら攢銆?)) return;
         FavoritesAPI.clearAll();
         renderFavoritesList();
         updateFavBadge();
-        showToast('已清空所有收藏');
+        showToast('宸叉竻绌烘墍鏈夋敹钘?);
     }
 
     function updateFavBadge() {
@@ -2771,3 +2771,5 @@ if ('serviceWorker' in navigator) {
 </script>
 </body>
 </html>
+
+
