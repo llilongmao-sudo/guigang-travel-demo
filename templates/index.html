@@ -1774,6 +1774,7 @@
         renderRecentOnHome();
         renderRecentOnHome();
         renderRoutesSection();
+        initPreferences(); // 初始化偏好功能
         // 自动提问（从详情页 AI 讲解跳转过来）
         const autoAsk = '{{ auto_ask | e }}';
         if (autoAsk) {
@@ -1828,6 +1829,154 @@
                 </div>
             `;
         }).join('');
+    }
+    
+    // ── Preferences ──
+    let selectedPreferences = [];
+    
+    function initPreferences() {
+        // 检查是否已有偏好设置
+        if (!PreferencesAPI.hasSelected()) {
+            // 首次进入，显示偏好选择弹窗
+            setTimeout(() => {
+                showPreferencesModal();
+            }, 500);
+        } else {
+            // 已有偏好，更新首页个性化内容
+            updatePersonalizedContent();
+        }
+        updatePreferenceBadge();
+    }
+    
+    function showPreferencesModal() {
+        const modal = document.getElementById('prefModal');
+        modal.style.display = 'flex';
+        renderPreferenceCards();
+        selectedPreferences = [];
+        updateConfirmButton();
+    }
+    
+    function hidePreferencesModal() {
+        document.getElementById('prefModal').style.display = 'none';
+    }
+    
+    function renderPreferenceCards() {
+        const grid = document.getElementById('prefGrid');
+        grid.innerHTML = PreferencesAPI.TYPES.map(type => `
+            <div class="pref-card" id="pref_${type.id}" onclick="togglePreferenceCard('${type.id}')">
+                <div class="pref-icon">${type.icon}</div>
+                <div class="pref-label">${type.name}</div>
+            </div>
+        `).join('');
+    }
+    
+    function togglePreferenceCard(id) {
+        const index = selectedPreferences.indexOf(id);
+        const card = document.getElementById('pref_' + id);
+        
+        if (index === -1) {
+            selectedPreferences.push(id);
+            card.classList.add('selected');
+        } else {
+            selectedPreferences.splice(index, 1);
+            card.classList.remove('selected');
+        }
+        
+        updateConfirmButton();
+    }
+    
+    function updateConfirmButton() {
+        const btn = document.querySelector('.pref-btn-confirm');
+        btn.disabled = selectedPreferences.length === 0;
+    }
+    
+    function skipPreferences() {
+        hidePreferencesModal();
+        showToast('你可以随时在侧边栏设置偏好');
+    }
+    
+    function confirmPreferences() {
+        if (selectedPreferences.length === 0) {
+            showToast('请至少选择一个偏好');
+            return;
+        }
+        
+        PreferencesAPI.save(selectedPreferences);
+        hidePreferencesModal();
+        updatePreferenceBadge();
+        updatePersonalizedContent();
+        showToast('✅ 偏好设置成功！已为你推荐个性化内容');
+    }
+    
+    function openPreferencesPanel() {
+        // 关闭侧边栏
+        document.getElementById('sidePanel').classList.remove('active');
+        // 打开偏好设置弹窗
+        setTimeout(() => {
+            showPreferencesModal();
+        }, 300);
+    }
+    
+    function updatePreferenceBadge() {
+        const badge = document.getElementById('prefBadge');
+        const count = PreferencesAPI.getInterests().length;
+        if (badge) {
+            badge.textContent = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        }
+    }
+    
+    function updatePersonalizedContent() {
+        const interests = PreferencesAPI.getInterests();
+        if (interests.length === 0) return;
+        
+        const interestLabels = PreferencesAPI.getInterestLabels();
+        const greetingSub = document.getElementById('greetingSub');
+        
+        // 更新欢迎语
+        if (greetingSub) {
+            const prefText = interestLabels.join('、');
+            greetingSub.textContent = `为你推荐${prefText}相关内容 🎯`;
+        }
+        
+        // 根据偏好筛选推荐景点
+        const recommendedSpots = spots.filter(s => {
+            const category = s.category || '';
+            return interests.some(interest => {
+                if (interest === 'photo') return true; // 摄影推荐所有景点
+                if (interest === 'food') return s.description && s.description.includes('美食');
+                if (interest === 'family') return category === '主题乐园' || category === '城市公园';
+                if (interest === 'drive') return true; // 自驾推荐所有景点
+                if (interest === 'camping') return s.description && (s.description.includes('露营') || s.description.includes('户外'));
+                if (interest === 'culture') return category === '人文景观';
+                return true;
+            });
+        }).slice(0, 8);
+        
+        // 更新推荐景点展示
+        if (recommendedSpots.length > 0) {
+            const featuredRow = document.getElementById('featuredRow');
+            if (featuredRow) {
+                featuredRow.innerHTML = recommendedSpots.map(s => {
+                    const c = s.category || '';
+                    const colors = categoryColors[c] || ['#66bb6a','#388e3c'];
+                    const isFree = s.ticket_price && s.ticket_price.includes('免费');
+                    return `
+                        <div class="featured-card" onclick="window.location.href='/spot/${s.id}'">
+                            <div class="card-top" style="background:linear-gradient(135deg,${colors[0]},${colors[1]})">
+                                ${categoryEmoji[c] || '📍'}
+                                <span class="badge">${s.district || '贵港'}</span>
+                                ${isFree ? '<span class="free-badge">免费</span>' : ''}
+                            </div>
+                            <div class="card-body">
+                                <div class="fd-name">${s.name}</div>
+                                <div class="fd-desc">${(s.description || '').slice(0, 28)}...</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
     }
     
     let activeCategory = null;

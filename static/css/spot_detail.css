@@ -689,6 +689,73 @@ body {
     }
 }
 
+/* ── 附近推荐 Tab ── */
+.nearby-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 14px;
+}
+.nearby-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    margin-bottom: -2px;
+}
+.nearby-tab.active {
+    color: #2d8a4e;
+    border-bottom-color: #2d8a4e;
+}
+.nearby-tab:active {
+    opacity: 0.7;
+}
+.nearby-food-list {
+    list-style: none;
+    padding: 0;
+}
+.nearby-food-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.nearby-food-item:last-child {
+    border-bottom: none;
+}
+.nf-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff8e1;
+    border-radius: 10px;
+}
+.nf-info {
+    flex: 1;
+}
+.nf-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+.nf-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: #999;
+}
+
 @media (max-width: 360px) {
     .hero-image { height: 260px; }
     .spot-title-overlay h1 { font-size: 22px; }
