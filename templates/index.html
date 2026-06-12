@@ -426,6 +426,23 @@
             text-decoration: underline;
         }
 
+        /* Chat Markdown styles */
+        .message.bot .bubble h3,
+        .message.bot .bubble h4 {
+            color: #1a6b3c;
+            font-weight: 700;
+            margin: 8px 0 4px;
+            font-size: 14px;
+        }
+        .message.bot .bubble .star-text,
+        .message.bot .bubble strong {
+            color: #2d8a4e;
+        }
+        .message.bot .bubble .star-rating {
+            color: #FFD700;
+            font-weight: 700;
+        }
+
         /* Spot Card in Chat */
         .spot-card {
             background: #f0faf3;
@@ -1601,6 +1618,7 @@
         html = html
             .replace(/\n/g, '<br>')
             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/⭐(\s*推荐指数[\uFF1A:]?\s*.*?)(<br>|$)/g, '<span class="star-rating">⭐$1</span>$2')
             .replace(/\n- /g, '<br>• ')
             .replace(/^\d+\. /gm, '<br>$&');
         

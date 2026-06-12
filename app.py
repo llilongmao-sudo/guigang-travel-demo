@@ -572,6 +572,26 @@ def chat():
             "- 推荐住宿时遵循'先近后远'原则：优先推荐距离景点最近的住宿，再推荐稍远的备选\n"
             f"\n{context}{hotels_context}"
         )
+
+        # 明确景点时注入结构化输出模板
+        if explicit_spot:
+            system_prompt += (
+                "\n\n请严格按以下格式回答（每个段落以 emoji 标题开头）：\n"
+                "🏞️ 景点介绍\n"
+                "[简要介绍50字]\n"
+                "⭐ 推荐指数\n"
+                "[1-5星]\n"
+                "🕐 最佳游玩时间\n"
+                "[建议时长]\n"
+                "🌸 推荐季节\n"
+                "[最佳季节]\n"
+                "🍜 附近美食\n"
+                "- 列表\n"
+                "📍 附近景点\n"
+                "- 列表\n"
+                "🚗 出行建议\n"
+                "[交通/注意事项]"
+            )
         messages = [{"role": "system", "content": system_prompt}]
         # 加入历史对话（最近3轮）
         for msg in history[-6:]:
