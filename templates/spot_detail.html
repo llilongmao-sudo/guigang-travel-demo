@@ -190,6 +190,7 @@
 <div class="toast" id="toast"></div>
 
 <script src="/static/js/favorites.js"></script>
+<script src="/static/js/recent.js"></script>
 <script>
     // ── 数据 ──
     const spotData = {{ spot | tojson | safe }};
@@ -201,7 +202,13 @@
         // 初始化收藏状态
         updateFavButton();
         // 记录浏览
-        saveViewHistory();
+        RecentAPI.add({
+            id: spotData.id,
+            name: spotData.name,
+            image_url: spotData.image_url || '',
+            ticket_price: spotData.ticket_price || '',
+            district: spotData.district || ''
+        });
     });
 
     // ── 评分渲染 ──
@@ -295,23 +302,50 @@
             });
     }
 
-    // ── 浏览历史记录 ──
-    function saveViewHistory() {
-        try {
-            const key = 'guigang_recent_views';
-            let views = JSON.parse(localStorage.getItem(key) || '[]');
-            // 去重
-            views = views.filter(v => v.id !== spotData.id);
-            views.unshift({
-                id: spotData.id,
-                name: spotData.name,
-                viewed_at: new Date().toISOString()
-            });
-            // 最多保留 20 条
-            if (views.length > 20) views = views.slice(0, 20);
-            localStorage.setItem(key, JSON.stringify(views));
-        } catch(e) { /* ignore */ }
+    // ── 最近浏览（详情页底部） ──
+    function renderRecentViews() {
+        const views = RecentAPI.getAll().filter(v => v.id !== spotData.id);
+        if (views.length === 0) return;
+
+        let html = `
+            <div class="section-title"><span class="st-icon">🕐</span> 最近浏览</div>
+            <div class="info-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <span style="font-size:12px;color:#999;">浏览过的景点</span>
+                    <button onclick="clearRecentViews(this)" style="background:none;border:none;font-size:12px;color:#999;cursor:pointer;padding:2px 6px;font-family:inherit;">清空</button>
+                </div>
+                <div class="recent-scroll" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+                    ${views.map(v => {
+                        const imgContent = v.image_url
+                            ? `<img src="${v.image_url}" alt="${v.name}" style="width:100%;height:80px;object-fit:cover;border-radius:12px 12px 0 0;" onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:28px;background:#f0f0f0;border-radius:12px 12px 0 0;\'>🏞️</div>'">`
+                            : `<div style="width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:28px;background:#f0f0f0;border-radius:12px 12px 0 0;">🏞️</div>`;
+                        return `
+                            <div onclick="window.location.href='/spot/${v.id}'" style="flex-shrink:0;width:120px;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);cursor:pointer;transition:transform 0.2s;background:#fff;">
+                                ${imgContent}
+                                <div style="padding:8px;text-align:center;">
+                                    <div style="font-size:12px;font-weight:600;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.name}</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+
+        const container = document.querySelector('.info-section');
+        container.insertAdjacentHTML('beforeend', html);
     }
+
+    function clearRecentViews(btn) {
+        RecentAPI.clear();
+        const section = btn.closest('.info-card').previousElementSibling;
+        btn.closest('.info-card').remove();
+        if (section) section.remove();
+        showToast('已清空浏览记录');
+    }
+
+    // 页面加载后渲染最近浏览
+    renderRecentViews();
 
     // ── 返回 ──
     function goBack() {

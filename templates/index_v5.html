@@ -125,248 +125,236 @@
         .chat-area::-webkit-scrollbar { width: 4px; }
         .chat-area::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
 
-        /* ── Welcome Card v6 (全新设计) ── */
+        /* ── Welcome Card v5 ── */
         .welcome-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
             margin-bottom: 8px;
         }
 
-        /* Hero Banner */
-        .welcome-hero {
-            background: linear-gradient(135deg, #1a6b3c 0%, #2d8a4e 40%, #43a047 100%);
-            padding: 28px 20px 24px;
-            border-radius: 0 0 28px 28px;
-            color: #fff;
+        /* Carousel */
+        .carousel-wrapper {
             position: relative;
-            overflow: hidden;
+            background: linear-gradient(180deg, #e8f5e9 0%, #f8f9fa 100%);
+            padding: 16px 0 12px;
         }
-        .welcome-hero::before {
-            content: '';
-            position: absolute;
-            top: -60px;
-            right: -60px;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.06);
-        }
-        .welcome-hero::after {
-            content: '';
-            position: absolute;
-            bottom: -40px;
-            left: -30px;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.04);
-        }
-        .welcome-hero .greeting {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            position: relative;
-            z-index: 1;
-        }
-        .welcome-hero .greeting-sub {
-            font-size: 13px;
-            opacity: 0.8;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 1;
-        }
-        .welcome-hero .search-hint {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            position: relative;
-            z-index: 1;
-            cursor: text;
-            border: 1px solid rgba(255,255,255,0.25);
-            transition: background 0.2s;
-        }
-        .welcome-hero .search-hint:active {
-            background: rgba(255,255,255,0.3);
-        }
-        .welcome-hero .search-hint span {
-            font-size: 13px;
-            opacity: 0.7;
-            flex: 1;
-        }
-        .welcome-hero .search-hint .hint-text {
-            color: #fff;
-            opacity: 0.6;
-            font-size: 12px;
-        }
-
-        /* Category Row */
-        .category-row {
-            display: flex;
-            gap: 10px;
+        .carousel-viewport {
             overflow-x: auto;
-            padding: 16px 16px 0;
-            scrollbar-width: none;
+            scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
-            margin-top: -14px;
-            position: relative;
-            z-index: 2;
+            scrollbar-width: none;
+            padding: 0 16px;
         }
-        .category-row::-webkit-scrollbar { display: none; }
-        .category-item {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            background: #fff;
-            border-radius: 14px;
-            padding: 10px 16px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-            cursor: pointer;
-            transition: transform 0.2s;
-            min-width: 72px;
-            border: none;
-            font-family: inherit;
-        }
-        .category-item:active { transform: scale(0.93); }
-        .category-item .cat-emoji { font-size: 24px; }
-        .category-item .cat-label {
-            font-size: 11px;
-            color: #666;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-        .category-item.active {
-            background: #2d8a4e;
-            box-shadow: 0 4px 14px rgba(45,138,78,0.3);
-        }
-        .category-item.active .cat-label { color: #fff; }
-
-        /* Section Title */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 16px 10px;
-        }
-        .section-header h3 {
-            font-size: 15px;
-            font-weight: 700;
-            color: #222;
-        }
-        .section-header .more-btn {
-            font-size: 12px;
-            color: #2d8a4e;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-family: inherit;
-            padding: 2px 6px;
-        }
-
-        /* Featured Spot Cards (Horizontal Scroll) */
-        .featured-row {
+        .carousel-viewport::-webkit-scrollbar { display: none; }
+        .carousel-track {
             display: flex;
             gap: 12px;
-            overflow-x: auto;
-            padding: 0 16px 4px;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-            scroll-snap-type: x mandatory;
+            padding-bottom: 4px;
         }
-        .featured-row::-webkit-scrollbar { display: none; }
-        .featured-card {
-            flex: 0 0 160px;
-            background: #fff;
+        .carousel-slide {
+            flex: 0 0 72%;
+            scroll-snap-align: start;
             border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            background: #fff;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            scroll-snap-align: start;
+            transition: transform 0.25s;
         }
-        .featured-card:active { transform: scale(0.97); }
-        .featured-card .card-top {
-            height: 100px;
+        .carousel-slide:hover { transform: scale(1.02); }
+        .carousel-slide:active { transform: scale(0.98); }
+        .carousel-slide-img {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #66bb6a, #43a047);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 44px;
+            font-size: 64px;
             position: relative;
         }
-        .featured-card .card-top .badge {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            color: #fff;
-            font-size: 10px;
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-        .featured-card .card-top .free-badge {
+        .carousel-slide-img .district-badge {
             position: absolute;
             top: 8px;
             right: 8px;
-            background: #f44336;
+            background: rgba(0,0,0,0.5);
             color: #fff;
-            font-size: 9px;
-            font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 6px;
-        }
-        .featured-card .card-body {
-            padding: 10px 12px 12px;
-        }
-        .featured-card .card-body .fd-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #222;
-            margin-bottom: 3px;
-        }
-        .featured-card .card-body .fd-desc {
             font-size: 11px;
-            color: #999;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+        .carousel-slide-body {
+            padding: 10px 14px 12px;
+        }
+        .carousel-slide-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a6b3c;
+            margin-bottom: 4px;
+        }
+        .carousel-slide-desc {
+            font-size: 12px;
+            color: #888;
             line-height: 1.4;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .carousel-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ccc;
+            transition: all 0.3s;
+        }
+        .carousel-dot.active {
+            width: 16px;
+            border-radius: 3px;
+            background: #2d8a4e;
+        }
 
-        /* (District/Spot Grid CSS removed - now in Side Panel only) */
-
-        /* Quick Actions Bar (compact) */
-        .quick-actions-bar {
+        /* District Tabs */
+        .district-tabs {
             display: flex;
             gap: 6px;
-            padding: 12px 16px 18px;
             overflow-x: auto;
+            padding: 12px 16px;
             scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
+            border-bottom: 1px solid #f0f0f0;
         }
-        .quick-actions-bar::-webkit-scrollbar { display: none; }
-        .qa-btn {
+        .district-tabs::-webkit-scrollbar { display: none; }
+        .district-tab {
             flex-shrink: 0;
-            padding: 8px 14px;
-            border-radius: 20px;
-            border: none;
-            background: linear-gradient(135deg, #f5f5f5, #eee);
-            color: #444;
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            color: #666;
             font-size: 13px;
-            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
-            font-family: inherit;
             white-space: nowrap;
+            font-weight: 500;
         }
-        .qa-btn:active {
-            background: linear-gradient(135deg, #2d8a4e, #43a047);
+        .district-tab:hover { border-color: #2d8a4e; color: #2d8a4e; }
+        .district-tab.active {
+            background: #2d8a4e;
             color: #fff;
-            transform: scale(0.95);
+            border-color: #2d8a4e;
+        }
+
+        /* Spot Grid */
+        .spot-grid-section {
+            padding: 12px 16px 16px;
+            display: none;
+        }
+        .spot-grid-section.show { display: block; }
+        .spot-grid-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .spot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .spot-grid-card {
+            background: #fafafa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .spot-grid-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45,138,78,0.12);
+        }
+        .spot-grid-card-img {
+            width: 100%;
+            height: 90px;
+            background: linear-gradient(135deg, #a5d6a7, #81c784);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        .spot-grid-card-body {
+            padding: 8px 10px 10px;
+        }
+        .spot-grid-card-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        .spot-grid-card-info {
+            font-size: 11px;
+            color: #999;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .spot-grid-card-info .tag {
+            background: #e8f5e9;
+            color: #2d8a4e;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+        .spot-grid-card-btn {
+            display: block;
+            width: 100%;
+            padding: 6px;
+            border: none;
+            background: #2d8a4e;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-radius: 0 0 12px 12px;
+        }
+        .spot-grid-card-btn:hover { background: #1a6b3c; }
+
+        /* Quick Tags */
+        .quick-tags-section {
+            padding: 12px 16px 16px;
+        }
+        .quick-tags-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .quick-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .quick-tags button {
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1px solid #2d8a4e;
+            background: #fff;
+            color: #2d8a4e;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-tags button:hover {
+            background: #2d8a4e;
+            color: #fff;
         }
 
         /* ── Message Bubbles (keep existing) ── */
@@ -770,241 +758,6 @@
         }
         .toast.show { opacity: 1; }
 
-        /* ── Drawer Favorites Entry ── */
-        .drawer-fav-entry {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 16px;
-            margin: 4px 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.2s;
-            background: #fafafa;
-            border: 1px solid #f0f0f0;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .drawer-fav-entry:hover {
-            background: #f0faf3;
-            border-color: #c8e6c9;
-        }
-        .drawer-fav-entry:active {
-            background: #e8f5e9;
-        }
-        .drawer-fav-entry .dfe-icon {
-            font-size: 20px;
-        }
-        .drawer-fav-entry .dfe-label {
-            flex: 1;
-            font-size: 14px;
-            font-weight: 500;
-            color: #333;
-        }
-        .drawer-fav-entry .dfe-badge {
-            background: #e53935;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 600;
-            min-width: 20px;
-            height: 20px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 6px;
-        }
-
-        /* ── Favorites Panel (Bottom Sheet) ── */
-        .fav-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 150;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s 0.3s, opacity 0.3s;
-        }
-        .fav-panel.active {
-            visibility: visible;
-            opacity: 1;
-            transition: opacity 0.3s;
-        }
-        .fav-panel .fav-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-        }
-        .fav-panel .fav-sheet {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            max-height: 60vh;
-            background: #fff;
-            border-radius: 20px 20px 0 0;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .fav-panel.active .fav-sheet {
-            transform: translateY(0);
-        }
-        .fav-sheet-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            flex-shrink: 0;
-        }
-        .fav-sheet-header h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #222;
-        }
-        .fav-close-btn {
-            background: #f0f0f0;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            transition: background 0.2s;
-            font-family: inherit;
-        }
-        .fav-close-btn:hover { background: #e0e0e0; }
-        .fav-sheet-actions {
-            padding: 10px 20px;
-            flex-shrink: 0;
-            display: flex;
-            justify-content: flex-end;
-        }
-        .fav-clear-all {
-            background: none;
-            border: none;
-            font-size: 12px;
-            color: #e53935;
-            cursor: pointer;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-family: inherit;
-            transition: background 0.2s;
-        }
-        .fav-clear-all:hover { background: #fff0f0; }
-        .fav-sheet-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0 16px 16px;
-            -webkit-overflow-scrolling: touch;
-        }
-        .fav-empty {
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .fav-empty .fav-empty-emoji {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-        .fav-empty p {
-            font-size: 14px;
-            color: #999;
-            line-height: 1.6;
-        }
-        .fav-empty .fav-empty-hint {
-            font-size: 12px;
-            color: #bbb;
-            margin-top: 8px;
-        }
-        .fav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 12px;
-            background: #fafafa;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .fav-item:hover { background: #f0faf3; }
-        .fav-item:active { background: #e8f5e9; }
-        .fav-item-img {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            background: #f0f0f0;
-            overflow: hidden;
-        }
-        .fav-item-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .fav-item-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .fav-item-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 2px;
-        }
-        .fav-item-meta {
-            font-size: 12px;
-            color: #999;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .fav-item-meta .fav-district {
-            background: #e8f5e9;
-            color: #2d8a4e;
-            padding: 1px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-        }
-        .fav-item-meta .fav-price {
-            color: #e53935;
-            font-weight: 500;
-        }
-        .fav-item-meta .fav-price.free {
-            color: #43a047;
-        }
-        .fav-remove-btn {
-            flex-shrink: 0;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: none;
-            background: #fee;
-            color: #e53935;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-            font-family: inherit;
-        }
-        .fav-remove-btn:hover { background: #fcc; }
-
         /* ── Modal ── */
         .modal-overlay {
             position: fixed;
@@ -1071,7 +824,6 @@
             <div class="subtitle">AI 带你畅游贵港</div>
         </div>
         <div class="header-actions">
-            <button class="icon-btn" onclick="showWelcome()" title="返回首页" id="homeBtn">🏠</button>
             <button class="icon-btn" onclick="showWeather()" title="天气查询">🌤️</button>
             <button class="icon-btn" onclick="toggleHistory()" title="对话历史">📜</button>
             <button class="icon-btn" onclick="clearHistory()" title="清除历史">🗑️</button>
@@ -1081,43 +833,46 @@
 
     <!-- Chat Area -->
     <div class="chat-area" id="chatArea">
-        <!-- Welcome Card v6 (新设计) -->
+        <!-- Welcome Card v5 -->
         <div class="welcome-card" id="welcomeCard">
-            <!-- Hero Banner -->
-            <div class="welcome-hero">
-                <div class="greeting">🏕️ 畅游贵港</div>
-                <div class="greeting-sub" id="greetingSub">探索这座充满魅力的城市</div>
-                <div class="search-hint" onclick="document.getElementById('inputBox').focus()">
-                    <span>🔍</span>
-                    <span class="hint-text">搜索景点、美食、行程...</span>
+            <!-- Carousel -->
+            <div class="carousel-wrapper">
+                <div class="carousel-viewport" id="carouselViewport">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- JS 动态填充 -->
+                    </div>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+
+            <!-- District Tabs -->
+            <div class="district-tabs" id="districtTabs">
+                <button class="district-tab active" data-district="全部" onclick="switchDistrict('全部', this)">🌟 全部</button>
+                <button class="district-tab" data-district="港北区" onclick="switchDistrict('港北区', this)">🏙️ 港北区</button>
+                <button class="district-tab" data-district="港南区" onclick="switchDistrict('港南区', this)">🏛️ 港南区</button>
+                <button class="district-tab" data-district="覃塘区" onclick="switchDistrict('覃塘区', this)">⛰️ 覃塘区</button>
+                <button class="district-tab" data-district="桂平市" onclick="switchDistrict('桂平市', this)">🏔️ 桂平市</button>
+                <button class="district-tab" data-district="平南县" onclick="switchDistrict('平南县', this)">🌿 平南县</button>
+            </div>
+
+            <!-- Spot Grid -->
+            <div class="spot-grid-section" id="spotGridSection">
+                <div class="spot-grid-title" id="spotGridTitle">全部景点</div>
+                <div class="spot-grid" id="spotGrid">
+                    <!-- JS 动态填充 -->
                 </div>
             </div>
 
-            <!-- Category Row -->
-            <div class="category-row" id="categoryRow">
-                <!-- JS 动态生成 -->
+            <!-- Quick Tags -->
+            <div class="quick-tags-section">
+                <div class="quick-tags-title">🔥 热门提问</div>
+                <div class="quick-tags" id="quickTags">
+                    <button onclick="quickAsk('西山风景区有什么好玩的？')">🏔️ 西山景点</button>
+                    <button onclick="quickAsk('推荐一日游行程')">🗺️ 一日游</button>
+                    <button onclick="quickAsk('贵港有什么特色美食？')">🍜 美食推荐</button>
+                    <button onclick="quickAsk('从广州怎么去贵港？')">🚄 交通指南</button>
+                </div>
             </div>
-
-            <!-- Featured Spots -->
-            <div class="section-header">
-                <h3>🔥 推荐景点</h3>
-                <button class="more-btn" onclick="togglePanel()">查看全部 →</button>
-            </div>
-            <div class="featured-row" id="featuredRow">
-                <!-- JS 动态生成 -->
-            </div>
-
-            <!-- Quick Actions (inline) -->
-            <div class="quick-actions-bar" id="quickActionsBar">
-                <button class="qa-btn" onclick="quickAsk('推荐一日游行程')">🗺️ 一日游</button>
-                <button class="qa-btn" onclick="quickAsk('贵港有什么特色美食？')">🍜 美食</button>
-                <button class="qa-btn" onclick="quickAsk('西山风景区有什么好玩的？')">🏔️ 景点</button>
-                <button class="qa-btn" onclick="togglePanel()">📋 全部景点</button>
-                <button class="qa-btn" onclick="showWeather()">🌤️ 天气</button>
-            </div>
-
-            <!-- 最近浏览 -->
-            <div id="recentSection" style="display:none;"></div>
         </div>
     </div>
 
@@ -1138,12 +893,6 @@
             <h2>🏕️ 贵港景点一览</h2>
             <p>点击查看详情，位置可跳转地图</p>
         </div>
-        <!-- 收藏入口 -->
-        <div class="drawer-fav-entry" onclick="openFavoritesPanel()">
-            <span class="dfe-icon">❤️</span>
-            <span class="dfe-label">我的收藏</span>
-            <span class="dfe-badge" id="favBadge">0</span>
-        </div>
         <div class="drawer-list" id="spotList"></div>
     </div>
 </div>
@@ -1157,27 +906,6 @@
             <p>点击可重新加载对话</p>
         </div>
         <div id="historyList"></div>
-    </div>
-</div>
-
-<!-- Favorites Panel (Bottom Sheet) -->
-<div class="fav-panel" id="favPanel">
-    <div class="fav-overlay" onclick="closeFavoritesPanel()"></div>
-    <div class="fav-sheet">
-        <div class="fav-sheet-header">
-            <h3>❤️ 我的收藏</h3>
-            <button class="fav-close-btn" onclick="closeFavoritesPanel()">✕</button>
-        </div>
-        <div class="fav-sheet-actions">
-            <button class="fav-clear-all" onclick="clearAllFavorites()">🗑️ 清空所有</button>
-        </div>
-        <div class="fav-sheet-body" id="favList">
-            <div class="fav-empty">
-                <div class="fav-empty-emoji">📭</div>
-                <p>收藏夹空空如也~</p>
-                <div class="fav-empty-hint">浏览景点时点击 ♡ 即可收藏</div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -1203,8 +931,6 @@
     <div class="suggestion" id="weatherSuggest">正在获取天气数据...</div>
 </div>
 
-<script src="/static/js/favorites.js"></script>
-<script src="/static/js/recent.js"></script>
 <script>
     // ── State ──
     const spots = {{ spots | tojson | safe }};
@@ -1217,23 +943,10 @@
     let isRecording = false;
     let messageCounter = 0;
     
-    // Constants
-    const categoryEmoji = {
-        '自然景观': '🏔️',
-        '人文景观': '🏛️',
-        '城市公园': '🌳',
-        '主题乐园': '🎢',
-        '科普教育': '🔬',
-        '农业观光': '🌾'
-    };
-    const categoryColors = {
-        '自然景观': ['#66bb6a','#388e3c'],
-        '人文景观': ['#42a5f5','#1565c0'],
-        '城市公园': ['#66bb6a','#2e7d32'],
-        '主题乐园': ['#ffa726','#f57c00'],
-        '科普教育': ['#ab47bc','#7b1fa2'],
-        '农业观光': ['#ffcc02','#f9a825']
-    };
+    // Carousel state
+    let carouselIndex = 0;
+    let carouselTimer = null;
+    const CAROUSEL_INTERVAL = 3500;
     
     function generateSessionId() {
         return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -1241,114 +954,130 @@
 
     // ── Init ──
     document.addEventListener('DOMContentLoaded', () => {
-        initHero();
-        initDistricts();
-        initSpotList();
+        initCarousel();
+        initDistrictTabs();
         checkConnection();
         loadChatHistory();
         initVoice();
-        renderRecentOnHome();
-        // 自动提问（从详情页 AI 讲解跳转过来）
-        const autoAsk = '{{ auto_ask | e }}';
-        if (autoAsk) {
-            setTimeout(() => {
-                document.getElementById('inputBox').value = autoAsk;
-                sendMessage();
-            }, 500);
-        }
     });
 
-    // ── Hero: Categories + Featured ──
-    function initHero() {
-        // Greeting based on time
-        const h = new Date().getHours();
-        const greet = h < 6 ? '夜深了' : h < 9 ? '早上好' : h < 12 ? '上午好' : h < 14 ? '中午好' : h < 18 ? '下午好' : '晚上好';
-        document.getElementById('greetingSub').textContent = `${greet}！开始探索贵港吧 🌟`;
+    // ── Carousel ──
+    function initCarousel() {
+        const track = document.getElementById('carouselTrack');
+        const dotsContainer = document.getElementById('carouselDots');
         
-        // Category row
-        const catRow = document.getElementById('categoryRow');
-        const cats = [
-            {key:'自然景观',emoji:'🏔️',label:'自然风光'},
-            {key:'人文景观',emoji:'🏛️',label:'人文历史'},
-            {key:'城市公园',emoji:'🌳',label:'公园休闲'},
-            {key:'主题乐园',emoji:'🎢',label:'主题乐园'},
-            {key:'科普教育',emoji:'🔬',label:'科普教育'},
-            {key:'农业观光',emoji:'🌾',label:'乡村体验'}
-        ];
-        catRow.innerHTML = cats.map(c => `
-            <button class="category-item" onclick="filterByCategory('${c.key}', this)">
-                <span class="cat-emoji">${c.emoji}</span>
-                <span class="cat-label">${c.label}</span>
-            </button>
+        // 精选前5个景点做轮播
+        const featured = spots.slice(0, 5);
+        const categoryEmoji = {
+            '自然景观': '🏔️',
+            '人文景观': '🏛️',
+            '城市公园': '🌳',
+            '主题乐园': '🎢',
+            '科普教育': '🔬',
+            '农业观光': '🌾'
+        };
+        
+        track.innerHTML = featured.map((s, i) => `
+            <div class="carousel-slide" onclick="quickAsk('${s.name}有什么特色？')">
+                <div class="carousel-slide-img" style="background: linear-gradient(135deg, ${getColor(i)}, ${getColorDark(i)});">
+                    ${categoryEmoji[s.category] || '📍'}
+                    <span class="district-badge">${s.district || '贵港'}</span>
+                </div>
+                <div class="carousel-slide-body">
+                    <div class="carousel-slide-name">${s.name}</div>
+                    <div class="carousel-slide-desc">${(s.description || '').slice(0, 40)}...</div>
+                </div>
+            </div>
         `).join('');
         
-        // Featured spots - show top 8
-        const featuredRow = document.getElementById('featuredRow');
-        featuredRow.innerHTML = spots.slice(0, 8).map(s => {
-            const c = s.category || '';
-            const colors = categoryColors[c] || ['#66bb6a','#388e3c'];
-            const isFree = s.ticket_price && s.ticket_price.includes('免费');
-            return `
-                <div class="featured-card" onclick="window.location.href='/spot/${s.id}'">
-                    <div class="card-top" style="background:linear-gradient(135deg,${colors[0]},${colors[1]})">
-                        ${categoryEmoji[c] || '📍'}
-                        <span class="badge">${s.district || '贵港'}</span>
-                        ${isFree ? '<span class="free-badge">免费</span>' : ''}
-                    </div>
-                    <div class="card-body">
-                        <div class="fd-name">${s.name}</div>
-                        <div class="fd-desc">${(s.description || '').slice(0, 28)}...</div>
-                    </div>
-                </div>
-            `;
-        }).join('');
+        // Dots
+        dotsContainer.innerHTML = featured.map((_, i) => 
+            `<div class="carousel-dot${i === 0 ? ' active' : ''}" onclick="goToSlide(${i})"></div>`
+        ).join('');
+        
+        // Auto-play
+        startCarouselAutoPlay();
+        
+        // Touch/pointer events for manual scroll
+        const viewport = document.getElementById('carouselViewport');
+        let startX = 0;
+        let scrollLeft = 0;
+        
+        viewport.addEventListener('pointerdown', (e) => {
+            startX = e.pageX;
+            scrollLeft = viewport.scrollLeft;
+            viewport.setPointerCapture(e.pointerId);
+        });
+        
+        viewport.addEventListener('pointerup', () => {
+            clearInterval(carouselTimer);
+            startCarouselAutoPlay();
+        });
     }
     
-    let activeCategory = null;
-    function filterByCategory(category, btn) {
-        document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
-        if (activeCategory === category) {
-            activeCategory = null;
-            return;
-        }
-        btn.classList.add('active');
-        activeCategory = category;
+    function getColor(i) {
+        const colors = ['#66bb6a', '#42a5f5', '#ab47bc', '#ffa726', '#ef5350'];
+        return colors[i % colors.length];
+    }
+    function getColorDark(i) {
+        const colors = ['#388e3c', '#1565c0', '#7b1fa2', '#f57c00', '#c62828'];
+        return colors[i % colors.length];
+    }
+    
+    function startCarouselAutoPlay() {
+        clearInterval(carouselTimer);
+        const slides = document.querySelectorAll('.carousel-slide');
+        if (slides.length <= 1) return;
         
-        const filtered = spots.filter(s => s.category === category);
-        if (filtered.length) {
-            const msg = filtered.slice(0, 3).map(s => s.name).join('、');
-            quickAsk(`推荐${category}景点`);
-        }
+        carouselTimer = setInterval(() => {
+            carouselIndex = (carouselIndex + 1) % slides.length;
+            goToSlide(carouselIndex);
+        }, CAROUSEL_INTERVAL);
+    }
+    
+    function goToSlide(index) {
+        const viewport = document.getElementById('carouselViewport');
+        const slides = document.querySelectorAll('.carousel-slide');
+        if (!slides[index]) return;
+        
+        carouselIndex = index;
+        const slideWidth = slides[0].offsetWidth + 12; // gap
+        viewport.scrollTo({ left: index * slideWidth, behavior: 'smooth' });
+        
+        // Update dots
+        document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === index);
+        });
     }
 
-    // ── Districts (kept for backward compat, no-op on welcome card) ──
-    function initDistricts() {}
-    function switchDistrict(district, btnEl) { togglePanel(); }
-    function renderSpotGrid(district) {}
-
-    // ── 返回首页 ──
-    function showWelcome() {
-        const welcome = document.getElementById('welcomeCard');
-        const chatArea = document.getElementById('chatArea');
-        const sidePanel = document.getElementById('sidePanel');
-        if (welcome) {
-            // 把欢迎卡移到聊天区域最前面
-            if (chatArea && chatArea.firstChild !== welcome) {
-                chatArea.insertBefore(welcome, chatArea.firstChild);
-            }
-            welcome.style.display = '';
-        }
-        renderRecentOnHome();
-        // 滚到顶部
-        if (chatArea) chatArea.scrollTop = 0;
-        // 关闭侧边栏
-        if (sidePanel) sidePanel.classList.remove('active');
+    // ── District Tabs ──
+    function initDistrictTabs() {
+        // 默认显示全部
+        renderSpotGrid('全部');
     }
-
-    // ── Side Panel ──
-    function initSpotList() {
-        const list = document.getElementById('spotList');
-        if (!list || list.children.length > 0) return; // 已初始化则跳过
+    
+    function switchDistrict(district, btnEl) {
+        // Update active tab
+        document.querySelectorAll('.district-tab').forEach(t => t.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+        
+        // Show grid
+        renderSpotGrid(district);
+        
+        // Scroll to grid
+        document.getElementById('spotGridSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    function renderSpotGrid(district) {
+        const grid = document.getElementById('spotGrid');
+        const title = document.getElementById('spotGridTitle');
+        const section = document.getElementById('spotGridSection');
+        
+        const filtered = district === '全部' 
+            ? spots 
+            : spots.filter(s => (s.district || '港北区') === district);
+        
+        title.textContent = district === '全部' ? '📍 全部景点' : `📍 ${district}景点（${filtered.length}个）`;
         
         const categoryEmoji = {
             '自然景观': '🏔️',
@@ -1359,21 +1088,27 @@
             '农业观光': '🌾'
         };
         
-        list.innerHTML = spots.map(s => `
-            <div class="drawer-item" onclick="window.location.href='/spot/${s.id}'">
-                <div class="emoji">${categoryEmoji[s.category] || '📍'}</div>
-                <div class="info">
-                    <h3>${s.name}</h3>
-                    <p>${(s.description || '').slice(0, 30)}...</p>
-                    <span class="tag ${(s.category === '自然景观' ? 'nature' : s.category === '人文景观' ? 'culture' : s.category === '城市公园' ? 'park' : 'free')}">${s.category || '景点'}</span>
-                    ${s.district ? `<span class="tag" style="background:#e3f2fd;color:#1565c0;">${s.district}</span>` : ''}
+        grid.innerHTML = filtered.map(s => `
+            <div class="spot-grid-card" onclick="quickAsk('${s.name}有什么特色？')">
+                <div class="spot-grid-card-img" style="background: linear-gradient(135deg, #a5d6a7, #66bb6a);">
+                    ${categoryEmoji[s.category] || '📍'}
                 </div>
+                <div class="spot-grid-card-body">
+                    <div class="spot-grid-card-name">${s.name}</div>
+                    <div class="spot-grid-card-info">
+                        <span class="tag">${s.category || '景点'}</span>
+                        ${(s.ticket_price && s.ticket_price.includes('免费')) ? '<span class="tag" style="background:#fce4ec;color:#c62828;">免费</span>' : ''}
+                    </div>
+                </div>
+                <button class="spot-grid-card-btn">💬 问问AI</button>
             </div>
         `).join('');
+        
+        section.classList.add('show');
     }
 
+    // ── Side Panel ──
     function togglePanel() {
-        initSpotList();
         document.getElementById('sidePanel').classList.toggle('active');
     }
 
@@ -1857,131 +1592,6 @@
 
     if ('speechSynthesis' in window) {
         window.speechSynthesis.getVoices();
-    }
-
-    // ── 首页最近浏览模块 ──
-    function renderRecentOnHome() {
-        const views = RecentAPI.getAll();
-        const container = document.getElementById('recentSection');
-        if (!container) return;
-        if (views.length === 0) {
-            container.style.display = 'none';
-            return;
-        }
-        container.style.display = 'block';
-        container.innerHTML = `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:0 16px;">
-                <h3 style="font-size:15px;font-weight:700;color:#222;">🕐 最近浏览</h3>
-                <button onclick="clearRecentHome(this)" style="background:none;border:none;font-size:12px;color:#999;cursor:pointer;padding:2px 6px;font-family:inherit;">清空</button>
-            </div>
-            <div class="featured-row" style="margin-top:4px;">
-                ${views.map(v => {
-                    const imgContent = v.image_url
-                        ? `<img src="${v.image_url}" alt="${v.name}" style="width:100%;height:80px;object-fit:cover;border-radius:12px 12px 0 0;" onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:44px;\'>🏞️</div>'">`
-                        : `<div style="width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:44px;">🏞️</div>`;
-                    return `
-                        <div class="featured-card" style="flex:0 0 120px;" onclick="window.location.href='/spot/${v.id}'">
-                            <div class="card-top" style="padding:0;overflow:hidden;">${imgContent}</div>
-                            <div class="card-body">
-                                <div class="fd-name" style="font-size:13px;">${v.name}</div>
-                            </div>
-                        </div>
-                    `;
-                }).join('')}
-            </div>
-        `;
-    }
-
-    function clearRecentHome(btn) {
-        RecentAPI.clear();
-        const container = document.getElementById('recentSection');
-        container.style.display = 'none';
-        container.innerHTML = '';
-        showToast('已清空浏览记录');
-    }
-
-    // ── 收藏功能：初始化徽章 ──
-    function initFavorites() {
-        updateFavBadge();
-        // 监听 localStorage 变化（其他标签页的同步）
-        window.addEventListener('storage', function(e) {
-            if (e.key === 'guigang_favorites') {
-                updateFavBadge();
-            }
-        });
-    }
-    initFavorites();
-
-    // ── 收藏面板 ──
-    function openFavoritesPanel() {
-        renderFavoritesList();
-        document.getElementById('favPanel').classList.add('active');
-    }
-
-    function closeFavoritesPanel() {
-        document.getElementById('favPanel').classList.remove('active');
-    }
-
-    function renderFavoritesList() {
-        const container = document.getElementById('favList');
-        const favs = FavoritesAPI.getAll();
-        
-        if (favs.length === 0) {
-            container.innerHTML = `
-                <div class="fav-empty">
-                    <div class="fav-empty-emoji">📭</div>
-                    <p>收藏夹空空如也~</p>
-                    <div class="fav-empty-hint">浏览景点时点击 ♡ 即可收藏</div>
-                </div>
-            `;
-            return;
-        }
-        
-        container.innerHTML = favs.map(f => {
-            const imgContent = f.image_url
-                ? `<img src="${f.image_url}" alt="${f.name}" onerror="this.parentElement.textContent='🏞️'">`
-                : '🏞️';
-            const priceClass = (f.ticket_price && f.ticket_price.includes('免费')) ? 'free' : '';
-            const priceText = f.ticket_price || '暂无信息';
-            
-            return `
-                <div class="fav-item" onclick="window.location.href='/spot/${f.id}'">
-                    <div class="fav-item-img">${imgContent}</div>
-                    <div class="fav-item-info">
-                        <div class="fav-item-name">${f.name}</div>
-                        <div class="fav-item-meta">
-                            ${f.district ? `<span class="fav-district">${f.district}</span>` : ''}
-                            <span class="fav-price ${priceClass}">💰 ${priceText}</span>
-                        </div>
-                    </div>
-                    <button class="fav-remove-btn" onclick="event.stopPropagation(); removeFavorite('${f.id}')" title="取消收藏">✕</button>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function removeFavorite(spotId) {
-        FavoritesAPI.remove(spotId);
-        renderFavoritesList();
-        updateFavBadge();
-        showToast('已取消收藏');
-    }
-
-    function clearAllFavorites() {
-        if (!confirm('确定清空所有收藏吗？此操作不可撤销。')) return;
-        FavoritesAPI.clearAll();
-        renderFavoritesList();
-        updateFavBadge();
-        showToast('已清空所有收藏');
-    }
-
-    function updateFavBadge() {
-        const count = FavoritesAPI.count();
-        const badge = document.getElementById('favBadge');
-        if (badge) {
-            badge.textContent = count;
-            badge.style.display = count > 0 ? 'flex' : 'none';
-        }
     }
 </script>
 <script>
