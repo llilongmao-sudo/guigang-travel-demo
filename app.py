@@ -19,8 +19,8 @@ SESSION_HISTORY = {}
 MAX_HISTORY_LEN = 10  # 保留最近10轮对话
 
 # ── LLM 配置（可选） ──────────────────────────────
-LLM_API_BASE = os.environ.get("LLM_API_BASE", "http://127.0.0.1:8642/v1")
-LLM_API_KEY = os.environ.get("LLM_API_KEY", "hermes-local-auth-key-2026")
+LLM_API_BASE = os.environ.get("LLM_API_BASE", "http://127.0.0.1:11434/v1")
+LLM_API_KEY = os.environ.get("LLM_API_KEY", "ollama")
 LLM_MODEL = os.environ.get("LLM_MODEL", None)
 
 # 检查 LLM 是否可用
