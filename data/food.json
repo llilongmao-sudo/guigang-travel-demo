@@ -42,7 +42,9 @@
       "pair_with": [
         "桥圩鸭肉粉",
         "牛肠酸"
-      ]
+      ],
+      "image": "/static/images/food/guigang-suanliao.svg",
+      "image_alt": "贵港酸料 🥬"
     },
     {
       "id": "guipin-luoxiu-mifen",
@@ -75,7 +77,9 @@
       "history": "罗秀米粉制作技艺入选广西壮族自治区非物质文化遗产",
       "pair_with": [
         "桂平绿豆沙"
-      ]
+      ],
+      "image": "/static/images/food/guipin-luoxiu-mifen.svg",
+      "image_alt": "桂平罗秀米粉 🍜"
     },
     {
       "id": "qintang-lianou",
@@ -105,7 +109,9 @@
       "best_season": "6-12月（秋季莲藕最佳）",
       "price_range": "¥60-150/人（莲藕宴）",
       "where_to_find": "覃塘农家乐、荷美覃塘景区周边",
-      "history": "覃塘莲藕 2011 年获国家地理标志产品保护"
+      "history": "覃塘莲藕 2011 年获国家地理标志产品保护",
+      "image": "/static/images/food/qintang-lianou.svg",
+      "image_alt": "覃塘莲藕（及莲藕宴） 🌿"
     },
     {
       "id": "pingnan-baiqi-ji",
@@ -134,7 +140,9 @@
       "best_time": "正餐",
       "best_season": "全年",
       "price_range": "¥60-100/只",
-      "where_to_find": "平南县各酒家、北帝山山下农家乐"
+      "where_to_find": "平南县各酒家、北帝山山下农家乐",
+      "image": "/static/images/food/pingnan-baiqi-ji.svg",
+      "image_alt": "平南白切三黄鸡 🍗"
     },
     {
       "id": "qiaowei-yarou-fen",
@@ -164,7 +172,9 @@
       "best_time": "全天（早餐最经典）",
       "best_season": "全年",
       "price_range": "¥10-20/碗",
-      "where_to_find": "桥圩镇任何一家粉店都不会踩雷 / 港南城区 / 贵港市区有分店"
+      "where_to_find": "桥圩镇任何一家粉店都不会踩雷 / 港南城区 / 贵港市区有分店",
+      "image": "/static/images/food/qiaowei-yarou-fen.svg",
+      "image_alt": "桥圩鸭肉粉 🦆"
     },
     {
       "id": "donglong-mizong",
@@ -195,7 +205,9 @@
       "best_season": "全年（端午前后最盛）",
       "price_range": "¥5-15/只",
       "where_to_find": "东龙镇 / 港南城区 / 贵港市区部分老字号",
-      "history": "东龙米粽制作技艺入选贵港市级非物质文化遗产"
+      "history": "东龙米粽制作技艺入选贵港市级非物质文化遗产",
+      "image": "/static/images/food/donglong-mizong.svg",
+      "image_alt": "东龙米粽 🍙"
     },
     {
       "id": "pingnan-yusheng",
@@ -226,7 +238,9 @@
       "best_season": "全年",
       "price_range": "¥80-150/份",
       "where_to_find": "平南县城酒楼",
-      "note": "生食，肠胃敏感者慎尝"
+      "note": "生食，肠胃敏感者慎尝",
+      "image": "/static/images/food/pingnan-yusheng.svg",
+      "image_alt": "平南鱼生 🐟"
     },
     {
       "id": "pingnan-baiqie-gourou",
@@ -254,7 +268,9 @@
       "best_season": "秋冬季",
       "price_range": "¥80-150/份",
       "where_to_find": "平南县 / 贵港部分特色餐馆",
-      "note": "食材敏感，建议根据个人饮食习惯决定"
+      "note": "食材敏感，建议根据个人饮食习惯决定",
+      "image": "/static/images/food/pingnan-baiqie-gourou.svg",
+      "image_alt": "平南白切狗肉 🍖"
     },
     {
       "id": "niuchang-suan",
@@ -284,7 +300,9 @@
       "best_time": "晚餐/夜宵",
       "best_season": "全年",
       "price_range": "¥10-30/份",
-      "where_to_find": "贵港市区各夜市、桥圩镇"
+      "where_to_find": "贵港市区各夜市、桥圩镇",
+      "image": "/static/images/food/niuchang-suan.svg",
+      "image_alt": "牛肠酸 🌶️"
     },
     {
       "id": "guipin-lvdousha",
@@ -313,7 +331,9 @@
       "best_time": "下午茶",
       "best_season": "夏季最佳",
       "price_range": "¥5-10/碗",
-      "where_to_find": "桂平市糖水铺、贵港市区部分店铺"
+      "where_to_find": "桂平市糖水铺、贵港市区部分店铺",
+      "image": "/static/images/food/guipin-lvdousha.svg",
+      "image_alt": "桂平绿豆沙 🥣"
     },
     {
       "id": "xishan-cha",
@@ -340,7 +360,9 @@
       "best_season": "春茶最佳（3-5月）",
       "price_range": "¥50-300/盒（伴手礼）",
       "where_to_find": "桂平西山景区 / 西山茶专卖店",
-      "history": "西山茶 2010 年获国家地理标志产品保护"
+      "history": "西山茶 2010 年获国家地理标志产品保护",
+      "image": "/static/images/food/xishan-cha.svg",
+      "image_alt": "西山茶 🍵"
     },
     {
       "id": "shengzha-mifen",
@@ -368,7 +390,9 @@
       "best_time": "早餐",
       "best_season": "全年",
       "price_range": "¥6-12/碗",
-      "where_to_find": "贵港市区老牌粉店"
+      "where_to_find": "贵港市区老牌粉店",
+      "image": "/static/images/food/shengzha-mifen.svg",
+      "image_alt": "生榨米粉 🥣"
     },
     {
       "id": "ciba",
@@ -394,7 +418,9 @@
       "best_time": "下午茶",
       "best_season": "全年",
       "price_range": "¥3-8/个",
-      "where_to_find": "贵港老街、菜市场、平南县"
+      "where_to_find": "贵港老街、菜市场、平南县",
+      "image": "/static/images/food/ciba.svg",
+      "image_alt": "糍粑 🍡"
     },
     {
       "id": "yeshi-shaokao",
@@ -423,7 +449,9 @@
       "best_time": "夜宵（19:00 后）",
       "best_season": "全年（夏夜最佳）",
       "price_range": "¥30-80/人",
-      "where_to_find": "马草江夜市、港北夜市、各大商圈周边"
+      "where_to_find": "马草江夜市、港北夜市、各大商圈周边",
+      "image": "/static/images/food/yeshi-shaokao.svg",
+      "image_alt": "贵港夜市烧烤 🍢"
     },
     {
       "id": "jiulinghu-yu",
@@ -451,7 +479,9 @@
       "best_time": "正餐",
       "best_season": "全年",
       "price_range": "¥60-120/份",
-      "where_to_find": "九凌湖周边农家乐、覃塘区餐馆"
+      "where_to_find": "九凌湖周边农家乐、覃塘区餐馆",
+      "image": "/static/images/food/jiulinghu-yu.svg",
+      "image_alt": "九凌湖鱼 🐟"
     },
     {
       "id": "xishan-suzhai",
@@ -479,7 +509,9 @@
       "best_time": "正餐",
       "best_season": "全年",
       "price_range": "¥50-100/人",
-      "where_to_find": "桂平西山寺庙斋堂"
+      "where_to_find": "桂平西山寺庙斋堂",
+      "image": "/static/images/food/xishan-suzhai.svg",
+      "image_alt": "西山素斋 🥗"
     }
   ]
 }
