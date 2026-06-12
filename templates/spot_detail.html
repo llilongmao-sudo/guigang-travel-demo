@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ spot.name }} - 贵港旅游智能助手</title>
+    <link rel="stylesheet" href="/static/css/spot_detail.css">
+    <meta name="theme-color" content="#2d8a4e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+<div class="detail-page" id="app">
+    <!-- 顶部大图 -->
+    <div class="hero-image">
+        <!-- 返回按钮 -->
+        <button class="back-btn" onclick="goBack()" id="backBtn" aria-label="返回">←</button>
+        <!-- 收藏按钮 -->
+        <button class="fav-btn" id="favBtn" onclick="toggleFavorite()" aria-label="收藏">🤍</button>
+        <img id="heroImg" src="{{ spot.image_url }}" alt="{{ spot.name }}"
+             onerror="this.style.display='none'; document.getElementById('imgPlaceholder').style.display='flex';"
+             onload="this.classList.add('loaded')">
+        <div class="img-placeholder" id="imgPlaceholder" style="display:none;">🏞️</div>
+        <!-- 景点名称（叠在图片上） -->
+        <div class="spot-title-overlay">
+            <h1>{{ spot.name }}</h1>
+            <span class="spot-category-tag">{{ spot.category }}</span>
+        </div>
+        <!-- AI 讲解按钮 -->
+        <button class="ai-btn" onclick="startAiTour()">
+            <span class="ai-icon">🤖</span>
+            AI 讲解
+        </button>
+    </div>
+
+    <!-- 信息区域 -->
+    <div class="info-section">
+        <!-- 快速信息卡片 -->
+        <div class="info-card">
+            <div class="quick-info">
+                <div class="qi-item">
+                    <div class="qi-icon">⭐</div>
+                    <div class="qi-label">推荐指数</div>
+                    <div class="qi-value">
+                        <span class="rating-stars" id="ratingStars"></span>
+                    </div>
+                </div>
+                <div class="qi-item">
+                    <div class="qi-icon">💰</div>
+                    <div class="qi-label">门票价格</div>
+                    <div class="qi-value" id="ticketDisplay">{{ spot.ticket_price }}</div>
+                </div>
+                <div class="qi-item">
+                    <div class="qi-icon">🕐</div>
+                    <div class="qi-label">开放时间</div>
+                    <div class="qi-value" id="openTimeDisplay">{{ spot.open_time }}</div>
+                </div>
+                <div class="qi-item">
+                    <div class="qi-icon">🌸</div>
+                    <div class="qi-label">最佳季节</div>
+                    <div class="qi-value">
+                        {%- if spot.best_season -%}
+                            {{ spot.best_season }}
+                        {%- else -%}
+                            四季皆宜
+                        {%- endif -%}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 位置 + 导航 -->
+            <div class="location-row">
+                <div class="loc-text">
+                    <span class="loc-icon">📍</span>
+                    {{ spot.location }}
+                    {%- if spot.district -%}
+                        <span style="font-size:12px;color:#999;margin-left:4px;">（{{ spot.district }}）</span>
+                    {%- endif -%}
+                </div>
+                <a class="nav-btn" href="https://uri.amap.com/search?keyword={{ '贵港市' + spot.name }}" target="_blank" rel="noopener">
+                    🗺️ 导航
+                </a>
+            </div>
+        </div>
+
+        <!-- 景点简介 -->
+        <div class="section-title"><span class="st-icon">📖</span> 景点简介</div>
+        <div class="info-card">
+            <div class="description-text">{{ spot.description }}</div>
+        </div>
+
+        <!-- 亮点列表 -->
+        <div class="section-title"><span class="st-icon">✨</span> 亮点特色</div>
+        <div class="info-card">
+            <ul class="highlight-list">
+                {%- for hl in spot.highlights -%}
+                <li>
+                    <span class="hl-icon">🌟</span>
+                    <span class="hl-text">{{ hl }}</span>
+                </li>
+                {%- endfor -%}
+            </ul>
+        </div>
+
+        <!-- 推荐路线 -->
+        <div class="section-title"><span class="st-icon">🗺️</span> 推荐路线</div>
+        <div class="info-card">
+            <div class="route-text">
+                {%- set route_parts = spot.recommended_route.split('→') -%}
+                {%- for part in route_parts -%}
+                    <span class="route-step">{{ part | trim }}</span>
+                {%- endfor -%}
+                <div class="route-tips-icon">⏱️ {{ spot.tips[:30] if '小时' in spot.tips else '建议安排半日游览' }}</div>
+            </div>
+        </div>
+
+        <!-- 小贴士 -->
+        <div class="section-title"><span class="st-icon">💡</span> 游玩贴士</div>
+        <div class="info-card">
+            <div class="tips-content">
+                {%- set tips_list = spot.tips.split('；') -%}
+                {%- for tip in tips_list -%}
+                    {%- if tip.strip() -%}
+                    <div class="tip-item">{{ tip.strip() }}</div>
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+        </div>
+
+        <!-- 附近景点 -->
+        {%- if spot.nearby_spots -%}
+        <div class="section-title"><span class="st-icon">🏘️</span> 附近景点</div>
+        <div class="info-card">
+            <div class="nearby-grid" id="nearbyGrid">
+                {%- for nearby_name in spot.nearby_spots -%}
+                <div class="nearby-card" onclick="navigateToSpot('{{ nearby_name }}')">
+                    <div class="nbc-img">
+                        {%- set nearby_emoji_map = {'西山风景区':'🏔️','东湖公园':'🌳','南山寺':'🏛️','贵港博物馆':'🏛️','民族公园':'🌳','新世纪广场':'🏛️','园博园':'🌳','平天山':'🏔️','龙潭':'🌳','大藤峡':'🏔️','北帝山':'🏔️','北回归线':'🗼','金田':'🏛️','白石山':'🏔️','雄森':'🦁','龚州':'🌳','老街':'🏘️','世纪广场':'🏛️','覃塘':'🌾','九凌湖':'🌊','马草江':'🌳','图书馆':'📚','莲藕':'🌾','东塔':'🗼','乳泉亭':'⛲','西山乳泉':'⛲','龙华寺':'⛩️','平坦水库':'🌊','起义':'🏛️','湿地公园':'🌳','古镇':'🏘️','大坦':'🌊','荷花基地':'🌸'} -%}
+                        {{ nearby_emoji_map.get(nearby_name.split(' ')[0] if ' ' in nearby_name else nearby_name[:3] if nearby_name|length > 2 else nearby_name, '📍') }}
+                    </div>
+                    <div class="nbc-body">
+                        <div class="nbc-name">{{ nearby_name }}</div>
+                        <div class="nbc-district">点击查看详情 →</div>
+                    </div>
+                </div>
+                {%- endfor -%}
+            </div>
+        </div>
+        {%- endif -%}
+
+        <!-- 附近住宿 -->
+        {%- if spot.nearby_hotels -%}
+        <div class="section-title"><span class="st-icon">🏨</span> 附近住宿</div>
+        <div class="info-card">
+            <ul class="hotel-list">
+                {%- for hotel in spot.nearby_hotels -%}
+                <li class="hotel-item">
+                    <div class="hotel-icon">🏨</div>
+                    <div class="hotel-info">
+                        <div class="h-name">{{ hotel.name }}</div>
+                        <div class="h-meta">
+                            <span>🏷️ {{ hotel.type }}</span>
+                            <span>💰 {{ hotel.price }}</span>
+                            <span>📍 {{ hotel.distance }}</span>
+                        </div>
+                        <div class="h-note">{{ hotel.note }}</div>
+                    </div>
+                </li>
+                {%- endfor -%}
+            </ul>
+        </div>
+        {%- endif -%}
+
+        <!-- 底部留白 -->
+        <div style="height:16px;"></div>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="detail-footer">
+        <button class="df-btn secondary" onclick="toggleFavorite()">
+            <span id="favBtnText">🤍 收藏</span>
+        </button>
+        <button class="df-btn primary" onclick="startAiTour()">
+            🤖 AI 智能讲解
+        </button>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+    // ── 数据 ──
+    const spotData = {{ spot | tojson | safe }};
+    const STORAGE_KEY = 'guigang_favorites';
+
+    // ── 初始化 ──
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化评分星星
+        renderRating(spotData.rating);
+        // 初始化收藏状态
+        updateFavButton();
+        // 记录浏览
+        saveViewHistory();
+    });
+
+    // ── 评分渲染 ──
+    function renderRating(ratingStr) {
+        const container = document.getElementById('ratingStars');
+        if (!container) return;
+        // rating 字段可能是 "免费" 或数值字符串，提取数字
+        let rating = parseFloat(ratingStr);
+        if (isNaN(rating)) {
+            // 如果 rating 是 "免费"，显示默认 4 星
+            rating = 4;
+        }
+        const full = Math.floor(rating);
+        const half = rating - full >= 0.3 ? 1 : 0;
+        const empty = 5 - full - half;
+        let html = '';
+        for (let i = 0; i < full; i++) html += '<span class="star-filled">★</span>';
+        if (half) html += '<span class="star-filled" style="opacity:0.6;">★</span>';
+        for (let i = 0; i < empty; i++) html += '<span class="star-empty">★</span>';
+        html += ` <span style="font-size:12px;color:#999;margin-left:4px;">${rating.toFixed(1)}</span>`;
+        container.innerHTML = html;
+    }
+
+    // ── 收藏功能 ──
+    function getFavorites() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        } catch(e) { return []; }
+    }
+
+    function saveFavorites(favs) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(favs));
+    }
+
+    function isFavorited() {
+        const favs = getFavorites();
+        return favs.some(f => f.id === spotData.id);
+    }
+
+    function toggleFavorite() {
+        const favs = getFavorites();
+        const idx = favs.findIndex(f => f.id === spotData.id);
+        if (idx > -1) {
+            favs.splice(idx, 1);
+            showToast('已取消收藏');
+        } else {
+            favs.push({
+                id: spotData.id,
+                name: spotData.name,
+                district: spotData.district || '',
+                added_at: new Date().toISOString()
+            });
+            showToast('❤️ 已收藏');
+        }
+        saveFavorites(favs);
+        updateFavButton();
+    }
+
+    function updateFavButton() {
+        const faved = isFavorited();
+        const favBtn = document.getElementById('favBtn');
+        const favText = document.getElementById('favBtnText');
+        if (favBtn) favBtn.textContent = faved ? '❤️' : '🤍';
+        if (favBtn) favBtn.classList.toggle('favorited', faved);
+        if (favText) favText.textContent = faved ? '❤️ 已收藏' : '🤍 收藏';
+    }
+
+    // ── AI 讲解 ──
+    function startAiTour() {
+        // 跳回首页并发起聊天
+        if (window.opener && !window.opener.closed) {
+            // 如果是从首页打开的，通知父窗口
+            try {
+                window.opener.postMessage({
+                    type: 'ai_tour',
+                    spotName: spotData.name,
+                    spotId: spotData.id
+                }, '*');
+                window.close();
+            } catch(e) {
+                window.location.href = '/?ask=' + encodeURIComponent(spotData.name + '有什么好玩的？');
+            }
+        } else {
+            // 跳转首页，URL 参数触发自动提问
+            window.location.href = '/?ask=' + encodeURIComponent(spotData.name + '有什么好玩的？');
+        }
+    }
+
+    // ── 附近景点导航 ──
+    function navigateToSpot(name) {
+        // 查找景点 ID（通过 API）
+        fetch('/api/spots')
+            .then(r => r.json())
+            .then(spots => {
+                const match = spots.find(s => s.name === name || name.includes(s.name) || s.name.includes(name));
+                if (match && match.id) {
+                    window.location.href = '/spot/' + match.id;
+                } else {
+                    // 找不到直接匹配，用名称搜索跳回首页
+                    window.location.href = '/?ask=' + encodeURIComponent(name);
+                }
+            })
+            .catch(() => {
+                window.location.href = '/?ask=' + encodeURIComponent(name);
+            });
+    }
+
+    // ── 浏览历史记录 ──
+    function saveViewHistory() {
+        try {
+            const key = 'guigang_recent_views';
+            let views = JSON.parse(localStorage.getItem(key) || '[]');
+            // 去重
+            views = views.filter(v => v.id !== spotData.id);
+            views.unshift({
+                id: spotData.id,
+                name: spotData.name,
+                viewed_at: new Date().toISOString()
+            });
+            // 最多保留 20 条
+            if (views.length > 20) views = views.slice(0, 20);
+            localStorage.setItem(key, JSON.stringify(views));
+        } catch(e) { /* ignore */ }
+    }
+
+    // ── 返回 ──
+    function goBack() {
+        if (document.referrer && document.referrer.includes(window.location.host)) {
+            history.back();
+        } else {
+            window.location.href = '/';
+        }
+    }
+
+    // ── Toast ──
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+</script>
+</body>
+</html>

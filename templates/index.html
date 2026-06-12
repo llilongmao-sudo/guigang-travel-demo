@@ -980,6 +980,14 @@
         checkConnection();
         loadChatHistory();
         initVoice();
+        // 自动提问（从详情页 AI 讲解跳转过来）
+        const autoAsk = '{{ auto_ask | e }}';
+        if (autoAsk) {
+            setTimeout(() => {
+                document.getElementById('inputBox').value = autoAsk;
+                sendMessage();
+            }, 500);
+        }
     });
 
     // ── Hero: Categories + Featured ──
@@ -1013,7 +1021,7 @@
             const colors = categoryColors[c] || ['#66bb6a','#388e3c'];
             const isFree = s.ticket_price && s.ticket_price.includes('免费');
             return `
-                <div class="featured-card" onclick="quickAsk('${s.name}有什么特色？')">
+                <div class="featured-card" onclick="window.location.href='/spot/${s.id}'">
                     <div class="card-top" style="background:linear-gradient(135deg,${colors[0]},${colors[1]})">
                         ${categoryEmoji[c] || '📍'}
                         <span class="badge">${s.district || '贵港'}</span>
@@ -1083,7 +1091,7 @@
         };
         
         list.innerHTML = spots.map(s => `
-            <div class="drawer-item" onclick="quickAsk('${s.name}有什么特色？')">
+            <div class="drawer-item" onclick="window.location.href='/spot/${s.id}'">
                 <div class="emoji">${categoryEmoji[s.category] || '📍'}</div>
                 <div class="info">
                     <h3>${s.name}</h3>

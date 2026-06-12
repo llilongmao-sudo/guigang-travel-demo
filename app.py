@@ -458,7 +458,8 @@ def generate_local_reply(query, spots, tips, current_topic=None):
 
 @app.route("/")
 def index():
-    return render_template("index.html", spots=SCENIC_SPOTS)
+    auto_ask = request.args.get("ask", "")
+    return render_template("index.html", spots=SCENIC_SPOTS, auto_ask=auto_ask)
 
 @app.route("/api/debug_search")
 def debug_search():
@@ -629,6 +630,19 @@ def feedback():
     except Exception as e:
         print(f"[反馈] 保存失败: {e}")
     return jsonify({"status": "ok", "message": "感谢反馈！"})
+
+@app.route("/spot/<spot_id>")
+def spot_detail_page(spot_id):
+    """景点详情页"""
+    spot = None
+    for s in SCENIC_SPOTS:
+        if s["id"] == spot_id:
+            spot = s
+            break
+    if not spot:
+        return render_template("index.html", spots=SCENIC_SPOTS, error="未找到该景点"), 404
+    return render_template("spot_detail.html", spot=spot)
+
 
 @app.route("/api/spot/<spot_id>")
 def get_spot_detail(spot_id):

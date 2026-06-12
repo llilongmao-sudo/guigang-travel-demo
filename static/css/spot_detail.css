@@ -1,0 +1,623 @@
+/* ── 景点详情页样式 (spot_detail.css) ── */
+/* 与首页风格一致：绿色主题 #2d8a4e */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 页面容器 - 移动端优先 */
+.detail-page {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #fff;
+    min-height: 100vh;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+/* ── 顶部大图 ── */
+.hero-image {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #2d8a4e, #1a6b3c);
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.hero-image img.loaded {
+    transform: scale(1);
+}
+
+.hero-image .img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    color: rgba(255,255,255,0.5);
+}
+
+/* 渐变遮罩 */
+.hero-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    pointer-events: none;
+}
+
+/* ── 返回按钮 ── */
+.back-btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.back-btn:active {
+    background: rgba(0,0,0,0.5);
+}
+
+/* ── 收藏按钮 ── */
+.fav-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.fav-btn:active {
+    transform: scale(1.2);
+}
+
+.fav-btn.favorited {
+    background: rgba(244,67,54,0.4);
+}
+
+/* ── AI 讲解按钮 ── */
+.ai-btn {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    z-index: 10;
+    padding: 10px 18px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #2d8a4e, #1a6b3c);
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 16px rgba(45,138,78,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+}
+
+.ai-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(45,138,78,0.3);
+}
+
+.ai-btn .ai-icon {
+    font-size: 18px;
+}
+
+/* ── 景点名称（叠在图片上） ── */
+.spot-title-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    z-index: 5;
+    color: #fff;
+}
+
+.spot-title-overlay h1 {
+    font-size: 26px;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+.spot-title-overlay .spot-category-tag {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(4px);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* ── 信息区域 ── */
+.info-section {
+    padding: 16px;
+    margin-top: -8px;
+    position: relative;
+    z-index: 2;
+}
+
+/* 信息卡片 */
+.info-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 12px;
+}
+
+/* 快捷信息行 */
+.quick-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.quick-info .qi-item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+}
+
+.quick-info .qi-item .qi-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.quick-info .qi-item .qi-label {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 2px;
+}
+
+.quick-info .qi-item .qi-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* 星级评分 */
+.rating-stars {
+    display: inline-flex;
+    gap: 2px;
+    font-size: 18px;
+}
+
+.star-filled { color: #ffc107; }
+.star-empty { color: #e0e0e0; }
+
+/* 位置 + 导航 */
+.location-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 12px;
+}
+
+.location-row .loc-text {
+    flex: 1;
+    font-size: 14px;
+    color: #555;
+}
+
+.location-row .loc-text .loc-icon {
+    margin-right: 6px;
+}
+
+.nav-btn {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: none;
+    background: linear-gradient(135deg, #2d8a4e, #1a6b3c);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: transform 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+    text-decoration: none;
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+/* 行信息 */
+.info-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 0;
+    gap: 10px;
+}
+
+.info-row .ir-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+}
+
+.info-row .ir-content {
+    flex: 1;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+}
+
+.info-row .ir-content .ir-label {
+    font-size: 11px;
+    color: #999;
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* ── 内容区块标题 ── */
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a6b3c;
+    padding: 16px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title .st-icon {
+    font-size: 18px;
+}
+
+/* ── 景点简介 ── */
+.description-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+    padding: 0 4px;
+}
+
+/* ── 亮点列表 ── */
+.highlight-list {
+    list-style: none;
+}
+
+.highlight-list li {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+    align-items: flex-start;
+}
+
+.highlight-list li:last-child {
+    border-bottom: none;
+}
+
+.highlight-list li .hl-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.highlight-list li .hl-text {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* ── 推荐路线 ── */
+.route-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+    padding: 0 4px;
+}
+
+.route-text .route-step {
+    display: block;
+    padding: 6px 0;
+}
+
+.route-text .route-step::before {
+    content: '→ ';
+    color: #2d8a4e;
+    font-weight: 600;
+}
+
+.route-tips-icon {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2d8a4e;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+/* ── 小贴士 ── */
+.tips-content {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+}
+
+.tips-content .tip-item {
+    display: flex;
+    gap: 8px;
+    padding: 6px 0;
+    align-items: flex-start;
+}
+
+.tips-content .tip-item::before {
+    content: '💡';
+    flex-shrink: 0;
+}
+
+/* ── 附近景点 ── */
+.nearby-grid {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 0 8px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nearby-grid::-webkit-scrollbar { display: none; }
+
+.nearby-card {
+    flex: 0 0 140px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform 0.2s;
+    scroll-snap-align: start;
+}
+
+.nearby-card:active {
+    transform: scale(0.95);
+}
+
+.nearby-card .nbc-img {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+}
+
+.nearby-card .nbc-body {
+    padding: 8px 10px;
+}
+
+.nearby-card .nbc-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nearby-card .nbc-district {
+    font-size: 11px;
+    color: #999;
+}
+
+/* ── 附近住宿 ── */
+.hotel-list {
+    list-style: none;
+}
+
+.hotel-item {
+    display: flex;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f5f5f5;
+    align-items: flex-start;
+}
+
+.hotel-item:last-child {
+    border-bottom: none;
+}
+
+.hotel-item .hotel-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5faf6;
+    border-radius: 8px;
+}
+
+.hotel-item .hotel-info {
+    flex: 1;
+}
+
+.hotel-item .hotel-info .h-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.hotel-item .hotel-info .h-meta {
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.hotel-item .hotel-info .h-note {
+    font-size: 12px;
+    color: #2d8a4e;
+    margin-top: 3px;
+    background: #e8f5e9;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* ── 底部导航 ── */
+.detail-footer {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #eee;
+    padding: 12px 16px;
+    display: flex;
+    gap: 10px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+
+.detail-footer .df-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+}
+
+.detail-footer .df-btn:active {
+    transform: scale(0.97);
+}
+
+.detail-footer .df-btn.primary {
+    background: linear-gradient(135deg, #2d8a4e, #1a6b3c);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(45,138,78,0.3);
+}
+
+.detail-footer .df-btn.secondary {
+    background: #f5f5f5;
+    color: #555;
+}
+
+/* ── Toast ── */
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.toast.show { opacity: 1; }
+
+/* ── 空/暂无数据提示 ── */
+.empty-hint {
+    text-align: center;
+    padding: 20px;
+    color: #bbb;
+    font-size: 13px;
+}
+
+/* ── 加载占位动画 ── */
+@keyframes shimmer {
+    0% { background-position: -200px 0; }
+    100% { background-position: calc(200px + 100%) 0; }
+}
+
+.loading-placeholder {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200px 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+/* ── 响应式 ── */
+@media (min-width: 768px) {
+    .detail-page {
+        min-height: 100vh;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero-image { height: 260px; }
+    .spot-title-overlay h1 { font-size: 22px; }
+    .quick-info { grid-template-columns: 1fr 1fr; }
+}
