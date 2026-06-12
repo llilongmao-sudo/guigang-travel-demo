@@ -190,6 +190,29 @@ class DataLoader:
                 results.append(f)
         return results
 
+
+    # ── Meal Combos ──
+    @classmethod
+    def get_meal_combos(cls) -> list:
+        if not hasattr(cls, '_combos') or cls._combos is None:
+            data = cls._load_json('meal_combos.json')
+            cls._combos = data.get('combos', [])
+        return cls._combos
+
+    @classmethod
+    def get_combo_by_id(cls, cid: str) -> dict | None:
+        for c in cls.get_meal_combos():
+            if c.get('id') == cid:
+                return c
+        return None
+
+    @classmethod
+    def get_food_by_area(cls) -> list:
+        if not hasattr(cls, '_food_areas') or cls._food_areas is None:
+            data = cls._load_json('food_by_area.json')
+            cls._food_areas = data.get('areas', [])
+        return cls._food_areas
+
     @classmethod
     def get_stats(cls) -> Dict:
         """获取数据统计"""

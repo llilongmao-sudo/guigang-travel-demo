@@ -938,3 +938,47 @@ def search_foods():
 
 
 
+
+# ── 美食套餐 API ────────────────────────────────────────
+
+@app.route("/api/meal-combos")
+def get_meal_combos():
+    return jsonify(DataLoader.get_meal_combos())
+
+@app.route("/api/meal-combos/<combo_id>")
+def get_meal_combo(combo_id):
+    combo = DataLoader.get_combo_by_id(combo_id)
+    if combo:
+        # Resolve food_ids to food details
+        foods = []
+        for fid in combo.get('food_ids', []):
+            food = DataLoader.get_food_by_id(fid)
+            if food:
+                foods.append(food)
+        return jsonify({**combo, "foods_detail": foods})
+    return jsonify({"error": "未找到该套餐"}), 404
+
+
+# ── 美食区域 API ────────────────────────────────────────
+
+@app.route("/api/food-by-area")
+def get_food_by_area():
+    return jsonify(DataLoader.get_food_by_area())
+
+
+# ── 路线数据升级（从新版 routes.json）─────────────────────
+
+@app.route("/api/routes-v2")
+def get_routes_v2():
+    """新版路线（含详细行程、美食、预算）"""
+    return jsonify(DataLoader.get_routes())
+
+@app.route("/api/routes-v2/<route_id>")
+def get_route_v2(route_id):
+    for r in DataLoader.get_routes():
+        if r.get('id') == route_id:
+            return jsonify(r)
+    return jsonify({"error": "未找到该路线"}), 404
+
+
+

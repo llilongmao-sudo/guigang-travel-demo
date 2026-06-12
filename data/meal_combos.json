@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated_at": "2026-06-12",
+    "city": "贵港",
+    "note": "主题套餐：按场景/餐次/人组合贵港美食。food_id 引用 food.json"
+  },
+  "combos": [
+    {
+      "id": "combo-breakfast",
+      "name": "早餐套餐",
+      "type": "meal_time",
+      "icon": "🌅",
+      "color": "#F4A261",
+      "description": "贵港人早起的第一顿，米粉为主",
+      "best_time": "07:00-10:00",
+      "scenes": [
+        "日常",
+        "游客体验",
+        "本地人"
+      ],
+      "food_ids": [
+        "qiaowei-yarou-fen",
+        "guipin-luoxiu-mifen",
+        "shengzha-mifen"
+      ],
+      "pairing_logic": "三选一：桥圩鸭肉粉（最有名）/ 桂平罗秀米粉（清淡鲜）/ 生榨米粉（本地传统）",
+      "price_range": "¥6-20/人"
+    },
+    {
+      "id": "combo-lunch-dinner",
+      "name": "正餐套餐",
+      "type": "meal_time",
+      "icon": "🍱",
+      "color": "#E76F51",
+      "description": "中午晚上正式吃，招牌大菜 + 主食",
+      "best_time": "11:30-14:00 / 17:30-20:00",
+      "scenes": [
+        "家庭聚餐",
+        "游客打卡",
+        "节庆"
+      ],
+      "food_ids": [
+        "qintang-lianou",
+        "pingnan-baiqi-ji",
+        "xishan-suzhai",
+        "guipin-luoxiu-mifen"
+      ],
+      "pairing_logic": "覃塘莲藕宴（季节）/ 平南白切鸡（镇桌）/ 西山素斋（禅意） + 一份米粉",
+      "price_range": "¥60-150/人"
+    },
+    {
+      "id": "combo-latenight",
+      "name": "夜宵套餐",
+      "type": "meal_time",
+      "icon": "🌃",
+      "color": "#264653",
+      "description": "贵港夜生活标配：酸料+牛肠酸+烧烤",
+      "best_time": "20:00-01:00",
+      "scenes": [
+        "朋友聚会",
+        "夜游"
+      ],
+      "food_ids": [
+        "guigang-suanliao",
+        "niuchang-suan",
+        "yeshi-shaokao"
+      ],
+      "pairing_logic": "贵港酸料开胃 → 牛肠酸主食 → 烧烤配啤酒。灵魂三件套。",
+      "price_range": "¥30-80/人"
+    },
+    {
+      "id": "combo-couple",
+      "name": "情侣浪漫套餐",
+      "type": "scene",
+      "icon": "💕",
+      "color": "#D44C7C",
+      "description": "出片 + 调性 + 不踩雷",
+      "best_time": "18:00-21:00",
+      "scenes": [
+        "情侣",
+        "纪念日",
+        "约会"
+      ],
+      "food_ids": [
+        "pingnan-yusheng",
+        "xishan-cha",
+        "guipin-lvdousha"
+      ],
+      "pairing_logic": "平南鱼生（仪式感）+ 西山茶（清雅）+ 桂平绿豆沙（甜甜蜜蜜）",
+      "price_range": "¥150-250/人"
+    },
+    {
+      "id": "combo-family",
+      "name": "亲子家庭套餐",
+      "type": "scene",
+      "icon": "👨‍👩‍👧",
+      "color": "#4A7C59",
+      "description": "口味温和 + 营养均衡 + 小孩爱吃",
+      "best_time": "11:30-13:00 / 17:30-19:00",
+      "scenes": [
+        "带娃",
+        "家庭聚会"
+      ],
+      "food_ids": [
+        "donglong-mizong",
+        "qiaowei-yarou-fen",
+        "guipin-lvdousha",
+        "ciba"
+      ],
+      "pairing_logic": "东龙米粽（孩子爱）+ 桥圩鸭肉粉（温润）+ 绿豆沙（甜品）+ 糍粑（小吃）",
+      "price_range": "¥50-100/人"
+    },
+    {
+      "id": "combo-summer-2026",
+      "name": "6-8 月限定套餐",
+      "type": "seasonal",
+      "icon": "☀️",
+      "color": "#F4A261",
+      "description": "2026 夏季：荷花、漂流、避暑的味觉版本",
+      "best_time": "全天",
+      "scenes": [
+        "夏季限定",
+        "6-8月出行"
+      ],
+      "food_ids": [
+        "qintang-lianou",
+        "guipin-lvdousha",
+        "ciba"
+      ],
+      "pairing_logic": "莲藕宴（消暑）+ 绿豆沙（清热）+ 糍粑（饱腹轻食）",
+      "price_range": "¥80-150/人"
+    },
+    {
+      "id": "combo-souvenir",
+      "name": "伴手礼套餐",
+      "type": "scene",
+      "icon": "🎁",
+      "color": "#8B4513",
+      "description": "能带走、能送人、有贵港标识",
+      "best_time": "全天",
+      "scenes": [
+        "送礼",
+        "自留纪念"
+      ],
+      "food_ids": [
+        "xishan-cha",
+        "donglong-mizong"
+      ],
+      "pairing_logic": "西山茶（地理标志，有面子）+ 东龙米粽（真空包装能带）",
+      "price_range": "¥50-300/套"
+    }
+  ]
+}

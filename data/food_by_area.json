@@ -1,0 +1,265 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated_at": "2026-06-12",
+    "city": "贵港",
+    "note": "按区域分组的美食专题。'全市通用'放全城可见的美食，'港南区'含桥圩/东龙等子镇。",
+    "total_areas": 5,
+    "total_foods_grouped": 16
+  },
+  "areas": [
+    {
+      "id": "gangnan",
+      "name": "港南区",
+      "name_en": "Gangnan District",
+      "description": "桥圩鸭肉粉、东龙米粽的故乡",
+      "count": 2,
+      "foods": [
+        {
+          "id": "donglong-mizong",
+          "name": "东龙米粽",
+          "emoji": "🍙",
+          "category": "主食",
+          "signature": true,
+          "must_try": true,
+          "flavor": "粽香软糯",
+          "price_range": "¥5-15/只",
+          "best_time": "正餐/下午茶",
+          "where_to_find": "东龙镇 / 港南城区 / 贵港市区部分老字号",
+          "area_detail": "港南区东龙镇"
+        },
+        {
+          "id": "qiaowei-yarou-fen",
+          "name": "桥圩鸭肉粉",
+          "emoji": "🦆",
+          "category": "主食",
+          "signature": true,
+          "must_try": true,
+          "flavor": "鲜香浓郁",
+          "price_range": "¥10-20/碗",
+          "best_time": "全天（早餐最经典）",
+          "where_to_find": "桥圩镇任何一家粉店都不会踩雷 / 港南城区 / 贵港市区有分店",
+          "area_detail": "港南区桥圩镇"
+        }
+      ]
+    },
+    {
+      "id": "qintang",
+      "name": "覃塘区",
+      "name_en": "Qintang District",
+      "description": "6-8 月莲藕、荷花的主场",
+      "count": 2,
+      "foods": [
+        {
+          "id": "qintang-lianou",
+          "name": "覃塘莲藕（及莲藕宴）",
+          "emoji": "🌿",
+          "category": "正餐",
+          "signature": true,
+          "must_try": true,
+          "flavor": "清甜粉糯",
+          "price_range": "¥60-150/人（莲藕宴）",
+          "best_time": "正餐",
+          "where_to_find": "覃塘农家乐、荷美覃塘景区周边",
+          "area_detail": "覃塘区"
+        },
+        {
+          "id": "jiulinghu-yu",
+          "name": "九凌湖鱼",
+          "emoji": "🐟",
+          "category": "正餐",
+          "signature": false,
+          "must_try": false,
+          "flavor": "鲜嫩清淡",
+          "price_range": "¥60-120/份",
+          "best_time": "正餐",
+          "where_to_find": "九凌湖周边农家乐、覃塘区餐馆",
+          "area_detail": "覃塘区"
+        }
+      ]
+    },
+    {
+      "id": "guipin",
+      "name": "桂平市",
+      "name_en": "Guiping City",
+      "description": "罗秀米粉、西山茶、岭南老街",
+      "count": 4,
+      "foods": [
+        {
+          "id": "guipin-luoxiu-mifen",
+          "name": "桂平罗秀米粉",
+          "emoji": "🍜",
+          "category": "主食",
+          "signature": true,
+          "must_try": true,
+          "flavor": "清淡鲜美",
+          "price_range": "¥8-15/碗",
+          "best_time": "早餐/正餐",
+          "where_to_find": "桂平罗秀镇 / 桂平市区粉店",
+          "area_detail": "桂平市罗秀镇"
+        },
+        {
+          "id": "guipin-lvdousha",
+          "name": "桂平绿豆沙",
+          "emoji": "🥣",
+          "category": "甜品",
+          "signature": true,
+          "must_try": false,
+          "flavor": "清甜绵软",
+          "price_range": "¥5-10/碗",
+          "best_time": "下午茶",
+          "where_to_find": "桂平市糖水铺、贵港市区部分店铺",
+          "area_detail": "桂平市"
+        },
+        {
+          "id": "xishan-suzhai",
+          "name": "西山素斋",
+          "emoji": "🥗",
+          "category": "正餐",
+          "signature": true,
+          "must_try": false,
+          "flavor": "清淡素雅",
+          "price_range": "¥50-100/人",
+          "best_time": "正餐",
+          "where_to_find": "桂平西山寺庙斋堂",
+          "area_detail": "桂平市"
+        },
+        {
+          "id": "xishan-cha",
+          "name": "西山茶",
+          "emoji": "🍵",
+          "category": "饮品",
+          "signature": true,
+          "must_try": false,
+          "flavor": "清香甘醇",
+          "price_range": "¥50-300/盒（伴手礼）",
+          "best_time": "全天",
+          "where_to_find": "桂平西山景区 / 西山茶专卖店",
+          "area_detail": "桂平市"
+        }
+      ]
+    },
+    {
+      "id": "pingnan",
+      "name": "平南县",
+      "name_en": "Pingnan County",
+      "description": "白切三黄鸡、鱼生的产地",
+      "count": 4,
+      "foods": [
+        {
+          "id": "pingnan-baiqi-ji",
+          "name": "平南白切三黄鸡",
+          "emoji": "🍗",
+          "category": "正餐",
+          "signature": true,
+          "must_try": true,
+          "flavor": "鲜嫩清香",
+          "price_range": "¥60-100/只",
+          "best_time": "正餐",
+          "where_to_find": "平南县各酒家、北帝山山下农家乐",
+          "area_detail": "平南县"
+        },
+        {
+          "id": "pingnan-baiqie-gourou",
+          "name": "平南白切狗肉",
+          "emoji": "🍖",
+          "category": "正餐",
+          "signature": true,
+          "must_try": false,
+          "flavor": "浓郁香醇",
+          "price_range": "¥80-150/份",
+          "best_time": "正餐",
+          "where_to_find": "平南县 / 贵港部分特色餐馆",
+          "area_detail": "平南县"
+        },
+        {
+          "id": "pingnan-yusheng",
+          "name": "平南鱼生",
+          "emoji": "🐟",
+          "category": "正餐",
+          "signature": true,
+          "must_try": false,
+          "flavor": "鲜爽香脆",
+          "price_range": "¥80-150/份",
+          "best_time": "正餐",
+          "where_to_find": "平南县城酒楼",
+          "area_detail": "平南县"
+        },
+        {
+          "id": "ciba",
+          "name": "糍粑",
+          "emoji": "🍡",
+          "category": "甜品",
+          "signature": false,
+          "must_try": false,
+          "flavor": "软糯香甜",
+          "price_range": "¥3-8/个",
+          "best_time": "下午茶",
+          "where_to_find": "贵港老街、菜市场、平南县",
+          "area_detail": "贵港/平南"
+        }
+      ]
+    },
+    {
+      "id": "citywide",
+      "name": "全市通用",
+      "name_en": "Citywide",
+      "description": "全城都能吃到的",
+      "count": 4,
+      "foods": [
+        {
+          "id": "niuchang-suan",
+          "name": "牛肠酸",
+          "emoji": "🌶️",
+          "category": "小吃",
+          "signature": true,
+          "must_try": true,
+          "flavor": "酸辣咸鲜",
+          "price_range": "¥10-30/份",
+          "best_time": "晚餐/夜宵",
+          "where_to_find": "贵港市区各夜市、桥圩镇",
+          "area_detail": "贵港市区"
+        },
+        {
+          "id": "guigang-suanliao",
+          "name": "贵港酸料",
+          "emoji": "🥬",
+          "category": "小吃",
+          "signature": true,
+          "must_try": true,
+          "flavor": "酸辣甜咸",
+          "price_range": "¥5-20/份",
+          "best_time": "下午/晚上",
+          "where_to_find": "老城区酸料摊、马草江夜市、贵港各菜市场周边",
+          "area_detail": "贵港全市"
+        },
+        {
+          "id": "shengzha-mifen",
+          "name": "生榨米粉",
+          "emoji": "🥣",
+          "category": "主食",
+          "signature": false,
+          "must_try": false,
+          "flavor": "酸香软糯",
+          "price_range": "¥6-12/碗",
+          "best_time": "早餐",
+          "where_to_find": "贵港市区老牌粉店",
+          "area_detail": "贵港市区"
+        },
+        {
+          "id": "yeshi-shaokao",
+          "name": "贵港夜市烧烤",
+          "emoji": "🍢",
+          "category": "小吃",
+          "signature": false,
+          "must_try": false,
+          "flavor": "香辣咸鲜",
+          "price_range": "¥30-80/人",
+          "best_time": "夜宵（19:00 后）",
+          "where_to_find": "马草江夜市、港北夜市、各大商圈周边",
+          "area_detail": "贵港市区"
+        }
+      ]
+    }
+  ]
+}
