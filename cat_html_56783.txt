@@ -1,0 +1,10 @@
+// Constants
+    const categoryEmoji = {
+        '自然风光': '🏔️',
+        '古郡探幽': '🏯',
+        '公园休闲': '🌳',
+        '荷塘泛舟': '🪷',
+        '科普教育': '🔬'
+    };
+    const categoryColors = {
+        '自然风光': ['#66b

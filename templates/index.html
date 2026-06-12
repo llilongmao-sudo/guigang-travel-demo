@@ -1793,12 +1793,11 @@
         // Category row
         const catRow = document.getElementById('categoryRow');
         const cats = [
-            {key:'自然景观',emoji:'🏔️',label:'自然风光'},
-            {key:'人文景观',emoji:'🏛️',label:'人文历史'},
-            {key:'城市公园',emoji:'🌳',label:'公园休闲'},
-            {key:'主题乐园',emoji:'🎢',label:'主题乐园'},
-            {key:'科普教育',emoji:'🔬',label:'科普教育'},
-            {key:'农业观光',emoji:'🌾',label:'乡村体验'}
+            {key:'自然风光',emoji:'🏔️',label:'自然风光'},
+            {key:'古郡探幽',emoji:'🏯',label:'古郡探幽'},
+            {key:'公园休闲',emoji:'🌳',label:'公园休闲'},
+            {key:'荷塘泛舟',emoji:'🪷',label:'荷塘泛舟'},
+            {key:'科普教育',emoji:'🔬',label:'科普教育'}
         ];
         catRow.innerHTML = cats.map(c => `
             <button class="category-item" onclick="filterByCategory('${c.key}', this)">
@@ -1943,7 +1942,7 @@
             return interests.some(interest => {
                 if (interest === 'photo') return true; // 摄影推荐所有景点
                 if (interest === 'food') return s.description && s.description.includes('美食');
-                if (interest === 'family') return category === '主题乐园' || category === '城市公园';
+                if (interest === 'family') return category === '荷塘泛舟' || category === '城市公园';
                 if (interest === 'drive') return true; // 自驾推荐所有景点
                 if (interest === 'camping') return s.description && (s.description.includes('露营') || s.description.includes('户外'));
                 if (interest === 'culture') return category === '人文景观';
@@ -1987,10 +1986,22 @@
         btn.classList.add('active');
         activeCategory = category;
         
-        const filtered = spots.filter(s => s.category === category);
+        // Map new category names to old data keys for backward compat
+        const catMap = {
+            '自然风光': '自然景观',
+            '古郡探幽': '人文景观',
+            '公园休闲': '城市公园',
+            '荷塘泛舟': '荷塘泛舟',
+            '科普教育': '科普教育'
+        };
+        const dataKey = catMap[category] || category;
+        
+        // Try filtering by spots data or use quickAsk
+        const filtered = spots.filter(s => s.category === dataKey || s.category === category);
         if (filtered.length) {
-            const msg = filtered.slice(0, 3).map(s => s.name).join('、');
-            quickAsk(`推荐${category}景点`);
+            quickAsk(`推荐${category}景点有哪些？`);
+        } else {
+            quickAsk(`推荐${category}景点有哪些？`);
         }
     }
 

@@ -1,0 +1,5 @@
+ats = [
+            {key:'自然景观',emoji:'🏔️',label:'自然风光'},
+            {key:'人文景观',emoji:'🏛️',label:'人文历史'},
+            {key:'城市公园',emoji:'🌳',label:'公园休闲'},
+            {key:'主题乐园',emoji:'🎢',label:'主题乐园'}

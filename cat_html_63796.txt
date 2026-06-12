@@ -1,0 +1,3 @@
+  if (interest === 'family') return category === '主题乐园' || category === '城市公园';
+                if (interest === 'drive') return true; // 自驾推荐所有景点
+                if (interest === 'camping') return s.desc

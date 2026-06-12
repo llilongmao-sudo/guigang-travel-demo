@@ -1,0 +1,23 @@
+function filterByCategory(category, btn) {
+        document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
+        if (activeCategory === category) {
+            activeCategory = null;
+            return;
+        }
+        btn.classList.add('active');
+        activeCategory = category;
+        
+        const filtered = spots.filter(s => s.category === category);
+        if (filtered.length) {
+            const msg = filtered.slice(0, 3).map(s => s.name).join('、');
+            quickAsk(`推荐${category}景点`);
+        }
+    }
+
+    // ── Districts (kept for backward compat, no-op on welcome card) ──
+    
+    // 从新 API 加载分类数据
+    async function loadCategories() {
+        try {
+            const resp = await fetch('/api/categories');
+            const data = await 

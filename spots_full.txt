@@ -1,0 +1,81 @@
+const spots = {{ spots | tojson | safe }};
+    let isWaiting = false;
+    let sessionId = localStorage.getItem('guigang_session_id') || generateSessionId();
+    localStorage.setItem('guigang_session_id', sessionId);
+    let chatHistory = JSON.parse(localStorage.getItem('guigang_chat_history') || '[]');
+    let feedbacks = JSON.parse(localStorage.getItem('guigang_feedbacks') || '[]');
+    let recognition = null;
+    let isRecording = false;
+    let messageCounter = 0;
+    
+    // Constants
+    const categoryEmoji = {
+        '自然风光': '🏔️',
+        '古郡探幽': '🏯',
+        '公园休闲': '🌳',
+        '荷塘泛舟': '🪷',
+        '科普教育': '🔬'
+    };
+    const categoryColors = {
+        '自然风光': ['#66bb6a','#388e3c'],
+        '古郡探幽': ['#8d6e63','#5d4037'],
+        '公园休闲': ['#66bb6a','#2e7d32'],
+        '荷塘泛舟': ['#e91e63','#c2185b'],
+        '科普教育': ['#29b6f6','#0288d1']
+    };
+    
+    function generateSessionId() {
+        return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // ── Init ──
+    document.addEventListener('DOMContentLoaded', () => {
+        initHero();
+        loadCategories(); loadRoutes(); initDistricts();
+        initSpotList();
+        checkConnection();
+        loadChatHistory();
+        initVoice();
+        renderRecentOnHome();
+        renderRecentOnHome();
+        renderRoutesSection();
+        initPreferences(); // 初始化偏好功能
+        // 自动提问（从详情页 AI 讲解跳转过来）
+        const autoAsk = '{{ auto_ask | e }}';
+        if (autoAsk) {
+            setTimeout(() => {
+                document.getElementById('inputBox').value = autoAsk;
+                sendMessage();
+            }, 500);
+        }
+    });
+
+    // ── Hero: Categories + Featured ──
+    function initHero() {
+        // Greeting based on time
+        const h = new Date().getHours();
+        const greet = h < 6 ? '夜深了' : h < 9 ? '早上好' : h < 12 ? '上午好' : h < 14 ? '中午好' : h < 18 ? '下午好' : '晚上好';
+        document.getElementById('greetingSub').textContent = `${greet}！开始探索贵港吧 🌟`;
+        
+        // Category row
+        const catRow = document.getElementById('categoryRow');
+        const cats = [
+            {key:'nature',emoji:'🏔️',label:'自然风光'},
+            {key:'ancient',emoji:'🏯',label:'古郡探幽'},
+            {key:'park',emoji:'🌳',label:'公园休闲'},
+            {key:'lotus',emoji:'🪷',label:'荷塘泛舟'},
+            {key:'education',emoji:'🔬',label:'科普教育'}
+        ];
+        catRow.innerHTML = cats.map(c => `
+            <button class="category-item" onclick="filterByCategory('${c.key}', this)">
+                <span class="cat-emoji">${c.emoji}</span>
+                <span class="cat-label">${c.label}</span>
+            </button>
+        `).join('');
+        
+        // Featured spots - show top 8
+        const featuredRow = document.getElementById('featuredRow');
+        featuredRow.innerHTML = spots.slice(0, 8).map(s => {
+            const c = s.category || '';
+            const colors = categoryColors[c] || ['#66bb6a','#388e3c'];
+            const isFree = s.ticket_price && s.tic

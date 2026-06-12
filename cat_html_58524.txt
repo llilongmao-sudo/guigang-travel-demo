@@ -1,0 +1,6 @@
+'城市公园',emoji:'🌳',label:'公园休闲'},
+            {key:'主题乐园',emoji:'🎢',label:'主题乐园'},
+            {key:'科普教育',emoji:'🔬',label:'科普教育'},
+            {key:'农业观光',emoji:'🌾',label:'乡村体验'}
+        ];
+        catRow.

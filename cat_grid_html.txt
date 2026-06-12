@@ -1,0 +1,64 @@
+let messageCounter = 0;
+    
+    // Constants
+    const categoryEmoji = {
+        '自然风光': '🏔️',
+        '古郡探幽': '🏯',
+        '公园休闲': '🌳',
+        '荷塘泛舟': '🪷',
+        '科普教育': '🔬'
+    };
+    const categoryColors = {
+        '自然风光': ['#66bb6a','#388e3c'],
+        '古郡探幽': ['#8d6e63','#5d4037'],
+        '公园休闲': ['#66bb6a','#2e7d32'],
+        '荷塘泛舟': ['#e91e63','#c2185b'],
+        '科普教育': ['#29b6f6','#0288d1']
+    };
+    
+    function generateSessionId() {
+        return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // ── Init ──
+    document.addEventListener('DOMContentLoaded', () => {
+        initHero();
+        loadCategories(); loadRoutes(); initDistricts();
+        initSpotList();
+        checkConnection();
+        loadChatHistory();
+        initVoice();
+        renderRecentOnHome();
+        renderRecentOnHome();
+        renderRoutesSection();
+        initPreferences(); // 初始化偏好功能
+        // 自动提问（从详情页 AI 讲解跳转过来）
+        const autoAsk = '{{ auto_ask | e }}';
+        if (autoAsk) {
+            setTimeout(() => {
+                document.getElementById('inputBox').value = autoAsk;
+                sendMessage();
+            }, 500);
+        }
+    });
+
+    // ── Hero: Categories + Featured ──
+    function initHero() {
+        // Greeting based on time
+        const h = new Date().getHours();
+        const greet = h < 6 ? '夜深了' : h < 9 ? '早上好' : h < 12 ? '上午好' : h < 14 ? '中午好' : h < 18 ? '下午好' : '晚上好';
+        document.getElementById('greetingSub').textContent = `${greet}！开始探索贵港吧 🌟`;
+        
+        // Category row
+        const catRow = document.getElementById('categoryRow');
+        const cats = [
+            {key:'自然景观',emoji:'🏔️',label:'自然风光'},
+            {key:'人文景观',emoji:'🏛️',label:'人文历史'},
+            {key:'城市公园',emoji:'🌳',label:'公园休闲'},
+            {key:'主题乐园',emoji:'🎢',label:'主题乐园'},
+            {key:'科普教育',emoji:'🔬',label:'科普教育'},
+            {key:'农业观光',emoji:'🌾',label:'乡村体验'}
+        ];
+        catRow.innerHTML = cats.map(c => `
+            <button class="category-item" onclick="filterByCategory('${c.key}', this)">
+      
