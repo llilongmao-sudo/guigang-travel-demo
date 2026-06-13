@@ -885,18 +885,6 @@ def get_seasonal():
     })
 
 
-if __name__ == "__main__":
-    PORT = int(os.environ.get("PORT", 5001))
-    print("=" * 50)
-    print("  贵港旅游智能助手 v4.0")
-    print("=" * 50)
-    print(f"  LLM API: {LLM_API_BASE}")
-    print(f"  运行模式: 自动（有 LLM 用 LLM，无 LLM 用本地知识库）")
-    print(f"  启动地址: http://localhost:{PORT}")
-    print("=" * 50)
-    get_llm_client()  # 启动时检测并提示
-    app.run(host="0.0.0.0", port=PORT, debug=False, use_reloader=False)
-
 # ── 美食 API 端点 ────────────────────────────────────────
 
 # ── 测试路由 ─────────────────────────────────────
@@ -916,17 +904,17 @@ def get_foods_list():
     })
 
 # ⚠️ 以下具体路由必须在 <food_id> 之前，否则会被拦截
-@app.route("/api/foods/must-try")
+@app.route("/api/must-try-foods")
 def get_must_try_foods():
     """获取必吃美食列表"""
     return jsonify(DataLoader.get_must_try_foods())
 
-@app.route("/api/foods/signature")
+@app.route("/api/signature-foods")
 def get_signature_foods():
     """获取招牌美食列表"""
     return jsonify(DataLoader.get_signature_foods())
 
-@app.route("/api/foods/search")
+@app.route("/api/food-search")
 def search_foods():
     """搜索美食"""
     query = request.args.get('q', '').strip()
@@ -995,4 +983,15 @@ def get_route_v2(route_id):
     return jsonify({"error": "未找到该路线"}), 404
 
 
+if __name__ == "__main__":
+    PORT = int(os.environ.get("PORT", 5001))
+    print("=" * 50)
+    print("  贵港旅游智能助手 v4.0")
+    print("=" * 50)
+    print(f"  LLM API: {LLM_API_BASE}")
+    print(f"  运行模式: 自动（有 LLM 用 LLM，无 LLM 用本地知识库）")
+    print(f"  启动地址: http://localhost:{PORT}")
+    print("=" * 50)
+    get_llm_client()  # 启动时检测并提示
+    app.run(host="0.0.0.0", port=PORT, debug=False, use_reloader=False)
 

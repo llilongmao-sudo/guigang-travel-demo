@@ -2169,18 +2169,7 @@
         }
     }
     
-    // 从新 API 加载路线数据
-    async function loadRoutes() {
-        try {
-            const resp = await fetch('/api/routes');
-            const data = await resp.json();
-            window.ROUTES_DATA = data.routes || [];
-            return window.ROUTES_DATA;
-        } catch (e) {
-            console.error('加载路线数据失败:', e);
-            return [];
-        }
-    }
+
 
     function initDistricts() {}
     function switchDistrict(district, btnEl) { togglePanel(); }
@@ -2758,10 +2747,52 @@
     async function loadRoutes() {
         if (_routesCache) return _routesCache;
         try {
-            const resp = await fetch('/api/routes');
+            // 使用 /api/routes-v2（包含完整 itinerary 数据）
+            const resp = await fetch('/api/routes-v2');
             if (!resp.ok) throw new Error('API error');
-            const data = await resp.json();
-            _routesCache = data.routes || [];
+            const raw = await resp.json();
+            const routes = Array.isArray(raw) ? raw : (raw.routes || []);
+
+            // 字段适配：routes-v2 字段 -> 前端期望的字段名
+            const typeMap = { '自然': '经典', '田园': '经典', '休闲': '经典',
+                              '摄影': '摄影', '拍照': '摄影',
+                              '亲子': '亲子', '家庭': '亲子',
+                              '自驾': '自驾' };
+
+            _routesCache = routes.map(r => {
+                // 从 theme 推断路线类型
+                let type = '经典';
+                const themeLower = (r.theme || '').toLowerCase();
+                for (const [kw, t] of Object.entries(typeMap)) {
+                    if (themeLower.includes(kw)) { type = t; break; }
+                }
+                if ((r.tags || []).some(t => /摄影|拍照/.test(t))) type = '摄影';
+                if ((r.tags || []).some(t => /亲子|家庭|小孩/.test(t))) type = '亲子';
+
+                // 从 itinerary 提取景点名称
+                const spotNames = (r.itinerary || [])
+                    .filter(s => s.type === 'visit')
+                    .map(s => s.title);
+
+                return {
+                    id: r.id,
+                    name: r.name,
+                    type,
+                    duration: (r.days || 1) + '天',
+                    schedule: r.itinerary || [],
+                    spot_names: spotNames,
+                    description: r.highlights || r.tips || r.theme || '',
+                    days: r.days,
+                    tags: r.tags,
+                    theme: r.theme,
+                    budget_min: r.budget_min,
+                    budget_max: r.budget_max,
+                    suitable_for: r.suitable_for,
+                    highlights: r.highlights,
+                    food: r.food,
+                    food_ids: r.food_ids,
+                };
+            });
             return _routesCache;
         } catch (e) {
             return [];
