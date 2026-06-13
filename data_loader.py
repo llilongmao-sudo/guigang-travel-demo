@@ -25,9 +25,12 @@ class DataLoader:
     
     @classmethod
     def get_attractions(cls, reload: bool = False) -> List[Dict]:
-        """获取所有景点数据"""
+        """获取所有景点数据（优先加载 V2）"""
         if cls._attractions is None or reload:
-            data = cls._load_json('attractions.json')
+            # 优先加载 V2 版本
+            data = cls._load_json('attractions_v2.json')
+            if not data or not data.get('attractions'):
+                data = cls._load_json('attractions.json')
             cls._attractions = data.get('attractions', [])
         return cls._attractions
     
@@ -65,9 +68,12 @@ class DataLoader:
     
     @classmethod
     def get_routes(cls, reload: bool = False) -> List[Dict]:
-        """获取所有路线数据"""
+        """获取所有路线数据（优先加载 V2）"""
         if cls._routes is None or reload:
-            data = cls._load_json('routes.json')
+            # 优先加载 V2 版本
+            data = cls._load_json('routes_v2.json')
+            if not data or not data.get('routes'):
+                data = cls._load_json('routes.json')
             cls._routes = data.get('routes', [])
         return cls._routes
     
@@ -142,9 +148,12 @@ class DataLoader:
 
     @classmethod
     def get_foods(cls, reload: bool = False) -> List[Dict]:
-        """获取所有美食数据"""
+        """获取所有美食数据（优先加载 V2）"""
         if not hasattr(cls, '_foods') or cls._foods is None or reload:
-            data = cls._load_json('food.json')
+            # 优先加载 V2 版本
+            data = cls._load_json('food_v2.json')
+            if not data or not data.get('foods'):
+                data = cls._load_json('food.json')
             cls._foods = data.get('foods', [])
         return cls._foods
 

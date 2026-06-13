@@ -705,17 +705,20 @@ def get_nearby(spot_id):
 
 @app.route("/api/spots")
 def list_spots():
+    # 使用 DataLoader 加载最新数据
+    attractions = DataLoader.get_attractions()
     return jsonify([{
-        "id": s["id"], "name": s["name"],
-        "category": s["category"], "rating": s["rating"],
-        "description": s["description"][:80] + "...",
-        "image_url": s.get("image_url", ""),
-        "ticket_price": s["ticket_price"],
-        "location": s["location"],
-        "district": s.get("district", ""),
+        "id": s.get("id", ""), "name": s.get("name", ""),
+        "category": s.get("category", "") or ", ".join(s.get("category_ids", [])),
+        "rating": s.get("rating", "") or s.get("level", ""),
+        "description": (s.get("description", "")[:80] + "...") if s.get("description") else "",
+        "image_url": s.get("image_url", "") or s.get("image", ""),
+        "ticket_price": s.get("ticket_price", "") or s.get("ticket", ""),
+        "location": s.get("location", "") or s.get("area", ""),
+        "district": s.get("district", "") or s.get("area", ""),
         "lat": s.get("lat", 0),
         "lng": s.get("lng", 0),
-    } for s in SCENIC_SPOTS])
+    } for s in attractions])
 
 @app.route("/api/weather")
 def weather():
