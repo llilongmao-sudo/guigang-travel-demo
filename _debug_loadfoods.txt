@@ -1,0 +1,10 @@
+async function loadFoods() {
+        try {
+            // 从静态JSON文件加载（绕过API 404问题）
+            const resp = await fetch('/static/data/food.json');
+            const data = await resp.json();
+            // 过滤 must_try=True 的美食
+            const foods = (data.foods || data).filter(f => f.must_try || f.signature);
+            const container = document.getElementById('foodScroll');
+            const section = document.getElementById('foodSection');
+            if (!foods.length) { section.style.display = 'none'; return; }
