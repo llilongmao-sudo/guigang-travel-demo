@@ -1521,6 +1521,29 @@
         .combo-card-body .combo-foods { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
         .combo-card-body .combo-food-tag { font-size: 10px; padding: 1px 6px; border-radius: 8px; background: #f0f0f0; color: #555; }
 
+        /* ── 侧边栏区域筛选 ── */
+        .district-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 16px 10px;
+            border-bottom: 1px solid #eee;
+            background: #fafafa;
+        }
+        .dist-btn {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 14px;
+            border: 1.5px solid #ddd;
+            background: #fff;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .dist-btn:hover { border-color: #43a047; color: #43a047; }
+        .dist-btn.active { background: #43a047; border-color: #43a047; color: #fff; }
+
     </style>
 </head>
 <body>
@@ -1650,6 +1673,8 @@
             <h2>🏕️ 贵港景点一览</h2>
             <p>点击查看详情，位置可跳转地图</p>
         </div>
+        <!-- 区域筛选 -->
+        <div class="district-filter" id="districtFilter"></div>
         <!-- 收藏入口 -->
         <div class="drawer-fav-entry" onclick="openFavoritesPanel()">
             <span class="dfe-icon">❤️</span>
@@ -2171,9 +2196,70 @@
     
 
 
-    function initDistricts() {}
-    function switchDistrict(district, btnEl) { togglePanel(); }
-    function renderSpotGrid(district) {}
+    // ── 区域筛选 ──
+    let activeDistrict = null;
+
+    function initDistricts() {
+        const container = document.getElementById('districtFilter');
+        if (!container) return;
+        // 动态从数据中提取区域，按地级市归类
+        const cityDistricts = {};
+        spots.forEach(s => {
+            const d = s.district || '';
+            if (!d) return;
+            cityDistricts[d] = true;
+        });
+        const all = Object.keys(cityDistricts).sort();
+        // 归类：港北/港南/覃塘（贵港市辖区），桂平市，平南县
+        const groups = [
+            { label: '全部', value: '' },
+            { label: '港北区', value: '港北区' },
+            { label: '港南区', value: '港南区' },
+            { label: '覃塘区', value: '覃塘区' },
+            { label: '桂平市', value: '桂平市' },
+            { label: '平南县', value: '平南县' },
+            ...all.filter(d => !['港北区','港南区','覃塘区','桂平市','平南县'].includes(d))
+                .map(d => ({ label: d, value: d })),
+        ];
+        container.innerHTML = groups.map(g =>
+            `<button class="dist-btn${!activeDistrict && g.value === '' || activeDistrict === g.value ? ' active' : ''}" onclick="switchDistrict('${g.value}', this)">${g.label}</button>`
+        ).join('');
+    }
+
+    function switchDistrict(district, btnEl) {
+        activeDistrict = district;
+        // 更新按钮状态
+        document.querySelectorAll('.dist-btn').forEach(b => b.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+        // 重新渲染列表
+        renderSpotList(activeDistrict);
+    }
+
+    function renderSpotList(filterDistrict) {
+        const list = document.getElementById('spotList');
+        if (!list) return;
+        // 区域匹配：精确匹配 或 前缀匹配（如'港北区'匹配'港北区奇石乡'）
+        const filtered = filterDistrict
+            ? spots.filter(s => s.district === filterDistrict || (s.district && s.district.startsWith(filterDistrict)))
+            : spots;
+        const categoryEmoji = {
+            '自然风光': '🏔️', '人文景观': '🏛️', '城市公园': '🌳',
+            '荷塘泛舟': '🛶', '科普教育': '🔬', '农业观光': '🌾', '景点': '📍'
+        };
+        list.innerHTML = filtered.map(s => `
+            <div class="drawer-item" onclick="window.location.href='/spot/${s.id}'">
+                <div class="emoji">${categoryEmoji[s.category] || '📍'}</div>
+                <div class="info">
+                    <h3>${s.name}</h3>
+                    <p>${(s.description || '').slice(0, 30)}...</p>
+                    <span class="tag ${(s.category === '自然风光' ? 'nature' : s.category === '人文景观' ? 'culture' : s.category === '城市公园' ? 'park' : 'free')}">${s.category || '景点'}</span>
+                    ${s.district ? `<span class="tag" style="background:#e3f2fd;color:#1565c0;">${s.district}</span>` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderSpotGrid(district) { switchDistrict(district, null); }
 
     // ── 返回首页 ──
     function showWelcome() {
@@ -2222,8 +2308,12 @@
     }
 
     function togglePanel() {
-        initSpotList();
-        document.getElementById('sidePanel').classList.toggle('active');
+        const panel = document.getElementById('sidePanel');
+        panel.classList.toggle('active');
+        if (panel.classList.contains('active')) {
+            initDistricts();
+            renderSpotList(activeDistrict);
+        }
     }
 
     // ── History Panel ──

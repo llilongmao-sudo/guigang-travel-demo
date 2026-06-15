@@ -13,6 +13,47 @@ from knowledge_base_v4 import SCENIC_SPOTS, TRAVEL_TIPS, CATEGORY_INDEX, DISTRIC
 from data_loader import DataLoader
 
 app = Flask(__name__)
+
+# ── V2景点数据适配器（对齐前端字段名） ───────────────────────────────────
+_CATEGORY_MAP = {
+    'nature':    '自然风光',
+    'ancient':   '人文景观',
+    'park':      '城市公园',
+    'lotus':     '荷塘泛舟',
+    'education':  '科普教育',
+    'agritourism': '农业观光',
+}
+
+def adapt_spot_v2(spot):
+    """将 V2 景点数据适配为前端期望的字段格式"""
+    cat_ids = spot.get('category_ids', [])
+    primary_cat = _CATEGORY_MAP.get(cat_ids[0], '景点') if cat_ids else '景点'
+    tips_raw = spot.get('tips', [])
+    tips_str = '；'.join(tips_raw) if isinstance(tips_raw, list) else str(tips_raw)
+    duration = spot.get('duration_recommended', '')
+    name = spot.get('name', '')
+    recommended_route = f"入口 → {name} → {'核心景点' if duration else '精华区域'} → 出口（建议{duration or '半日'}）" if name else ''
+    return {
+        'id':              spot.get('id', ''),
+        'name':            name,
+        'category':        primary_cat,
+        'district':        spot.get('area', ''),
+        'ticket_price':    spot.get('ticket', ''),
+        'open_time':       spot.get('open_hours', ''),
+        'best_season':     spot.get('best_season', ''),
+        'image_url':       spot.get('image', ''),
+        'rating':          spot.get('level', ''),
+        'description':     spot.get('description', ''),
+        'highlights':      spot.get('highlights', []) or [],
+        'tips':            tips_str,
+        'recommended_route': recommended_route,
+        'location':        spot.get('location', ''),
+        'lat':             spot.get('lat', 0),
+        'lng':             spot.get('lng', 0),
+        'alias':           spot.get('alias', []),
+        'nearby_spots':    spot.get('nearby_spots', []),
+        'nearby_hotels':   [],
+    }
 # ── SVG MIME 类型支持 ─────────────────────────────────────
 import mimetypes
 mimetypes.add_type('image/svg+xml', '.svg')
@@ -464,7 +505,10 @@ def generate_local_reply(query, spots, tips, current_topic=None):
 @app.route("/")
 def index():
     auto_ask = request.args.get("ask", "")
-    return render_template("index.html", spots=SCENIC_SPOTS, auto_ask=auto_ask)
+    # 统一使用 V2 数据 + 字段适配
+    raw_spots = DataLoader().get_attractions()
+    spots = [adapt_spot_v2(s) for s in raw_spots]
+    return render_template("index.html", spots=spots, auto_ask=auto_ask)
 
 @app.route("/api/debug_search")
 def debug_search():
@@ -659,22 +703,21 @@ def feedback():
 @app.route("/spot/<spot_id>")
 def spot_detail_page(spot_id):
     """景点详情页"""
-    spot = None
-    for s in SCENIC_SPOTS:
-        if s["id"] == spot_id:
-            spot = s
-            break
-    if not spot:
-        return render_template("index.html", spots=SCENIC_SPOTS, error="未找到该景点"), 404
+    raw = DataLoader.get_attraction_by_id(spot_id)
+    if not raw:
+        raw_spots = DataLoader().get_attractions()
+        spots = [adapt_spot_v2(s) for s in raw_spots]
+        return render_template("index.html", spots=spots, error="未找到该景点"), 404
+    spot = adapt_spot_v2(raw)
     return render_template("spot_detail.html", spot=spot)
 
 
 @app.route("/api/spot/<spot_id>")
 def get_spot_detail(spot_id):
-    for spot in SCENIC_SPOTS:
-        if spot["id"] == spot_id:
-            return jsonify(spot)
-    return jsonify({"error": "未找到该景点"}), 404
+    raw = DataLoader.get_attraction_by_id(spot_id)
+    if not raw:
+        return jsonify({"error": "未找到该景点"}), 404
+    return jsonify(adapt_spot_v2(raw))
 
 @app.route("/api/spot/<spot_id>/nearby")
 def get_nearby(spot_id):

@@ -10,497 +10,911 @@
       "id": "pingtianshan",
       "name": "平天山国家森林公园",
       "area": "港北区",
-      "category_ids": ["nature"],
+      "category_ids": [
+        "nature"
+      ],
       "level": "4A",
-      "highlights": ["高山草甸", "云海日出", "桫椤群落", "仙女浴池"],
+      "highlights": [
+        "高山草甸",
+        "云海日出",
+        "桫椤群落",
+        "仙女浴池"
+      ],
       "best_season": "全年（春秋最佳）",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "1天",
-      "tags": ["徒步", "露营", "日出", "免费"],
+      "tags": [
+        "徒步",
+        "露营",
+        "日出",
+        "免费"
+      ],
       "description": "桂东南第二高峰，海拔1157.8米，山顶有广西最大的高山草甸3500亩。春天杜鹃花开，秋天云海翻涌，是户外徒步和星空露营的绝佳去处。",
-      "tips": ["山顶风大，需带外套", "观日出建议4点出发", "目前免大门票"],
-      "image": "/static/images/spots/pingtianshan.jpg"
+      "tips": [
+        "山顶风大，需带外套",
+        "观日出建议4点出发",
+        "目前免大门票"
+      ],
+      "image": "/static/images/spots/pingtianshan.svg"
     },
     {
       "id": "jiulinghu",
       "name": "九凌湖风景区",
       "area": "覃塘区石卡镇",
-      "category_ids": ["nature", "lotus"],
+      "category_ids": [
+        "nature",
+        "lotus"
+      ],
       "level": "4A",
-      "highlights": ["地下涌泉", "划船", "环湖骑行", "水上乐园"],
+      "highlights": [
+        "地下涌泉",
+        "划船",
+        "环湖骑行",
+        "水上乐园"
+      ],
       "best_season": "全年",
       "ticket": "免费（部分项目收费）",
       "open_hours": "08:00-18:00",
       "duration_recommended": "半天",
-      "tags": ["亲水", "骑行", "划船"],
+      "tags": [
+        "亲水",
+        "骑行",
+        "划船"
+      ],
       "description": "九凌湖为地下涌泉形成的湖泊，水质清澈。湖中建有水上乐园，夏季可游泳戏水；环湖绿道约10公里，适合骑行和散步。",
-      "tips": ["划船约30元/小时", "夏季注意防晒"],
-      "image": "/static/images/spots/jiulinghu.jpg"
+      "tips": [
+        "划船约30元/小时",
+        "夏季注意防晒"
+      ],
+      "image": "/static/images/spots/jiulinghu.svg"
     },
     {
       "id": "longtoushan",
       "name": "龙头山（天上草原）",
       "area": "港北区",
-      "category_ids": ["nature"],
+      "category_ids": [
+        "nature"
+      ],
       "level": "市级景区",
-      "highlights": ["海拔1158m", "5000亩草甸", "云海日出"],
+      "highlights": [
+        "海拔1158m",
+        "5000亩草甸",
+        "云海日出"
+      ],
       "best_season": "5-10月",
       "ticket": "免大门票",
       "open_hours": "全天",
       "duration_recommended": "1天",
-      "tags": ["徒步", "出片", "草原", "云海"],
+      "tags": [
+        "徒步",
+        "出片",
+        "草原",
+        "云海"
+      ],
       "description": "龙头山为平天山主峰，山顶草甸一望无际，早晚云雾缭绕，被称为'天上草原'。是贵港户外圈的热门打卡点。",
-      "tips": ["山顶风大温差大", "建议自驾/拼车", "桫椤群落沿途可见"],
-      "image": "/static/images/spots/longtoushan.jpg"
+      "tips": [
+        "山顶风大温差大",
+        "建议自驾/拼车",
+        "桫椤群落沿途可见"
+      ],
+      "image": "/static/images/spots/longtoushan.svg"
     },
     {
       "id": "beidishan",
       "name": "北帝山旅游区",
       "area": "平南县大鹏镇",
-      "category_ids": ["nature"],
+      "category_ids": [
+        "nature"
+      ],
       "level": "4A",
-      "highlights": ["小张家界", "玻璃栈道", "峡谷漂流", "云海观景台"],
+      "highlights": [
+        "小张家界",
+        "玻璃栈道",
+        "峡谷漂流",
+        "云海观景台"
+      ],
       "best_season": "5-9月",
       "ticket": "约99元起",
       "open_hours": "08:00-17:00",
       "duration_recommended": "1天",
-      "tags": ["徒步", "漂流", "玻璃栈道", "云海"],
+      "tags": [
+        "徒步",
+        "漂流",
+        "玻璃栈道",
+        "云海"
+      ],
       "description": "北帝山以'峰秀、林茂、石奇、花艳、泉清、雾仙'六绝闻名，有'小张家界'之称。玻璃栈道悬挂绝壁，漂流河道长5.3公里，是广西最刺激的漂流之一。",
-      "tips": ["玻璃栈道另收30元", "漂流需另购装备包50元", "建议住山下北帝山大酒店"],
-      "image": "/static/images/spots/beidishan.jpg"
+      "tips": [
+        "玻璃栈道另收30元",
+        "漂流需另购装备包50元",
+        "建议住山下北帝山大酒店"
+      ],
+      "image": "/static/images/spots/beidishan.svg"
     },
     {
       "id": "datengxia",
       "name": "大藤峡风景区",
       "area": "桂平市",
-      "category_ids": ["nature", "ancient"],
+      "category_ids": [
+        "nature",
+        "ancient"
+      ],
       "level": "国家级",
-      "highlights": ["广西小三峽", "大藤峡水利枢纽", "黔江峡谷"],
+      "highlights": [
+        "广西小三峽",
+        "大藤峡水利枢纽",
+        "黔江峡谷"
+      ],
       "best_season": "全年",
       "ticket": "游船另收",
       "open_hours": "08:00-17:00",
       "duration_recommended": "半天",
-      "tags": ["游船", "历史", "风景"],
+      "tags": [
+        "游船",
+        "历史",
+        "风景"
+      ],
       "description": "大藤峡是广西最大最长的峡谷，被誉为'珠江流域第一峡'。峡谷两岸喀斯特峰林耸立，乘船游览可感受'小三峽'的壮丽。大藤峡水利枢纽是粤港澳大湾区的重要水源地。",
-      "tips": ["游船需提前预约", "4月水位上涨最壮观"],
-      "image": "/static/images/spots/datengxia.jpg"
+      "tips": [
+        "游船需提前预约",
+        "4月水位上涨最壮观"
+      ],
+      "image": "/static/images/spots/datengxia.svg"
     },
     {
       "id": "hemeitantang",
       "name": "荷美覃塘",
       "area": "覃塘区龙凤村",
-      "category_ids": ["lotus"],
+      "category_ids": [
+        "lotus"
+      ],
       "level": "市级",
-      "highlights": ["千亩荷田", "观景栈道", "莲藕宴"],
+      "highlights": [
+        "千亩荷田",
+        "观景栈道",
+        "莲藕宴"
+      ],
       "best_season": "6-8月",
       "ticket": "约30元",
       "open_hours": "08:00-18:00",
       "duration_recommended": "半天",
-      "tags": ["季节限定", "6月主推", "出片", "美食"],
+      "tags": [
+        "季节限定",
+        "6月主推",
+        "出片",
+        "美食"
+      ],
       "description": "覃塘区千亩荷塘，6-8月荷花竞相绽放。设有观景栈道、荷花文化博物馆、民宿，可体验采莲、挖藕、品莲藕宴。",
-      "tips": ["晨雾中的荷塘最出片", "防晒必备", "民宿需提前预订"],
-      "image": "/static/images/spots/hemeitantang.jpg"
+      "tips": [
+        "晨雾中的荷塘最出片",
+        "防晒必备",
+        "民宿需提前预订"
+      ],
+      "image": "/static/images/spots/hemeitantang.svg"
     },
     {
       "id": "xishan",
       "name": "桂平西山风景名胜区",
       "area": "桂平市",
-      "category_ids": ["ancient"],
+      "category_ids": [
+        "ancient"
+      ],
       "level": "4A",
-      "highlights": ["千年古刹", "林秀石奇泉甘茶香", "华南佛教圣地"],
+      "highlights": [
+        "千年古刹",
+        "林秀石奇泉甘茶香",
+        "华南佛教圣地"
+      ],
       "best_season": "3-5月、9-11月",
       "ticket": "约80元",
       "open_hours": "07:00-18:00",
       "duration_recommended": "半天到1天",
-      "tags": ["佛教", "人文", "爬山县", "问道"],
+      "tags": [
+        "佛教",
+        "人文",
+        "爬山县",
+        "问道"
+      ],
       "description": "西山是中国著名佛教圣地之一，龙华寺始建于宋，为华南重要禅林。山上有古树奇石、乳泉井，西山茶是中国国家地理标志产品。登顶可俯瞰桂平城。",
-      "tips": ["建议步行上山、缆车下山", "素斋馆人均30元", "西山茶伴手礼首选"],
-      "image": "/static/images/spots/xishan.jpg"
+      "tips": [
+        "建议步行上山、缆车下山",
+        "素斋馆人均30元",
+        "西山茶伴手礼首选"
+      ],
+      "image": "/static/images/spots/xishan.svg"
     },
     {
       "id": "longtansi",
       "name": "龙潭国家森林公园",
       "area": "桂平市南木镇",
-      "category_ids": ["nature"],
+      "category_ids": [
+        "nature"
+      ],
       "level": "4A",
-      "highlights": ["龙潭瀑布", "桫椤群落", "峡谷栈道"],
+      "highlights": [
+        "龙潭瀑布",
+        "桫椤群落",
+        "峡谷栈道"
+      ],
       "best_season": "5-9月",
       "ticket": "约50元起",
       "open_hours": "08:00-17:00",
       "duration_recommended": "半天",
-      "tags": ["徒步", "探险", "观瀑"],
+      "tags": [
+        "徒步",
+        "探险",
+        "观瀑"
+      ],
       "description": "龙潭公园以原始森林、峡谷瀑布闻名，有300米深的龙潭峡谷，保存着恐龙时代的桫椤群落。瀑布落差大，夏季可感受飞瀑清凉。",
-      "tips": ["穿防滑鞋", "带替换衣物", "夏季最佳"],
-      "image": "/static/images/spots/longtansi.jpg"
+      "tips": [
+        "穿防滑鞋",
+        "带替换衣物",
+        "夏季最佳"
+      ],
+      "image": "/static/images/spots/longtansi.svg"
     },
     {
       "id": "nanshansi",
       "name": "南山寺",
       "area": "港南区",
-      "category_ids": ["ancient"],
+      "category_ids": [
+        "ancient"
+      ],
       "level": "省级",
-      "highlights": ["千年古刹", "摩崖石刻", "闹中取静"],
+      "highlights": [
+        "千年古刹",
+        "摩崖石刻",
+        "闹中取静"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "07:00-17:30",
       "duration_recommended": "1-2小时",
-      "tags": ["佛教", "免费", "市区"],
+      "tags": [
+        "佛教",
+        "免费",
+        "市区"
+      ],
       "description": "南山寺始建于唐代，依山踞洞而建，寺内有丰富的摩崖石刻。寺外菩提树参天，寺内曲径通幽，是市民祈福休闲的去处。",
-      "tips": ["可顺便游南山动物园", "素斋体验推荐"],
-      "image": "/static/images/spots/nanshansi.jpg"
+      "tips": [
+        "可顺便游南山动物园",
+        "素斋体验推荐"
+      ],
+      "image": "/static/images/spots/nanshansi.svg"
     },
     {
       "id": "jintian",
       "name": "金田起义旧址",
       "area": "桂平市金田镇",
-      "category_ids": ["ancient"],
+      "category_ids": [
+        "ancient"
+      ],
       "level": "全国重点文物保护单位",
-      "highlights": ["太平天国策源地", "历史遗址", "博物馆"],
+      "highlights": [
+        "太平天国策源地",
+        "历史遗址",
+        "博物馆"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "09:00-17:00",
       "duration_recommended": "2-3小时",
-      "tags": ["历史", "红色旅游", "免费"],
+      "tags": [
+        "历史",
+        "红色旅游",
+        "免费"
+      ],
       "description": "1851年洪秀全在此发动金田起义，建立太平天国。现有起义旧址、博物馆、古戏台等，可了解这段震撼中国的农民起义历史。",
-      "tips": ["博物馆免费参观", "建议结合西山线路"],
-      "image": "/static/images/spots/jintian.jpg"
+      "tips": [
+        "博物馆免费参观",
+        "建议结合西山线路"
+      ],
+      "image": "/static/images/spots/jintian.svg"
     },
     {
       "id": "guipin-laostreet",
       "name": "桂平老街骑楼",
       "area": "桂平市",
-      "category_ids": ["ancient"],
+      "category_ids": [
+        "ancient"
+      ],
       "level": "市级",
-      "highlights": ["岭南骑楼", "老街烟火", "出片机位"],
+      "highlights": [
+        "岭南骑楼",
+        "老街烟火",
+        "出片机位"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "1-2小时",
-      "tags": ["人文", "免费", "老街", "出片"],
+      "tags": [
+        "人文",
+        "免费",
+        "老街",
+        "出片"
+      ],
       "description": "桂平老街保留着岭南风格骑楼建筑，街道两旁小吃摊、咖啡馆林立，是感受本地生活的最佳去处。",
-      "tips": ["傍晚灯光最美", "推荐尝试豆腐花、炸鸭脚"],
-      "image": "/static/images/spots/guipin-laostreet.jpg"
+      "tips": [
+        "傍晚灯光最美",
+        "推荐尝试豆腐花、炸鸭脚"
+      ],
+      "image": "/static/images/spots/guipin-laostreet.svg"
     },
     {
       "id": "wuyuan",
       "name": "郁江公园（吾园）",
       "area": "港北区",
-      "category_ids": ["park"],
+      "category_ids": [
+        "park"
+      ],
       "level": "市级",
-      "highlights": ["苏式园林", "假山水景", "出片"],
+      "highlights": [
+        "苏式园林",
+        "假山水景",
+        "出片"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "1.5小时",
-      "tags": ["园林", "出片", "市区", "免费"],
+      "tags": [
+        "园林",
+        "出片",
+        "市区",
+        "免费"
+      ],
       "description": "苏式园林风格的市中心公园，假山叠石、亭台楼阁，是市民休闲和拍照打卡的好去处。",
-      "tips": ["适合汉服拍摄", "夜景灯光不错"],
-      "image": "/static/images/spots/wuyuan.jpg"
+      "tips": [
+        "适合汉服拍摄",
+        "夜景灯光不错"
+      ],
+      "image": "/static/images/spots/wuyuan.svg"
     },
     {
       "id": "donghu",
       "name": "东湖公园",
       "area": "港北区",
-      "category_ids": ["park"],
+      "category_ids": [
+        "park"
+      ],
       "level": "市级",
-      "highlights": ["市区最大公园", "划船", "游乐场"],
+      "highlights": [
+        "市区最大公园",
+        "划船",
+        "游乐场"
+      ],
       "best_season": "全年",
       "ticket": "免费（划船另收）",
       "open_hours": "全天",
       "duration_recommended": "半天",
-      "tags": ["亲子", "划船", "免费"],
+      "tags": [
+        "亲子",
+        "划船",
+        "免费"
+      ],
       "description": "贵港市区最大的综合公园，湖面宽阔，可划船；有游乐场、翼王亭等设施，适合家庭休闲。",
-      "tips": ["划船约30元/小时", "夜景灯光秀"],
-      "image": "/static/images/spots/donghu.jpg"
+      "tips": [
+        "划船约30元/小时",
+        "夜景灯光秀"
+      ],
+      "image": "/static/images/spots/donghu.svg"
     },
     {
       "id": "macaojiang",
       "name": "马草江生态公园",
       "area": "港北区",
-      "category_ids": ["park"],
+      "category_ids": [
+        "park"
+      ],
       "level": "市级",
-      "highlights": ["生态绿地", "散步骑行"],
+      "highlights": [
+        "生态绿地",
+        "散步骑行"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "1-2小时",
-      "tags": ["生态", "免费", "市区"],
+      "tags": [
+        "生态",
+        "免费",
+        "市区"
+      ],
       "description": "城市生态公园，绿道环绕，适合散步和骑行。",
-      "tips": ["适合晨跑", "晚上广场舞热闹"],
-      "image": "/static/images/spots/macaojiang.jpg"
+      "tips": [
+        "适合晨跑",
+        "晚上广场舞热闹"
+      ],
+      "image": "/static/images/spots/macaojiang.svg"
     },
     {
       "id": "xiongsen-animal",
       "name": "平南雄森动物大世界",
       "area": "平南县",
-      "category_ids": ["park"],
+      "category_ids": [
+        "park"
+      ],
       "level": "4A",
-      "highlights": ["动物观赏", "亲子互动", "马戏表演"],
+      "highlights": [
+        "动物观赏",
+        "亲子互动",
+        "马戏表演"
+      ],
       "best_season": "全年",
       "ticket": "约120元",
       "open_hours": "09:00-17:00",
       "duration_recommended": "半天",
-      "tags": ["亲子", "动物"],
+      "tags": [
+        "亲子",
+        "动物"
+      ],
       "description": "集动物园、动物主题酒店、马戏表演于一体的大型景区。可近距离观赏东北虎、非洲狮等动物，观看俄罗斯大马戏。",
-      "tips": ["建议上午去动物活跃", "可住雄景生态酒店与虎隔窗共餐"],
-      "image": "/static/images/spots/xiongsen-animal.jpg"
+      "tips": [
+        "建议上午去动物活跃",
+        "可住雄景生态酒店与虎隔窗共餐"
+      ],
+      "image": "/static/images/spots/xiongsen-animal.svg"
     },
     {
       "id": "museum",
       "name": "贵港市博物馆",
       "area": "港北区",
-      "category_ids": ["education"],
+      "category_ids": [
+        "education"
+      ],
       "level": "市级",
-      "highlights": ["2200年建城史", "文物展", "周一闭馆"],
+      "highlights": [
+        "2200年建城史",
+        "文物展",
+        "周一闭馆"
+      ],
       "best_season": "全年",
       "ticket": "免费（需预约）",
       "open_hours": "09:00-17:00（周一闭馆）",
       "duration_recommended": "1.5小时",
-      "tags": ["室内", "免费", "雨天", "研学"],
+      "tags": [
+        "室内",
+        "免费",
+        "雨天",
+        "研学"
+      ],
       "description": "展示贵港从秦汉至今的历史，馆藏4672件文物，包括汉代青铜器、陶器等，是了解'桂林郡'历史的重要窗口。",
-      "tips": ["需提前公众号预约", "周一闭馆别跑空"],
-      "image": "/static/images/spots/museum.jpg"
+      "tips": [
+        "需提前公众号预约",
+        "周一闭馆别跑空"
+      ],
+      "image": "/static/images/spots/museum.svg"
     },
     {
       "id": "nature-museum",
       "name": "贵港自然博物馆",
       "area": "港北区",
-      "category_ids": ["education"],
+      "category_ids": [
+        "education"
+      ],
       "level": "市级",
-      "highlights": ["动植物标本", "自然科普"],
+      "highlights": [
+        "动植物标本",
+        "自然科普"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "09:00-17:00",
       "duration_recommended": "1-2小时",
-      "tags": ["室内", "免费", "雨天", "亲子"],
+      "tags": [
+        "室内",
+        "免费",
+        "雨天",
+        "亲子"
+      ],
       "description": "展示广西丰富的动植物资源，有大量标本和互动展项，适合带小朋友研学。",
-      "tips": ["适合雨天备选", "可结合博物馆半日游"],
-      "image": "/static/images/spots/nature-museum.jpg"
+      "tips": [
+        "适合雨天备选",
+        "可结合博物馆半日游"
+      ],
+      "image": "/static/images/spots/nature-museum.svg"
     },
     {
       "id": "baishishan",
       "name": "桂平白石山",
       "area": "桂平市麻垌镇",
-      "category_ids": ["ancient", "nature"],
+      "category_ids": [
+        "ancient",
+        "nature"
+      ],
       "level": "市级",
-      "highlights": ["丹霞地貌", "道教洞天", "一线天"],
+      "highlights": [
+        "丹霞地貌",
+        "道教洞天",
+        "一线天"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "半天",
-      "tags": ["徒步", "道教", "丹霞"],
+      "tags": [
+        "徒步",
+        "道教",
+        "丹霞"
+      ],
       "description": "典型的丹霞地貌，道教'白石洞天'为中国三十六小洞天之一。一线天狭窄陡峭，登顶可俯瞰周边田园风光。",
-      "tips": ["一线天较陡需注意安全", "适合摄影爱好者"],
-      "image": "/static/images/spots/baishishan.jpg"
+      "tips": [
+        "一线天较陡需注意安全",
+        "适合摄影爱好者"
+      ],
+      "image": "/static/images/spots/baishishan.svg"
     },
     {
       "id": "tongguwan",
       "name": "铜鼓湾温泉度假区",
       "area": "覃塘区",
-      "category_ids": ["leisure"],
+      "category_ids": [
+        "leisure"
+      ],
       "level": "4A",
-      "highlights": ["温泉泡池", "无边泳池", "瑶浴盐浴"],
+      "highlights": [
+        "温泉泡池",
+        "无边泳池",
+        "瑶浴盐浴"
+      ],
       "best_season": "全年（冬季最佳）",
       "ticket": "约109元起",
       "open_hours": "全天",
       "duration_recommended": "半天到1天",
-      "tags": ["温泉", "度假", "休闲"],
+      "tags": [
+        "温泉",
+        "度假",
+        "休闲"
+      ],
       "description": "广西知名温泉度假区，有多种泡池、无边泳池和瑶浴盐浴。适合冬季养生和家庭度假。",
-      "tips": ["建议住一晚", "周末人多建议早去"],
-      "image": "/static/images/spots/tongguwan.jpg"
+      "tips": [
+        "建议住一晚",
+        "周末人多建议早去"
+      ],
+      "image": "/static/images/spots/tongguwan.svg"
     },
     {
       "id": "yuanboyuan",
       "name": "贵港园博园",
       "area": "港北区",
-      "category_ids": ["park"],
+      "category_ids": [
+        "park"
+      ],
       "level": "市级",
-      "highlights": ["万亩荷塘", "灯光秀", "汉服泛舟"],
+      "highlights": [
+        "万亩荷塘",
+        "灯光秀",
+        "汉服泛舟"
+      ],
       "best_season": "6-8月",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "半天",
-      "tags": ["荷花", "免费", "拍照"],
+      "tags": [
+        "荷花",
+        "免费",
+        "拍照"
+      ],
       "description": "夏季必去的赏荷胜地，万亩荷塘碧叶连天。夜间灯光秀梦幻，可穿汉服泛舟采莲。",
-      "tips": ["6月底荷花最盛", "汉服租赁约50元"],
-      "image": "/static/images/spots/yuanboyuan.jpg"
+      "tips": [
+        "6月底荷花最盛",
+        "汉服租赁约50元"
+      ],
+      "image": "/static/images/spots/yuanboyuan.svg"
     },
     {
       "id": "danan-guzhen",
       "name": "大安古建筑群",
       "area": "平南县大安镇",
-      "category_ids": ["ancient"],
+      "category_ids": [
+        "ancient"
+      ],
       "level": "省级",
-      "highlights": ["大王庙", "粤东会馆", "骑楼老街"],
+      "highlights": [
+        "大王庙",
+        "粤东会馆",
+        "骑楼老街"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "2小时",
-      "tags": ["人文", "古建", "免费"],
+      "tags": [
+        "人文",
+        "古建",
+        "免费"
+      ],
       "description": "保存完好的明清古建筑群，包括大王庙、粤东会馆、骑楼老街等，是研究两广古代商贸文化的重要实物资料。",
-      "tips": ["可结合平南线路游览", "老街小吃值得尝试"],
-      "image": "/static/images/spots/danan-guzhen.jpg"
+      "tips": [
+        "可结合平南线路游览",
+        "老街小吃值得尝试"
+      ],
+      "image": "/static/images/spots/danan-guzhen.svg"
     },
     {
       "id": "dakaihu",
       "name": "达开湖",
       "area": "港北区奇石乡",
-      "category_ids": ["nature"],
+      "category_ids": [
+        "nature"
+      ],
       "level": "市级",
-      "highlights": ["一湖百岛", "湖光山色", "石达开故居"],
+      "highlights": [
+        "一湖百岛",
+        "湖光山色",
+        "石达开故居"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "半天",
-      "tags": ["湖泊", "免费", "休闲"],
+      "tags": [
+        "湖泊",
+        "免费",
+        "休闲"
+      ],
       "description": "以石达开命名的人工湖，湖中有百余岛屿，山水相映。可钓鱼、游船，是贵港周边的冷门美景。",
-      "tips": ["适合自驾游", "建议带野餐垫"],
-      "image": "/static/images/spots/dakaihu.jpg"
+      "tips": [
+        "适合自驾游",
+        "建议带野餐垫"
+      ],
+      "image": "/static/images/spots/dakaihu.svg"
     },
     {
       "id": "qinnangongyuan",
       "name": "覃塘公园",
       "area": "覃塘区",
-      "category_ids": ["park"],
+      "category_ids": [
+        "park"
+      ],
       "level": "区级",
-      "highlights": ["市民休闲", "夜景灯光"],
+      "highlights": [
+        "市民休闲",
+        "夜景灯光"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "1小时",
-      "tags": ["公园", "免费", "市区"],
+      "tags": [
+        "公园",
+        "免费",
+        "市区"
+      ],
       "description": "覃塘城区中心公园，有广场、步道和夜景灯光，是市民散步跳舞的场所。",
-      "tips": ["晚上广场舞热闹"],
-      "image": "/static/images/spots/qinnangongyuan.jpg"
+      "tips": [
+        "晚上广场舞热闹"
+      ],
+      "image": "/static/images/spots/qinnangongyuan.svg"
     },
     {
       "id": "shanzhongcu",
       "name": "山边村草坪屯",
       "area": "港北区",
-      "category_ids": ["rural"],
+      "category_ids": [
+        "rural"
+      ],
       "level": "市级",
-      "highlights": ["壮族民俗", "竹竿舞", "花千骨取景地"],
+      "highlights": [
+        "壮族民俗",
+        "竹竿舞",
+        "花千骨取景地"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "2小时",
-      "tags": ["民俗", "乡村", "免费"],
+      "tags": [
+        "民俗",
+        "乡村",
+        "免费"
+      ],
       "description": "壮族特色村落，可穿壮服、跳竹竿舞，感受三月三民俗。电视剧《花千骨》取景地之一。",
-      "tips": ["三月三期间活动丰富", "可体验舂糍粑"],
-      "image": "/static/images/spots/shanzhongcu.jpg"
+      "tips": [
+        "三月三期间活动丰富",
+        "可体验舂糍粑"
+      ],
+      "image": "/static/images/spots/shanzhongcu.svg"
     },
     {
       "id": "longhuagongyuan",
       "name": "龙凰公园",
       "area": "港北区",
-      "category_ids": ["park"],
+      "category_ids": [
+        "park"
+      ],
       "level": "区级",
-      "highlights": ["城市绿道", "晨跑健身"],
+      "highlights": [
+        "城市绿道",
+        "晨跑健身"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "1小时",
-      "tags": ["公园", "免费", "健身"],
+      "tags": [
+        "公园",
+        "免费",
+        "健身"
+      ],
       "description": "城区绿地公园，有健身步道和儿童游乐设施。",
-      "tips": ["适合清晨或傍晚散步"],
-      "image": "/static/images/spots/longhuagongyuan.jpg"
+      "tips": [
+        "适合清晨或傍晚散步"
+      ],
+      "image": "/static/images/spots/longhuagongyuan.svg"
     },
     {
       "id": "pingnanxianbowuguan",
       "name": "平南县博物馆",
       "area": "平南县",
-      "category_ids": ["education"],
+      "category_ids": [
+        "education"
+      ],
       "level": "县级",
-      "highlights": ["平南历史", "地方文物"],
+      "highlights": [
+        "平南历史",
+        "地方文物"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "09:00-17:00",
       "duration_recommended": "1小时",
-      "tags": ["室内", "免费", "研学"],
+      "tags": [
+        "室内",
+        "免费",
+        "研学"
+      ],
       "description": "展示平南县从古至今的历史变迁和地方文化。",
-      "tips": ["适合雨天游览"],
-      "image": "/static/images/spots/pingnanxianbowuguan.jpg"
+      "tips": [
+        "适合雨天游览"
+      ],
+      "image": "/static/images/spots/pingnanxianbowuguan.svg"
     },
     {
       "id": "guipingguijizhi",
       "name": "桂平地质公园",
       "area": "桂平市",
-      "category_ids": ["nature", "education"],
+      "category_ids": [
+        "nature",
+        "education"
+      ],
       "level": "国家级",
-      "highlights": ["喀斯特地貌", "地质科普", "北回归线标志园"],
+      "highlights": [
+        "喀斯特地貌",
+        "地质科普",
+        "北回归线标志园"
+      ],
       "best_season": "全年",
       "ticket": "部分收费",
       "open_hours": "全天",
       "duration_recommended": "半天",
-      "tags": ["地质", "科普", "自然"],
+      "tags": [
+        "地质",
+        "科普",
+        "自然"
+      ],
       "description": "包含西山、龙潭、白石山等景区，是研究喀斯特地貌和地质演变的天然课堂。北回归线标志园是必打卡点。",
-      "tips": ["可结合周边景区联游"],
-      "image": "/static/images/spots/guipingguijizhi.jpg"
+      "tips": [
+        "可结合周边景区联游"
+      ],
+      "image": "/static/images/spots/guipingguijizhi.svg"
     },
     {
       "id": "xishanquan",
       "name": "西山泉汽车露营基地",
       "area": "桂平市",
-      "category_ids": ["leisure"],
+      "category_ids": [
+        "leisure"
+      ],
       "level": "4A",
-      "highlights": ["房车营地", "星空露营", "亲子拓展"],
+      "highlights": [
+        "房车营地",
+        "星空露营",
+        "亲子拓展"
+      ],
       "best_season": "全年",
       "ticket": "营地收费",
       "open_hours": "全天",
       "duration_recommended": "1晚",
-      "tags": ["露营", "亲子", "户外"],
+      "tags": [
+        "露营",
+        "亲子",
+        "户外"
+      ],
       "description": "广西知名房车露营基地，可自带帐篷或租住房车。星空下围炉烧烤，亲子拓展项目丰富。",
-      "tips": ["需提前预订", "建议夏秋前往"],
-      "image": "/static/images/spots/xishanquan.jpg"
+      "tips": [
+        "需提前预订",
+        "建议夏秋前往"
+      ],
+      "image": "/static/images/spots/xishanquan.svg"
     },
     {
       "id": "zhoujiang",
       "name": "郁江沿岸风光带",
       "area": "港北区",
-      "category_ids": ["park"],
+      "category_ids": [
+        "park"
+      ],
       "level": "市级",
-      "highlights": ["滨江步道", "日落观景", "夜市美食"],
+      "highlights": [
+        "滨江步道",
+        "日落观景",
+        "夜市美食"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "2小时",
-      "tags": ["夜景", "免费", "散步"],
+      "tags": [
+        "夜景",
+        "免费",
+        "散步"
+      ],
       "description": "沿郁江修建的滨江公园，傍晚可追一场橘子味日落，晚上逛周边夜市。",
-      "tips": ["日落最佳时间是17:30-18:30", "附近夜市小吃丰富"],
-      "image": "/static/images/spots/zhoujiang.jpg"
+      "tips": [
+        "日落最佳时间是17:30-18:30",
+        "附近夜市小吃丰富"
+      ],
+      "image": "/static/images/spots/zhoujiang.svg"
     },
     {
       "id": "yuanboyuan-hehua",
       "name": "园博园荷花节",
       "area": "港北区",
-      "category_ids": ["lotus"],
+      "category_ids": [
+        "lotus"
+      ],
       "level": "节庆",
-      "highlights": ["万亩荷花", "汉服泛舟", "摄影大赛"],
+      "highlights": [
+        "万亩荷花",
+        "汉服泛舟",
+        "摄影大赛"
+      ],
       "best_season": "6-8月",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "半天",
-      "tags": ["季节限定", "荷花", "拍照", "免费"],
+      "tags": [
+        "季节限定",
+        "荷花",
+        "拍照",
+        "免费"
+      ],
       "description": "每年6-8月贵港园博园举办荷花节，万亩荷塘碧叶连天，有汉服租赁、泛舟采莲等活动。",
-      "tips": ["6月底盛花期", "晨雾时间最出片"],
-      "image": "/static/images/spots/yuanboyuan-hehua.jpg"
+      "tips": [
+        "6月底盛花期",
+        "晨雾时间最出片"
+      ],
+      "image": "/static/images/spots/yuanboyuan-hehua.svg"
     },
     {
       "id": "shigongsi",
       "name": "石达开铜像",
       "area": "港北区登龙桥路",
-      "category_ids": ["ancient"],
+      "category_ids": [
+        "ancient"
+      ],
       "level": "市级",
-      "highlights": ["翼王纪念", "历史地标"],
+      "highlights": [
+        "翼王纪念",
+        "历史地标"
+      ],
       "best_season": "全年",
       "ticket": "免费",
       "open_hours": "全天",
       "duration_recommended": "0.5小时",
-      "tags": ["历史", "免费", "地标"],
+      "tags": [
+        "历史",
+        "免费",
+        "地标"
+      ],
       "description": "为纪念太平天国翼王石达开而立的铜像，是贵港的城市地标之一。",
-      "tips": ["可与东湖公园联游"],
-      "image": "/static/images/spots/shigongsi.jpg"
+      "tips": [
+        "可与东湖公园联游"
+      ],
+      "image": "/static/images/spots/shigongsi.svg"
     }
   ]
 }
