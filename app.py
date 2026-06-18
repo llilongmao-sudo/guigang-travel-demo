@@ -16,11 +16,16 @@ from data_loader import DataLoader
 # 加载景点多图数据
 import json as _json
 _SPOT_IMAGES = {}
+import os as _os
+_SPOT_IMAGES_PATH = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'data', 'spot_images.json')
+_SPOT_IMAGES = {}
 try:
-    with open('data/spot_images.json', 'r', encoding='utf-8') as _f:
+    with open(_SPOT_IMAGES_PATH, 'r', encoding='utf-8') as _f:
         _data = _json.load(_f)
         _SPOT_IMAGES = {k: v['image_urls'] for k, v in _data.get('spot_images', {}).items()}
-except Exception:
+    print(f'[app] Loaded _SPOT_IMAGES: {len(_SPOT_IMAGES)} keys from {_SPOT_IMAGES_PATH}')
+except Exception as _e:
+    print(f'[app] WARN: Failed to load spot_images.json: {_e}')
     _SPOT_IMAGES = {}
 
 app = Flask(__name__)
@@ -64,6 +69,7 @@ def adapt_spot_v2(spot):
         'alias':           spot.get('alias', []),
         'nearby_spots':    spot.get('nearby_spots', []),
         'nearby_hotels':   [],
+        'image_urls':      _SPOT_IMAGES.get(spot.get('id'), []),
     }
 # ── SVG MIME 类型支持 ─────────────────────────────────────
 import mimetypes
@@ -774,7 +780,11 @@ def get_spot_detail(spot_id):
     raw = DataLoader.get_attraction_by_id(spot_id)
     if not raw:
         return jsonify({"error": "未找到该景点"}), 404
-    return jsonify(adapt_spot_v2(raw))
+    spot = adapt_spot_v2(raw)
+    # 手动补 image_urls（修复 adapt_spot_v2 未返回该字段的 bug）
+    if 'image_urls' not in spot or not spot['image_urls']:
+        spot['image_urls'] = _SPOT_IMAGES.get(spot_id, [])
+    return jsonify(spot)
 
 @app.route("/api/spot/<spot_id>/nearby")
 def get_nearby(spot_id):
@@ -813,7 +823,7 @@ def list_spots():
         "rating": s.get("rating", "") or s.get("level", ""),
         "description": (s.get("description", "")[:80] + "...") if s.get("description") else "",
         "image_url": s.get("image_url", "") or s.get("image", ""),
-        "image_urls": _SPOT_IMAGES.get(spot_id, [s.get("image_url", "") or s.get("image", "")]),
+        "image_urls": _SPOT_IMAGES.get(s.get("id"), [s.get("image_url", "") or s.get("image", "")]),
         "ticket_price": s.get("ticket_price", "") or s.get("ticket", ""),
         "location": s.get("location", "") or s.get("area", ""),
         "district": s.get("district", "") or s.get("area", ""),
