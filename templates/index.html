@@ -211,6 +211,30 @@
             transform: scale(0.97);
             box-shadow: 0 2px 8px rgba(16,185,129,0.25);
         }
+        /* 我的行程 第二入口 */
+        .hero-itinerary-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin: 6px 0 12px;
+            padding: clamp(10px, 2.5vw, 14px) clamp(16px, 4vw, 24px);
+            background: #fff;
+            border: 2px solid #10b981;
+            border-radius: 14px;
+            color: #10b981;
+            font-size: clamp(14px, 3.5vw, 17px);
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-itinerary-btn:active {
+            transform: scale(0.97);
+            background: #f0fdf4;
+        }
         .hero-ai-icon {
             font-size: clamp(20px, 5vw, 26px);
         }
@@ -1827,6 +1851,7 @@
                     <span class="hero-ai-text">AI 帮我规划旅行</span>
                     <span class="hero-ai-arrow">→</span>
                 </button>
+                <button class="hero-itinerary-btn" onclick="location.href='/my-itineraries'">📋 我的行程</button>
 
                 <!-- 第二行：快速功能入口 -->
                 <div class="hero-quick-row">
