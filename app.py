@@ -1337,6 +1337,14 @@ def plan_itinerary():
         return jsonify({'error': str(e)}), 500
 
 
+
+
+# ── V8 行程管理页面 ────────────────────────────────────────
+@app.route("/my-itineraries")
+def my_itineraries():
+    """我的行程页面（查看已保存的行程）"""
+    return render_template("itinerary_detail.html")
+
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 5001))
     print("=" * 50)

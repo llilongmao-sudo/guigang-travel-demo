@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的行程 - 贵港旅游智能助手</title>
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header h1 { font-size: 17px; font-weight: 700; }
+        
+        /* Itinerary List */
+        .list { padding: 16px; }
+        .itinerary-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .itinerary-card:active { transform: scale(0.98); }
+        .itinerary-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .itinerary-card .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #222;
+        }
+        .itinerary-card .card-date {
+            font-size: 11px;
+            color: #999;
+        }
+        .itinerary-card .card-summary {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        .itinerary-card .card-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .itinerary-card .tag {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .itinerary-card .card-delete {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+        .empty-state .empty-text { font-size: 14px; }
+        
+        /* Detail View */
+        .detail-view { display: none; padding: 16px; }
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .detail-title { font-size: 18px; font-weight: 700; color: #222; }
+        .detail-actions { display: flex; gap: 8px; }
+        .detail-actions button {
+            padding: 6px 12px;
+            border-radius: 10px;
+            border: 1.5px solid #ddd;
+            background: #fff;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        /* Timeline (reuse from index.html) */
+        .timeline { position: relative; padding-left: 24px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px; top: 0; bottom: 0;
+            width: 2px;
+            background: #e0e0e0;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 16px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px; top: 6px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px #10b981;
+        }
+        .timeline-time { font-size: 12px; color: #10b981; font-weight: 600; margin-bottom: 4px; }
+        .timeline-title { font-size: 14px; font-weight: 600; color: #222; margin-bottom: 2px; }
+        .timeline-desc { font-size: 12px; color: #666; line-height: 1.5; }
+        .timeline-cost { font-size: 12px; color: #e65100; margin-top: 4px; }
+        
+        /* Budget Card */
+        .budget-card {
+            background: #f8fffe;
+            border: 1px solid #c8e6c9;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-top: 14px;
+        }
+        .budget-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        .budget-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 700;
+            color: #222;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #c8e6c9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <h1>我的行程</h1>
+    </div>
+    
+    <!-- List View -->
+    <div class="list" id="listView">
+        <!-- JS 动态生成 -->
+    </div>
+    
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-icon">📭</div>
+        <div class="empty-text">暂无保存的行程<br>去首页让 AI 帮你规划吧！</div>
+    </div>
+    
+    <!-- Detail View -->
+    <div class="detail-view" id="detailView">
+        <div class="detail-header">
+            <div class="detail-title" id="detailTitle">行程详情</div>
+            <div class="detail-actions">
+                <button onclick="deleteCurrentItinerary()">🗑️ 删除</button>
+                <button onclick="goBackToList()">← 返回</button>
+            </div>
+        </div>
+        <div id="detailContent">
+            <!-- JS 动态生成 -->
+        </div>
+    </div>
+    
+    <script>
+        let currentItineraryId = null;
+        
+        // ── 加载行程列表 ──────────────────────────────────────
+        function loadItineraries() {
+            const listView = document.getElementById('listView');
+            const emptyState = document.getElementById('emptyState');
+            const itineraries = JSON.parse(localStorage.getItem('guigang_itineraries') || '[]');
+            
+            if (itineraries.length === 0) {
+                listView.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            listView.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            let html = '';
+            itineraries.forEach((itin, idx) => {
+                const date = new Date(itin.created_at).toLocaleDateString('zh-CN');
+                const form = itin.form_data || {};
+                const days = form.days || '?';
+                const people = form.people || '?';
+                
+                html += `
+                    <div class="itinerary-card" onclick="showItineraryDetail(${idx})">
+                        <div class="card-header">
+                            <div class="card-title">📅 ${days}天 ${people}人行程</div>
+                            <button class="card-delete" onclick="event.stopPropagation(); deleteItinerary(${idx})">✕</button>
+                        </div>
+                        <div class="card-date">创建于 ${date}</div>
+                        <div class="card-tags">
+                            <span class="tag">${days}天</span>
+                            <span class="tag">${people}人</span>
+                            <span class="tag">${form.transport || '自驾'}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            listView.innerHTML = html;
+        }
+        
+        // ── 显示行程详情 ──────────────────────────────────────
+        function showItineraryDetail(idx) {
+            const itineraries = JSON.parse(localStorage.getItem('guigang_itineraries') || '[]');
+            if (idx >= itineraries.length) return;
+            
+            const itin = itineraries[idx];
+            currentItineraryId = idx;
+            
+            document.getElementById('listView').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('detailView').style.display = 'block';
+            
+            const form = itin.form_data || {};
+            document.getElementById('detailTitle').textContent = `${form.days || '?'}天行程（${form.people || '?'}人）`;
+            
+            // 渲染详情内容
+            // 如果有保存的 result_html，直接复用
+            if (itin.result_html) {
+                document.getElementById('detailContent').innerHTML = itin.result_html;
+            } else {
+                document.getElementById('detailContent').innerHTML = '<div style="text-align:center;color:#999;padding:40px 0;">暂无详细内容</div>';
+            }
+        }
+        
+        // ── 删除行程 ──────────────────────────────────────────
+        function deleteItinerary(idx) {
+            if (!confirm('确定删除此行程吗？')) return;
+            
+            const itineraries = JSON.parse(localStorage.getItem('guigang_itineraries') || '[]');
+            itineraries.splice(idx, 1);
+            localStorage.setItem('guigang_itineraries', JSON.stringify(itineraries));
+            
+            loadItineraries();
+        }
+        
+        function deleteCurrentItinerary() {
+            if (currentItineraryId === null) return;
+            deleteItinerary(currentItineraryId);
+            goBackToList();
+        }
+        
+        // ── 返回 ──────────────────────────────────────────────
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+        
+        function goBackToList() {
+            currentItineraryId = null;
+            document.getElementById('detailView').style.display = 'none';
+            loadItineraries();
+        }
+        
+        // ── 初始化 ────────────────────────────────────────────
+        loadItineraries();
+    </script>
+</body>
+</html>
