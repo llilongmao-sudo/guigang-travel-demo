@@ -712,6 +712,49 @@ def spot_detail_page(spot_id):
     return render_template("spot_detail.html", spot=spot)
 
 
+@app.route("/food/<food_id>")
+def food_detail_page(food_id):
+    """美食详情页"""
+    food = DataLoader.get_food_by_id(food_id)
+    if not food:
+        raw_spots = DataLoader.get_attractions()
+        spots = [adapt_spot_v2(s) for s in raw_spots]
+        return render_template("index.html", spots=spots, error="未找到该美食"), 404
+    return render_template("food_detail.html", food=food)
+
+
+@app.route("/route/<route_id>")
+def route_detail_page(route_id):
+    """路线详情页"""
+    route = DataLoader.get_route_by_id(route_id)
+    if not route:
+        raw_spots = DataLoader.get_attractions()
+        spots = [adapt_spot_v2(s) for s in raw_spots]
+        return render_template("index.html", spots=spots, error="未找到该路线"), 404
+    # 丰富展示数据
+    itinerary = route.get('itinerary', [])
+    route_food = route.get('food', [])
+    tips = route.get('tips', [])
+    tags = route.get('tags', [])
+    suitable = route.get('suitable_for', [])
+    highlights = route.get('highlights', [])
+    days_map = {0.5: '半日游', 1: '一日游', 2: '两日游', 3: '三日游'}
+    duration = days_map.get(route.get('days', 1), f"{route.get('days', 1)}日游")
+    budget_str = f"¥{route.get('budget_min', '?')}-{route.get('budget_max', '?')}/人"
+    return render_template(
+        "route_detail.html",
+        route=route,
+        itinerary=itinerary,
+        route_food=route_food,
+        tips=tips,
+        tags=tags,
+        suitable=suitable,
+        highlights=highlights,
+        duration=duration,
+        budget_str=budget_str,
+    )
+
+
 @app.route("/api/spot/<spot_id>")
 def get_spot_detail(spot_id):
     raw = DataLoader.get_attraction_by_id(spot_id)
