@@ -60,10 +60,12 @@
     "beidishan": {
       "name": "北帝山",
       "image_urls": [
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80",
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80"
+        "/static/images/spots/beidishan/1.jpg",
+        "/static/images/spots/beidishan/2.jpg",
+        "/static/images/spots/beidishan/3.jpg",
+        "/static/images/spots/beidishan/4.jpg",
+        "/static/images/spots/beidishan/5.jpg",
+        "/static/images/spots/beidishan/6.jpg"
       ]
     },
     "wuyuan": {
