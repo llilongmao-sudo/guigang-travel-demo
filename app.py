@@ -1072,6 +1072,57 @@ def get_route_v2(route_id):
     return jsonify({"error": "未找到该路线"}), 404
 
 
+# ── V9.5 住宿数据 API ────────────────────────────────────────
+
+@app.route("/api/hotels")
+def get_hotels():
+    """获取所有住宿数据"""
+    try:
+        with open('data/hotels.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return jsonify(data.get('hotels', []))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/hotels/<hotel_id>")
+def get_hotel(hotel_id):
+    """获取单个住宿详情"""
+    try:
+        with open('data/hotels.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        for h in data.get('hotels', []):
+            if h.get('id') == hotel_id:
+                return jsonify(h)
+        return jsonify({"error": "未找到该住宿"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ── V9.5 交通数据 API ────────────────────────────────────────
+
+@app.route("/api/traffic")
+def get_traffic():
+    """获取交通数据"""
+    try:
+        with open('data/traffic.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ── V9.5 景点增强数据（parking/opening_hours_detail/ticket_info）────────────────────
+
+@app.route("/api/spot-v3/<spot_id>")
+def get_spot_v3(spot_id):
+    """获取景点详情（V3版本，含停车/营业时间/门票详细信息）"""
+    spot = DataLoader.get_attraction_by_id(spot_id)
+    if not spot:
+        return jsonify({"error": "未找到该景点"}), 404
+    return jsonify(spot)
+
+
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 5001))
     print("=" * 50)

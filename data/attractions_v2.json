@@ -36,7 +36,23 @@
         "观日出建议4点出发",
         "目前免大门票"
       ],
-      "image": "/static/images/spots/pingtianshan.svg"
+      "image": "/static/images/spots/pingtianshan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 200,
+        "notes": "山脚下有停车场，旺季需早到"
+      },
+      "opening_hours_detail": {
+        "open": "全天",
+        "best_time": "6:00-18:00",
+        "notes": "山顶日出时段需夜爬"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "无需预约"
+      }
     },
     {
       "id": "jiulinghu",
@@ -67,7 +83,24 @@
         "划船约30元/小时",
         "夏季注意防晒"
       ],
-      "image": "/static/images/spots/jiulinghu.svg"
+      "image": "/static/images/spots/jiulinghu.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "10元/次",
+        "spaces": 150,
+        "notes": "景区入口处"
+      },
+      "opening_hours_detail": {
+        "open": "8:00-18:00",
+        "closed_days": [],
+        "notes": "夏季荷花节延长至20:00"
+      },
+      "ticket_info": {
+        "price": 30,
+        "type": "门票",
+        "discount": "学生半价",
+        "notes": "含荷花节期间"
+      }
     },
     {
       "id": "longtoushan",
@@ -98,7 +131,20 @@
         "建议自驾/拼车",
         "桫椤群落沿途可见"
       ],
-      "image": "/static/images/spots/longtoushan.svg"
+      "image": "/static/images/spots/longtoushan.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "暂无停车信息"
+      },
+      "opening_hours_detail": {
+        "open": "全天",
+        "notes": ""
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "未知",
+        "notes": ""
+      }
     },
     {
       "id": "beidishan",
@@ -130,7 +176,22 @@
         "漂流需另购装备包50元",
         "建议住山下北帝山大酒店"
       ],
-      "image": "/static/images/spots/beidishan.svg"
+      "image": "/static/images/spots/beidishan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "10元/次",
+        "spaces": 150,
+        "notes": "景区入口"
+      },
+      "opening_hours_detail": {
+        "open": "8:30-17:00",
+        "notes": "漂流季节（6-9月）延长至18:00"
+      },
+      "ticket_info": {
+        "price": 80,
+        "type": "门票+漂流",
+        "notes": "漂流季节6-9月"
+      }
     },
     {
       "id": "datengxia",
@@ -160,7 +221,22 @@
         "游船需提前预约",
         "4月水位上涨最壮观"
       ],
-      "image": "/static/images/spots/datengxia.svg"
+      "image": "/static/images/spots/datengxia.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "10元/次",
+        "spaces": 100,
+        "notes": "游客中心停车场"
+      },
+      "opening_hours_detail": {
+        "open": "8:30-17:00",
+        "notes": "游船班次：9:00/11:00/14:00/16:00"
+      },
+      "ticket_info": {
+        "price": 50,
+        "type": "门票+游船",
+        "notes": "游船为必选项"
+      }
     },
     {
       "id": "hemeitantang",
@@ -191,7 +267,21 @@
         "防晒必备",
         "民宿需提前预订"
       ],
-      "image": "/static/images/spots/hemeitantang.svg"
+      "image": "/static/images/spots/hemeitantang.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "荷塘周边可临时停车"
+      },
+      "opening_hours_detail": {
+        "open": "全天",
+        "best_time": "6:00-19:00",
+        "notes": "夏季荷花最佳观赏期6-8月"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "荷塘免费，游船30元/人"
+      }
     },
     {
       "id": "xishan",
@@ -222,7 +312,24 @@
         "素斋馆人均30元",
         "西山茶伴手礼首选"
       ],
-      "image": "/static/images/spots/xishan.svg"
+      "image": "/static/images/spots/xishan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "15元/次",
+        "spaces": 300,
+        "notes": "西山脚下大型停车场"
+      },
+      "opening_hours_detail": {
+        "open": "8:00-17:30",
+        "ticket_stop": "16:30",
+        "notes": "节假日可能延长"
+      },
+      "ticket_info": {
+        "price": 90,
+        "type": "门票",
+        "discount": "学生/老人半价",
+        "notes": "索道另收费（上行40/下行30）"
+      }
     },
     {
       "id": "longtansi",
@@ -252,7 +359,22 @@
         "带替换衣物",
         "夏季最佳"
       ],
-      "image": "/static/images/spots/longtansi.svg"
+      "image": "/static/images/spots/longtansi.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "5元/次",
+        "spaces": 80,
+        "notes": "寺庙前空地"
+      },
+      "opening_hours_detail": {
+        "open": "8:00-17:00",
+        "notes": "初一/十五香火旺盛"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "香火自愿"
+      }
     },
     {
       "id": "nanshansi",
@@ -281,7 +403,20 @@
         "可顺便游南山动物园",
         "素斋体验推荐"
       ],
-      "image": "/static/images/spots/nanshansi.svg"
+      "image": "/static/images/spots/nanshansi.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "周边可停路边，建议打车"
+      },
+      "opening_hours_detail": {
+        "open": "7:00-18:00",
+        "notes": "常年开放"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "常年免费"
+      }
     },
     {
       "id": "jintian",
@@ -310,7 +445,25 @@
         "博物馆免费参观",
         "建议结合西山线路"
       ],
-      "image": "/static/images/spots/jintian.svg"
+      "image": "/static/images/spots/jintian.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 80,
+        "notes": "起义遗址停车场"
+      },
+      "opening_hours_detail": {
+        "open": "9:00-17:00",
+        "closed_days": [
+          "周一"
+        ],
+        "notes": "金田起义遗址，免费参观"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "金田起义遗址免费参观"
+      }
     },
     {
       "id": "guipin-laostreet",
@@ -340,7 +493,20 @@
         "傍晚灯光最美",
         "推荐尝试豆腐花、炸鸭脚"
       ],
-      "image": "/static/images/spots/guipin-laostreet.svg"
+      "image": "/static/images/spots/guipin-laostreet.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "老街内不准通车"
+      },
+      "opening_hours_detail": {
+        "open": "全天",
+        "notes": "老街全天开放，店铺8:00-20:00"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "老街免费"
+      }
     },
     {
       "id": "wuyuan",
@@ -370,7 +536,20 @@
         "适合汉服拍摄",
         "夜景灯光不错"
       ],
-      "image": "/static/images/spots/wuyuan.svg"
+      "image": "/static/images/spots/wuyuan.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "五原景区建议包车前往"
+      },
+      "opening_hours_detail": {
+        "open": "8:00-17:00",
+        "notes": "五原景区需包车前往"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "五原景区免费"
+      }
     },
     {
       "id": "donghu",
@@ -399,7 +578,20 @@
         "划船约30元/小时",
         "夜景灯光秀"
       ],
-      "image": "/static/images/spots/donghu.svg"
+      "image": "/static/images/spots/donghu.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "周边有收费停车场（5元/小时）"
+      },
+      "opening_hours_detail": {
+        "open": "6:00-22:00",
+        "notes": "免费开放，夜间有灯光"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "免费开放"
+      }
     },
     {
       "id": "macaojiang",
@@ -427,7 +619,20 @@
         "适合晨跑",
         "晚上广场舞热闹"
       ],
-      "image": "/static/images/spots/macaojiang.svg"
+      "image": "/static/images/spots/macaojiang.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "沿江路可临时停车"
+      },
+      "opening_hours_detail": {
+        "open": "全天",
+        "notes": "沿江绿道全天开放"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "沿江绿道免费"
+      }
     },
     {
       "id": "xiongsen-animal",
@@ -455,7 +660,23 @@
         "建议上午去动物活跃",
         "可住雄景生态酒店与虎隔窗共餐"
       ],
-      "image": "/static/images/spots/xiongsen-animal.svg"
+      "image": "/static/images/spots/xiongsen-animal.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "10元/次",
+        "spaces": 200,
+        "notes": "景区大门前"
+      },
+      "opening_hours_detail": {
+        "open": "9:00-17:30",
+        "notes": "16:00停止入场"
+      },
+      "ticket_info": {
+        "price": 120,
+        "type": "门票",
+        "discount": "儿童/老人优惠",
+        "notes": "含动物表演"
+      }
     },
     {
       "id": "museum",
@@ -485,7 +706,25 @@
         "需提前公众号预约",
         "周一闭馆别跑空"
       ],
-      "image": "/static/images/spots/museum.svg"
+      "image": "/static/images/spots/museum.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 50,
+        "notes": "博物馆院内"
+      },
+      "opening_hours_detail": {
+        "open": "9:00-17:00",
+        "closed_days": [
+          "周一"
+        ],
+        "notes": "16:30停止入场"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "需身份证登记"
+      }
     },
     {
       "id": "nature-museum",
@@ -514,7 +753,24 @@
         "适合雨天备选",
         "可结合博物馆半日游"
       ],
-      "image": "/static/images/spots/nature-museum.svg"
+      "image": "/static/images/spots/nature-museum.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 50
+      },
+      "opening_hours_detail": {
+        "open": "9:00-17:00",
+        "closed_days": [
+          "周一"
+        ],
+        "notes": "16:30停止入场"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "需身份证登记"
+      }
     },
     {
       "id": "baishishan",
@@ -544,7 +800,22 @@
         "一线天较陡需注意安全",
         "适合摄影爱好者"
       ],
-      "image": "/static/images/spots/baishishan.svg"
+      "image": "/static/images/spots/baishishan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "5元/次",
+        "spaces": 100,
+        "notes": "山门停车场"
+      },
+      "opening_hours_detail": {
+        "open": "8:00-17:00",
+        "notes": "白石山攀岩需预约"
+      },
+      "ticket_info": {
+        "price": 60,
+        "type": "门票",
+        "notes": "攀岩项目另收费"
+      }
     },
     {
       "id": "tongguwan",
@@ -573,7 +844,21 @@
         "建议住一晚",
         "周末人多建议早去"
       ],
-      "image": "/static/images/spots/tongguwan.svg"
+      "image": "/static/images/spots/tongguwan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "10元/次",
+        "spaces": 80
+      },
+      "opening_hours_detail": {
+        "open": "9:00-21:00",
+        "notes": "夜间灯光秀19:30-21:00"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "景区免费，游乐项目另收费"
+      }
     },
     {
       "id": "yuanboyuan",
@@ -602,7 +887,25 @@
         "6月底荷花最盛",
         "汉服租赁约50元"
       ],
-      "image": "/static/images/spots/yuanboyuan.svg"
+      "image": "/static/images/spots/yuanboyuan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 500,
+        "notes": "园博园东/南门均有停车场"
+      },
+      "opening_hours_detail": {
+        "open": "9:00-17:00",
+        "closed_days": [
+          "周一"
+        ],
+        "notes": "法定节假日周一照常开放"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "园博园免费，部分展馆收费"
+      }
     },
     {
       "id": "danan-guzhen",
@@ -631,7 +934,20 @@
         "可结合平南线路游览",
         "老街小吃值得尝试"
       ],
-      "image": "/static/images/spots/danan-guzhen.svg"
+      "image": "/static/images/spots/danan-guzhen.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "古镇内不准停车，需停镇外"
+      },
+      "opening_hours_detail": {
+        "open": "全天",
+        "notes": "古镇街道全天开放，店铺营业时间8:00-18:00"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "古镇免费，部分景点收费"
+      }
     },
     {
       "id": "dakaihu",
@@ -660,7 +976,20 @@
         "适合自驾游",
         "建议带野餐垫"
       ],
-      "image": "/static/images/spots/dakaihu.svg"
+      "image": "/static/images/spots/dakaihu.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "大开挖景区建议打车"
+      },
+      "opening_hours_detail": {
+        "open": "8:00-17:00",
+        "notes": "大开挖景区正在建设中"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费（在建）",
+        "notes": "景区建设中"
+      }
     },
     {
       "id": "qinnangongyuan",
@@ -687,7 +1016,21 @@
       "tips": [
         "晚上广场舞热闹"
       ],
-      "image": "/static/images/spots/qinnangongyuan.svg"
+      "image": "/static/images/spots/qinnangongyuan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 100
+      },
+      "opening_hours_detail": {
+        "open": "6:00-22:00",
+        "notes": "免费开放"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "免费开放"
+      }
     },
     {
       "id": "shanzhongcu",
@@ -716,7 +1059,20 @@
         "三月三期间活动丰富",
         "可体验舂糍粑"
       ],
-      "image": "/static/images/spots/shanzhongcu.svg"
+      "image": "/static/images/spots/shanzhongcu.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "山中无停车场，需停村口"
+      },
+      "opening_hours_detail": {
+        "open": "8:00-18:00",
+        "notes": "山中无照明，建议白天前往"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "山中免费"
+      }
     },
     {
       "id": "longhuagongyuan",
@@ -743,7 +1099,20 @@
       "tips": [
         "适合清晨或傍晚散步"
       ],
-      "image": "/static/images/spots/longhuagongyuan.svg"
+      "image": "/static/images/spots/longhuagongyuan.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "周边道路可临停"
+      },
+      "opening_hours_detail": {
+        "open": "6:00-22:00",
+        "notes": "免费开放"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "免费开放"
+      }
     },
     {
       "id": "pingnanxianbowuguan",
@@ -770,7 +1139,24 @@
       "tips": [
         "适合雨天游览"
       ],
-      "image": "/static/images/spots/pingnanxianbowuguan.svg"
+      "image": "/static/images/spots/pingnanxianbowuguan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 30
+      },
+      "opening_hours_detail": {
+        "open": "9:00-17:00",
+        "closed_days": [
+          "周一"
+        ],
+        "notes": "16:30停止入场"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "需身份证登记"
+      }
     },
     {
       "id": "guipingguijizhi",
@@ -799,7 +1185,20 @@
       "tips": [
         "可结合周边景区联游"
       ],
-      "image": "/static/images/spots/guipingguijizhi.svg"
+      "image": "/static/images/spots/guipingguijizhi.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "建议停西山停车场后步行"
+      },
+      "opening_hours_detail": {
+        "open": "9:00-21:00",
+        "notes": "骑楼夜景最佳时段19:00-22:00"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "骑楼免费，部分店铺消费"
+      }
     },
     {
       "id": "xishanquan",
@@ -828,7 +1227,23 @@
         "需提前预订",
         "建议夏秋前往"
       ],
-      "image": "/static/images/spots/xishanquan.svg"
+      "image": "/static/images/spots/xishanquan.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "20元/次",
+        "spaces": 100,
+        "notes": "温泉酒店停车场"
+      },
+      "opening_hours_detail": {
+        "open": "9:00-23:00",
+        "notes": "温泉开放至深夜，建议预约"
+      },
+      "ticket_info": {
+        "price": 138,
+        "type": "温泉门票",
+        "discount": "住店客人优惠",
+        "notes": "需预约"
+      }
     },
     {
       "id": "zhoujiang",
@@ -857,7 +1272,20 @@
         "日落最佳时间是17:30-18:30",
         "附近夜市小吃丰富"
       ],
-      "image": "/static/images/spots/zhoujiang.svg"
+      "image": "/static/images/spots/zhoujiang.svg",
+      "parking": {
+        "has_parking": false,
+        "notes": "郁江边无专用停车场"
+      },
+      "opening_hours_detail": {
+        "open": "全天",
+        "notes": "沿江步道全天开放"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "沿江步道免费"
+      }
     },
     {
       "id": "yuanboyuan-hehua",
@@ -887,7 +1315,25 @@
         "6月底盛花期",
         "晨雾时间最出片"
       ],
-      "image": "/static/images/spots/yuanboyuan-hehua.svg"
+      "image": "/static/images/spots/yuanboyuan-hehua.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 300,
+        "notes": "夏季荷花节期间车位紧张"
+      },
+      "opening_hours_detail": {
+        "open": "9:00-17:00",
+        "closed_days": [
+          "周一"
+        ],
+        "notes": "荷花节期间（6-8月）延长至20:00"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "园博园免费，荷花节期间可能收费"
+      }
     },
     {
       "id": "shigongsi",
@@ -914,7 +1360,22 @@
       "tips": [
         "可与东湖公园联游"
       ],
-      "image": "/static/images/spots/shigongsi.svg"
+      "image": "/static/images/spots/shigongsi.svg",
+      "parking": {
+        "has_parking": true,
+        "parking_fee": "免费",
+        "spaces": 30,
+        "notes": "寺前有空地"
+      },
+      "opening_hours_detail": {
+        "open": "8:00-17:30",
+        "notes": "香火最旺时段：农历初一/十五"
+      },
+      "ticket_info": {
+        "price": 0,
+        "type": "免费",
+        "notes": "寺内自愿捐赠"
+      }
     }
   ]
 }

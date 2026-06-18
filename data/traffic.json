@@ -1,0 +1,113 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-06-18",
+  "traffic": {
+    "airport": {
+      "nearest": "南宁吴圩国际机场",
+      "distance_to_guigang": 150,
+      "travel_time": "2小时",
+      "transport_options": [
+        {
+          "type": "机场大巴",
+          "price": 80,
+          "duration": "2.5小时",
+          "frequency": "每30分钟一班"
+        },
+        {
+          "type": "出租车",
+          "price": 400,
+          "duration": "2小时",
+          "notes": "可拼车，人均约100元"
+        },
+        {
+          "type": "高铁+打车",
+          "price": 120,
+          "duration": "2.5小时",
+          "route": "机场→南宁东站（高铁）→贵港站（打车）"
+        }
+      ]
+    },
+    "railway": {
+      "stations": [
+        {
+          "name": "贵港站",
+          "type": "高铁站",
+          "location": "市中心",
+          "distance_to_center": 3,
+          "taxi_to_center": "15元，10分钟",
+          "bus_to_center": "1路/2路，2元，30分钟"
+        },
+        {
+          "name": "桂平站",
+          "type": "高铁站",
+          "location": "桂平市",
+          "distance_to_center": 45,
+          "taxi_to_center": "80元，40分钟"
+        },
+        {
+          "name": "平南南站",
+          "type": "高铁站",
+          "location": "平南县",
+          "distance_to_center": 85,
+          "taxi_to_center": "150元，1.5小时"
+        }
+      ]
+    },
+    "bus": {
+      "main_station": "贵港汽车总站",
+      "location": "市中心",
+      "routes": "覆盖全市各乡镇",
+      "price_range": "5-30元",
+      "notes": "到各景区有专线巴士"
+    },
+    "city_transport": {
+      "bus": {
+        "price": "2元（现金）/1.5元（刷卡）",
+        "operating_hours": "6:30-22:00",
+        "tourist_routes": [
+          {
+            "route": "旅游1号线",
+            "attractions": ["东湖公园", "南山寺", "贵港博物馆"],
+            "price": 5,
+            "frequency": "每20分钟一班"
+          }
+        ]
+      },
+      "taxi": {
+        "starting_price": "6元（3公里内）",
+        "price_per_km": "2元/公里",
+        "notes": "建议使用滴滴/高德打车"
+      },
+      "shared_bike": {
+        "brands": ["美团单车", "哈啰单车"],
+        "price": "1.5元/半小时",
+        "coverage": "市区主要景点"
+      },
+      "car_rental": {
+        "price_per_day": "100-300元",
+        "platforms": ["神州租车", "一嗨租车", "本地租车行"],
+        "notes": "建议提前预约，节假日需提前3天"
+      }
+    },
+    "scenic_shuttle": [
+      {
+        "attraction": "西山风景名胜区",
+        "shuttle_price": "20元（往返）",
+        "departure_point": "桂平市区",
+        "frequency": "每1小时一班"
+      },
+      {
+        "attraction": "大藤峡",
+        "shuttle_price": "30元（往返）",
+        "departure_point": "桂平市区",
+        "notes": "可拼船游览"
+      },
+      {
+        "attraction": "雄森动物大世界",
+        "shuttle_price": "15元（往返）",
+        "departure_point": "平南县城",
+        "frequency": "每2小时一班"
+      }
+    ]
+  }
+}

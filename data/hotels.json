@@ -1,0 +1,110 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-06-18",
+  "hotels": [
+    {
+      "id": "hotel_001",
+      "name": "贵港维景大酒店",
+      "area": "市中心",
+      "rating": 4.5,
+      "price_range": "300-500",
+      "address": "贵港市港北区中山路",
+      "phone": "0775-4568888",
+      "distance_to_center": 0,
+      "amenities": ["wifi", "parking", "breakfast", "gym"],
+      "nearby_attractions": ["东湖公园", "贵港博物馆"],
+      "booking_platforms": ["携程", "美团", "飞猪"]
+    },
+    {
+      "id": "hotel_002",
+      "name": "桂平西山泉度假酒店",
+      "area": "桂平市",
+      "rating": 4.3,
+      "price_range": "400-800",
+      "address": "桂平市西山风景区内",
+      "phone": "0775-3388888",
+      "distance_to_center": 45,
+      "amenities": ["wifi", "parking", "hot_spring", "restaurant"],
+      "nearby_attractions": ["西山风景名胜区", "西山泉"],
+      "booking_platforms": ["携程", "美团"]
+    },
+    {
+      "id": "hotel_003",
+      "name": "贵港如家酒店（火车站店）",
+      "area": "火车站",
+      "rating": 3.8,
+      "price_range": "150-250",
+      "address": "贵港市港北区火车站广场",
+      "phone": "0775-4218888",
+      "distance_to_center": 3,
+      "amenities": ["wifi", "parking"],
+      "nearby_attractions": ["东湖公园", "贵港博物馆"],
+      "booking_platforms": ["携程", "美团", "如家APP"]
+    },
+    {
+      "id": "hotel_004",
+      "name": "平南雄森动物大世界酒店",
+      "area": "平南县",
+      "rating": 4.0,
+      "price_range": "350-600",
+      "address": "平南县雄森动物大世界景区内",
+      "phone": "0775-7866666",
+      "distance_to_center": 85,
+      "amenities": ["wifi", "parking", "restaurant", "zoo_ticket_included"],
+      "nearby_attractions": ["雄森动物大世界"],
+      "booking_platforms": ["携程", "美团"]
+    },
+    {
+      "id": "hotel_005",
+      "name": "贵港碧桂园凤凰酒店",
+      "area": "港北区",
+      "rating": 4.6,
+      "price_range": "500-900",
+      "address": "贵港市港北区迎宾大道",
+      "phone": "0775-4288888",
+      "distance_to_center": 5,
+      "amenities": ["wifi", "parking", "swimming_pool", "gym", "breakfast"],
+      "nearby_attractions": ["贵港园博园"],
+      "booking_platforms": ["携程", "美团", "碧桂园酒店APP"]
+    },
+    {
+      "id": "hotel_006",
+      "name": "桂平大藤峡酒店",
+      "area": "桂平市",
+      "rating": 4.1,
+      "price_range": "280-450",
+      "address": "桂平市大藤峡风景区",
+      "phone": "0775-3558888",
+      "distance_to_center": 50,
+      "amenities": ["wifi", "parking", "restaurant", "river_view"],
+      "nearby_attractions": ["大藤峡", "龙潭国家森林公园"],
+      "booking_platforms": ["携程", "美团"]
+    },
+    {
+      "id": "hotel_007",
+      "name": "贵港青旅国际青年旅舍",
+      "area": "市中心",
+      "rating": 3.5,
+      "price_range": "80-150",
+      "address": "贵港市港北区解放路",
+      "phone": "0775-4234567",
+      "distance_to_center": 1,
+      "amenities": ["wifi", "shared_kitchen", "laundry"],
+      "nearby_attractions": ["东湖公园", "南山寺"],
+      "booking_platforms": ["携程", "美团", "YHA官网"]
+    },
+    {
+      "id": "hotel_008",
+      "name": "平南县城商务酒店",
+      "area": "平南县",
+      "rating": 3.7,
+      "price_range": "120-200",
+      "address": "平南县城中心",
+      "phone": "0775-7823456",
+      "distance_to_center": 80,
+      "amenities": ["wifi", "parking"],
+      "nearby_attractions": ["平南博物馆", "平天山"],
+      "booking_platforms": ["携程", "美团"]
+    }
+  ]
+}
