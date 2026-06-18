@@ -46,7 +46,10 @@
           "title": "出发前往覃塘区",
           "type": "transit",
           "location": "贵港市区",
-          "description": "自驾或包车出发"
+          "description": "自驾或包车出发",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 2,
@@ -54,7 +57,10 @@
           "title": "荷美覃塘",
           "type": "attraction",
           "location": "覃塘区龙凤村",
-          "description": "千亩荷田、竹筏、拍照打卡"
+          "description": "千亩荷田、竹筏、拍照打卡",
+          "spot_id": "qintang_hetang",
+          "lat": 23.08,
+          "lng": 109.45
         },
         {
           "step": 3,
@@ -62,7 +68,10 @@
           "title": "午餐：覃塘莲藕宴",
           "type": "food",
           "location": "覃塘农家乐",
-          "description": "推荐：莲藕排骨汤、炸荷花、莲子羹"
+          "description": "推荐：莲藕排骨汤、炸荷花、莲子羹",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 4,
@@ -70,7 +79,10 @@
           "title": "九凌湖",
           "type": "attraction",
           "location": "覃塘区石卡镇",
-          "description": "划船、看地下泉眼、环湖骑行（4A景区）"
+          "description": "划船、看地下泉眼、环湖骑行（4A景区）",
+          "spot_id": "jiulingshan",
+          "lat": 23.18,
+          "lng": 109.52
         },
         {
           "step": 5,
@@ -78,7 +90,10 @@
           "title": "返程",
           "type": "transit",
           "location": "九凌湖 → 贵港市区",
-          "description": "约40分钟车程"
+          "description": "约40分钟车程",
+          "spot_id": "jiulingshan",
+          "lat": 23.18,
+          "lng": 109.52
         }
       ],
       "food": [
@@ -151,7 +166,10 @@
           "title": "出发前往桂平",
           "type": "transit",
           "location": "贵港市区 → 桂平市",
-          "description": "车程约1小时"
+          "description": "车程约1小时",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 2,
@@ -159,7 +177,10 @@
           "title": "桂平西山",
           "type": "attraction",
           "location": "桂平市",
-          "description": "4A景区，路线：龙华寺 → 乳泉 → 中山飞阁 → 洗石庵（需爬2-3h）"
+          "description": "4A景区，路线：龙华寺 → 乳泉 → 中山飞阁 → 洗石庵（需爬2-3h）",
+          "spot_id": "guiping_old_street",
+          "lat": 23.38,
+          "lng": 110.08
         },
         {
           "step": 3,
@@ -167,7 +188,10 @@
           "title": "午餐：西山素斋 / 罗秀米粉",
           "type": "food",
           "location": "桂平市区",
-          "description": "二选一：山上素斋体验禅意 / 下山吃桂平罗秀米粉"
+          "description": "二选一：山上素斋体验禅意 / 下山吃桂平罗秀米粉",
+          "spot_id": "guiping_old_street",
+          "lat": 23.38,
+          "lng": 110.08
         },
         {
           "step": 4,
@@ -175,7 +199,10 @@
           "title": "大藤峡游船",
           "type": "attraction",
           "location": "桂平市大藤峡",
-          "description": "广西小三峡风光 + 太平天国历史讲解"
+          "description": "广西小三峡风光 + 太平天国历史讲解",
+          "spot_id": "dategxia",
+          "lat": 23.45,
+          "lng": 109.95
         },
         {
           "step": 5,
@@ -183,7 +210,10 @@
           "title": "返程",
           "type": "transit",
           "location": "桂平 → 贵港市区",
-          "description": "约1小时车程"
+          "description": "约1小时车程",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         }
       ],
       "food": [
@@ -266,7 +296,10 @@
           "title": "出发（看日出方案）",
           "type": "transit",
           "location": "贵港市区 → 港北区龙头山",
-          "description": "建议自驾/拼车；如看日落则14:00出发"
+          "description": "建议自驾/拼车；如看日落则14:00出发",
+          "spot_id": "longtoushan",
+          "lat": 23.15,
+          "lng": 109.58
         },
         {
           "step": 2,
@@ -274,7 +307,10 @@
           "title": "龙头山栈道徒步",
           "type": "activity",
           "location": "龙头山",
-          "description": "爱情天梯 → 悬崖栈道 → 高山草甸"
+          "description": "爱情天梯 → 悬崖栈道 → 高山草甸",
+          "spot_id": "longtoushan",
+          "lat": 23.15,
+          "lng": 109.58
         },
         {
           "step": 3,
@@ -282,7 +318,10 @@
           "title": "山顶野餐",
           "type": "food",
           "location": "龙头山山顶",
-          "description": "自带食物（山顶小卖部贵且选择少）"
+          "description": "自带食物（山顶小卖部贵且选择少）",
+          "spot_id": "longtoushan",
+          "lat": 23.15,
+          "lng": 109.58
         },
         {
           "step": 4,
@@ -290,7 +329,10 @@
           "title": "草甸拍照 + 观云海",
           "type": "activity",
           "location": "龙头山草甸",
-          "description": "贵港版'云端阿勒泰'"
+          "description": "贵港版'云端阿勒泰'",
+          "spot_id": "longtoushan",
+          "lat": 23.15,
+          "lng": 109.58
         },
         {
           "step": 5,
@@ -298,7 +340,10 @@
           "title": "下山",
           "type": "transit",
           "location": "龙头山 → 贵港市区",
-          "description": "约1.5小时"
+          "description": "约1.5小时",
+          "spot_id": "longtoushan",
+          "lat": 23.15,
+          "lng": 109.58
         },
         {
           "step": 6,
@@ -306,7 +351,10 @@
           "title": "回市区晚餐",
           "type": "food",
           "location": "贵港市区",
-          "description": "推荐：桥圩鸭肉粉、港北夜市"
+          "description": "推荐：桥圩鸭肉粉、港北夜市",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         }
       ],
       "food": [
@@ -374,7 +422,10 @@
           "title": "吾园",
           "type": "attraction",
           "location": "贵港市区",
-          "description": "苏式园林，拍照 + 喂鱼（约1.5小时）"
+          "description": "苏式园林，拍照 + 喂鱼（约1.5小时）",
+          "spot_id": "wuyuan",
+          "lat": 23.12,
+          "lng": 109.6
         },
         {
           "step": 2,
@@ -382,7 +433,10 @@
           "title": "午餐：贵港老字号粉店",
           "type": "food",
           "location": "贵港市区",
-          "description": "推荐：东龙米粽、酸料"
+          "description": "推荐：东龙米粽、酸料",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 3,
@@ -390,7 +444,10 @@
           "title": "贵港博物馆",
           "type": "attraction",
           "location": "贵港市区",
-          "description": "免费，需预约，看2200年建城史"
+          "description": "免费，需预约，看2200年建城史",
+          "spot_id": "museum",
+          "lat": 23.11,
+          "lng": 109.602
         },
         {
           "step": 4,
@@ -398,7 +455,10 @@
           "title": "东湖公园",
           "type": "attraction",
           "location": "贵港市区",
-          "description": "市区最大城市公园，划船/游乐场/放风筝"
+          "description": "市区最大城市公园，划船/游乐场/放风筝",
+          "spot_id": "donghu",
+          "lat": 23.113,
+          "lng": 109.598
         },
         {
           "step": 5,
@@ -406,7 +466,10 @@
           "title": "晚餐：酸料+鸭肉粉",
           "type": "food",
           "location": "贵港市区",
-          "description": "必尝贵港酸料（灵魂美食）"
+          "description": "必尝贵港酸料（灵魂美食）",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 6,
@@ -414,7 +477,10 @@
           "title": "郁江夜游",
           "type": "activity",
           "location": "郁江沿岸",
-          "description": "看夜景、吹江风"
+          "description": "看夜景、吹江风",
+          "spot_id": "yujiang",
+          "lat": 23.108,
+          "lng": 109.6
         }
       ],
       "food": [
@@ -492,7 +558,10 @@
           "title": "出发前往平南北帝山",
           "type": "transit",
           "location": "贵港市区 → 平南县北帝山",
-          "description": "车程约2小时"
+          "description": "车程约2小时",
+          "spot_id": "beidishan",
+          "lat": 23.55,
+          "lng": 110.15
         },
         {
           "step": 2,
@@ -501,7 +570,10 @@
           "title": "北帝山主峰徒步",
           "type": "activity",
           "location": "平南北帝山",
-          "description": "玻璃栈道 + 祈福台（4A景区）"
+          "description": "玻璃栈道 + 祈福台（4A景区）",
+          "spot_id": "beidishan",
+          "lat": 23.55,
+          "lng": 110.15
         },
         {
           "step": 3,
@@ -510,7 +582,10 @@
           "title": "午餐：山下农家乐",
           "type": "food",
           "location": "北帝山脚下",
-          "description": "推荐：白切三黄鸡、五指毛桃汤"
+          "description": "推荐：白切三黄鸡、五指毛桃汤",
+          "spot_id": "beidishan",
+          "lat": 23.55,
+          "lng": 110.15
         },
         {
           "step": 4,
@@ -519,7 +594,10 @@
           "title": "北帝山漂流",
           "type": "activity",
           "location": "北帝山漂流点",
-          "description": "夏季限定，超刺激；建议带替换衣物"
+          "description": "夏季限定，超刺激；建议带替换衣物",
+          "spot_id": "beidishan",
+          "lat": 23.55,
+          "lng": 110.15
         },
         {
           "step": 5,
@@ -528,7 +606,10 @@
           "title": "入住山下民宿",
           "type": "rest",
           "location": "北帝山附近",
-          "description": "建议选带空调的民宿"
+          "description": "建议选带空调的民宿",
+          "spot_id": "beidishan",
+          "lat": 23.55,
+          "lng": 110.15
         },
         {
           "step": 6,
@@ -537,7 +618,10 @@
           "title": "晚餐",
           "type": "food",
           "location": "平南县",
-          "description": "推荐：白切狗肉、白切三黄鸡"
+          "description": "推荐：白切狗肉、白切三黄鸡",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 7,
@@ -546,7 +630,10 @@
           "title": "看星空",
           "type": "activity",
           "location": "民宿附近",
-          "description": "光污染少，银河可见"
+          "description": "光污染少，银河可见",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 8,
@@ -555,7 +642,10 @@
           "title": "早餐 + 出发",
           "type": "transit",
           "location": "民宿 → 平南县城",
-          "description": ""
+          "description": "",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 9,
@@ -564,7 +654,10 @@
           "title": "平南雄森动物大世界 / 浔江风光",
           "type": "attraction",
           "location": "平南县",
-          "description": "二选一：动物园（亲子）/ 浔江沿岸拍照"
+          "description": "二选一：动物园（亲子）/ 浔江沿岸拍照",
+          "spot_id": "xiongsen",
+          "lat": 23.52,
+          "lng": 110.3
         },
         {
           "step": 10,
@@ -573,7 +666,10 @@
           "title": "午餐：平南鱼生",
           "type": "food",
           "location": "平南县城",
-          "description": "平南鱼生是当地一绝"
+          "description": "平南鱼生是当地一绝",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         },
         {
           "step": 11,
@@ -582,7 +678,10 @@
           "title": "返程",
           "type": "transit",
           "location": "平南 → 贵港市区",
-          "description": "约2小时车程"
+          "description": "约2小时车程",
+          "spot_id": null,
+          "lat": null,
+          "lng": null
         }
       ],
       "food": [
