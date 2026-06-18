@@ -213,6 +213,19 @@
       "open_hours": "09:00-17:00",
       "duration_recommended": "1-2小时",
       "tags": ["室内", "免费", "雨天", "亲子"]
+    },
+    {
+      "id": "gongzhou-park",
+      "name": "龚州公园",
+      "area": "平南县",
+      "category_ids": ["park", "ancient"],
+      "level": "市级",
+      "highlights": ["状元阁", "湖心亭", "正觉寺", "城市山景"],
+      "best_season": "全年",
+      "ticket": "免费",
+      "open_hours": "全天",
+      "duration_recommended": "2-3小时",
+      "tags": ["公园", "古建", "免费", "出片"]
     }
   ]
 }

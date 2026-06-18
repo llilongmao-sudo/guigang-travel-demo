@@ -102,6 +102,14 @@
         "/static/images/spots/xiongsen-animal/5.jpg",
         "/static/images/spots/xiongsen-animal/6.jpg"
       ]
+    },
+    "gongzhou-park": {
+      "name": "龚州公园",
+      "image_urls": [
+        "/static/images/spots/gongzhou-park/1.jpg",
+        "/static/images/spots/gongzhou-park/2.jpg",
+        "/static/images/spots/gongzhou-park/3.jpg"
+      ]
     }
   }
 }
