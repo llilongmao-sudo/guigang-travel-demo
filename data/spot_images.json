@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "version": "1.0",
+    "description": "贵港核心景点多图数据（Unsplash 免费图片）",
+    "note": "所有 URL 为 Unsplash 免费使用，w=800&q=80 为优化参数"
+  },
+  "spot_images": {
+    "donghu": {
+      "name": "东湖公园",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=800&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&q=80",
+        "https://images.unsplash.com/photo-1471696035574180-96c066d5a59b?w=800&q=80"
+      ]
+    },
+    "museum": {
+      "name": "贵港博物馆",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1565711561500-49678a10ba48?w=800&q=80",
+        "https://images.unsplash.com/photo-1554904155-05ddb6b92a86?w=800&q=80",
+        "https://images.unsplash.com/photo-1513475382585-d06e58db468f?w=800&q=80"
+      ]
+    },
+    "yujiang": {
+      "name": "郁江两岸",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1501788507822-eb9b57b1067d?w=800&q=80",
+        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5b1?w=800&q=80",
+        "https://images.unsplash.com/photo-1504893525093-4a1f2a3a5b7d?w=800&q=80",
+        "https://images.unsplash.com/photo-1439066615861-d1ae4d8cfd00?w=800&q=80"
+      ]
+    },
+    "qintang_hetang": {
+      "name": "荷美覃塘",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1471696035574180-96c066d5a59b?w=800&q=80",
+        "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&q=80",
+        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&q=80",
+        "https://images.unsplash.com/photo-1502164980784-f81af1580096?w=800&q=80"
+      ]
+    },
+    "jiulinghu": {
+      "name": "九凌湖",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1501788507822-eb9b57b1067d?w=800&q=80",
+        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5b1?w=800&q=80",
+        "https://images.unsplash.com/photo-1502164980784-f81af1580096?w=800&q=80"
+      ]
+    },
+    "longtoushan": {
+      "name": "龙头山",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1502164980784-f81af1580096?w=800&q=80",
+        "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80"
+      ]
+    },
+    "beidishan": {
+      "name": "北帝山",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80"
+      ]
+    },
+    "wuyuan": {
+      "name": "吾园",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&q=80",
+        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&q=80",
+        "https://images.unsplash.com/photo-1471696035574180-96c066d5a59b?w=800&q=80"
+      ]
+    },
+    "xishan": {
+      "name": "桂平西山",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80",
+        "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80"
+      ]
+    },
+    "datengxia": {
+      "name": "大藤峡",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1439066615861-d1ae4d8cfd00?w=800&q=80",
+        "https://images.unsplash.com/photo-1501788507822-eb9b57b1067d?w=800&q=80",
+        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5b1?w=800&q=80"
+      ]
+    }
+  }
+}

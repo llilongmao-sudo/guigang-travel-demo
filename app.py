@@ -12,6 +12,17 @@ from flask import Flask, request, jsonify, render_template
 from knowledge_base_v4 import SCENIC_SPOTS, TRAVEL_TIPS, CATEGORY_INDEX, DISTRICT_STATS
 from data_loader import DataLoader
 
+
+# 加载景点多图数据
+import json as _json
+_SPOT_IMAGES = {}
+try:
+    with open('data/spot_images.json', 'r', encoding='utf-8') as _f:
+        _data = _json.load(_f)
+        _SPOT_IMAGES = {k: v['image_urls'] for k, v in _data.get('spot_images', {}).items()}
+except Exception:
+    _SPOT_IMAGES = {}
+
 app = Flask(__name__)
 
 # ── V2景点数据适配器（对齐前端字段名） ───────────────────────────────────
@@ -709,6 +720,9 @@ def spot_detail_page(spot_id):
         spots = [adapt_spot_v2(s) for s in raw_spots]
         return render_template("index.html", spots=spots, error="未找到该景点"), 404
     spot = adapt_spot_v2(raw)
+    # 附加多图 URL
+    spot_id = spot.get('id', '')
+    spot['image_urls'] = _SPOT_IMAGES.get(spot_id, [spot.get('image_url', '')])
     return render_template("spot_detail.html", spot=spot)
 
 
@@ -799,6 +813,7 @@ def list_spots():
         "rating": s.get("rating", "") or s.get("level", ""),
         "description": (s.get("description", "")[:80] + "...") if s.get("description") else "",
         "image_url": s.get("image_url", "") or s.get("image", ""),
+        "image_urls": _SPOT_IMAGES.get(spot_id, [s.get("image_url", "") or s.get("image", "")]),
         "ticket_price": s.get("ticket_price", "") or s.get("ticket", ""),
         "location": s.get("location", "") or s.get("area", ""),
         "district": s.get("district", "") or s.get("area", ""),
