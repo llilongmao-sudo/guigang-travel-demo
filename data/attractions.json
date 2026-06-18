@@ -226,6 +226,19 @@
       "open_hours": "全天",
       "duration_recommended": "2-3小时",
       "tags": ["公园", "古建", "免费", "出片"]
+    },
+    {
+      "id": "daan-ancient",
+      "name": "大安古建筑群",
+      "area": "平南县",
+      "category_ids": ["ancient"],
+      "level": "全国重点文物保护单位",
+      "highlights": ["岭南骑楼", "粤东会馆", "石拱桥", "明清古建"],
+      "best_season": "全年",
+      "ticket": "免费",
+      "open_hours": "全天",
+      "duration_recommended": "2-3小时",
+      "tags": ["古建", "免费", "摄影", "平南县"]
     }
   ]
 }

@@ -110,6 +110,17 @@
         "/static/images/spots/gongzhou-park/2.jpg",
         "/static/images/spots/gongzhou-park/3.jpg"
       ]
+    },
+    "daan-ancient": {
+      "name": "大安古建筑群",
+      "image_urls": [
+        "/static/images/spots/daan-ancient/1.png",
+        "/static/images/spots/daan-ancient/2.png",
+        "/static/images/spots/daan-ancient/3.png",
+        "/static/images/spots/daan-ancient/4.png",
+        "/static/images/spots/daan-ancient/5.png",
+        "/static/images/spots/daan-ancient/6.png"
+      ]
     }
   }
 }
