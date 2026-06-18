@@ -91,6 +91,17 @@
         "https://images.unsplash.com/photo-1501788507822-eb9b57b1067d?w=800&q=80",
         "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5b1?w=800&q=80"
       ]
+    },
+    "xiongsen-animal": {
+      "name": "平南雄森动物大世界",
+      "image_urls": [
+        "/static/images/spots/xiongsen-animal/1.jpg",
+        "/static/images/spots/xiongsen-animal/2.jpg",
+        "/static/images/spots/xiongsen-animal/3.jpg",
+        "/static/images/spots/xiongsen-animal/4.jpg",
+        "/static/images/spots/xiongsen-animal/5.jpg",
+        "/static/images/spots/xiongsen-animal/6.jpg"
+      ]
     }
   }
 }
