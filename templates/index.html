@@ -187,6 +187,46 @@
         .hero-quick-btn:active {
             background: rgba(255,255,255,0.3);
         }
+        /* AI规划旅行 第一入口 */
+        .hero-ai-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin: 12px 0 8px;
+            padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 24px);
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: clamp(15px, 4vw, 18px);
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(16,185,129,0.35);
+            position: relative;
+            z-index: 2;
+        }
+        .hero-ai-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 8px rgba(16,185,129,0.25);
+        }
+        .hero-ai-icon {
+            font-size: clamp(20px, 5vw, 26px);
+        }
+        .hero-ai-text {
+            flex: 1;
+            text-align: left;
+        }
+        .hero-ai-arrow {
+            font-size: 18px;
+            opacity: 0.7;
+            transition: transform 0.2s;
+        }
+        .hero-ai-btn:hover .hero-ai-arrow {
+            transform: translateX(4px);
+            opacity: 1;
+        }
         .hero-quick-btn span:last-child {
             font-size: clamp(9px, 2.5vw, 11px);
             font-weight: 600;
@@ -1615,6 +1655,124 @@
         .dist-btn:hover { border-color: #43a047; color: #43a047; }
         .dist-btn.active { background: #43a047; border-color: #43a047; color: #fff; }
 
+
+        /* ── AI规划弹窗 ── */
+        .modal-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.55);
+            z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px;
+        }
+        .modal-card {
+            background: #fff; border-radius: 18px;
+            width: 100%; max-width: 520px;
+            max-height: 85vh;
+            display: flex; flex-direction: column;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+            animation: modalIn 0.25s ease;
+        }
+        @keyframes modalIn {
+            from { opacity:0; transform: translateY(30px) scale(0.96); }
+            to { opacity:1; transform: translateY(0) scale(1); }
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .modal-header h3 { font-size: 17px; font-weight: 700; margin: 0; }
+        .modal-close {
+            width: 32px; height: 32px;
+            border: none; background: #f5f5f5;
+            border-radius: 50%; font-size: 16px;
+            cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .modal-close:hover { background: #e0e0e0; }
+        .modal-body {
+            padding: 16px 20px;
+            overflow-y: auto; flex: 1;
+        }
+        .modal-footer {
+            display: flex; gap: 10px;
+            padding: 14px 20px;
+            border-top: 1px solid #eee;
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-group > label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 8px; }
+        .option-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .option-btn {
+            padding: 7px 14px; border-radius: 10px;
+            border: 1.5px solid #ddd; background: #fff;
+            font-size: 13px; cursor: pointer;
+            transition: all 0.2s; font-family: inherit;
+        }
+        .option-btn:hover { border-color: #10b981; color: #10b981; }
+        .option-btn.active { background: #10b981; border-color: #10b981; color: #fff; }
+        .stepper-row { display: flex; align-items: center; gap: 14px; }
+        .stepper-btn {
+            width: 34px; height: 34px;
+            border: 1.5px solid #ddd; background: #fff;
+            border-radius: 10px; font-size: 18px;
+            cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            transition: all 0.2s; font-family: inherit;
+        }
+        .stepper-btn:hover { border-color: #10b981; color: #10b981; }
+        .stepper-value { font-size: 18px; font-weight: 700; min-width: 24px; text-align: center; }
+        .checkbox-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        .checkbox-item {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; color: #555; cursor: pointer;
+        }
+        .checkbox-item input[type="checkbox"] { accent-color: #10b981; }
+        .btn-cancel {
+            flex: 1; padding: 10px; border-radius: 12px;
+            border: 1.5px solid #ddd; background: #fff;
+            font-size: 14px; cursor: pointer;
+            transition: all 0.2s; font-family: inherit;
+        }
+        .btn-cancel:hover { border-color: #999; }
+        .btn-primary {
+            flex: 2; padding: 10px; border-radius: 12px;
+            border: none; background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; font-family: inherit;
+            box-shadow: 0 3px 12px rgba(16,185,129,0.25);
+        }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(16,185,129,0.35); }
+        .btn-primary:active { transform: translateY(0); }
+        .itinerary-result-modal { max-width: 640px; }
+        .timeline { position: relative; padding-left: 24px; }
+        .timeline::before {
+            content: ''; position: absolute;
+            left: 8px; top: 0; bottom: 0;
+            width: 2px; background: #e0e0e0;
+        }
+        .timeline-item {
+            position: relative; margin-bottom: 20px;
+            padding-left: 16px;
+        }
+        .timeline-item::before {
+            content: ''; position: absolute;
+            left: -20px; top: 6px;
+            width: 12px; height: 12px;
+            border-radius: 50%; background: #10b981;
+            border: 2px solid #fff; box-shadow: 0 0 0 2px #10b981;
+        }
+        .timeline-time { font-size: 12px; color: #10b981; font-weight: 600; margin-bottom: 4px; }
+        .timeline-title { font-size: 14px; font-weight: 600; color: #222; margin-bottom: 2px; }
+        .timeline-desc { font-size: 12px; color: #666; line-height: 1.5; }
+        .timeline-cost { font-size: 12px; color: #e65100; margin-top: 4px; }
+        .budget-card {
+            background: #f8fffe; border: 1px solid #c8e6c9;
+            border-radius: 12px; padding: 14px 16px;
+            margin-top: 14px;
+        }
+        .budget-row { display: flex; justify-content: space-between; font-size: 13px; color: #555; margin-bottom: 6px; }
+        .budget-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; color: #222; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #c8e6c9; }
     </style>
 </head>
 <body>
@@ -1662,6 +1820,13 @@
                         <div class="hero-sub-title">AI 带你畅游贵港</div>
                     </div>
                 </div>
+
+                <!-- AI规划旅行 第一入口 -->
+                <button class="hero-ai-btn" onclick="openPlanningModal()">
+                    <span class="hero-ai-icon">🤖</span>
+                    <span class="hero-ai-text">AI 帮我规划旅行</span>
+                    <span class="hero-ai-arrow">→</span>
+                </button>
 
                 <!-- 第二行：快速功能入口 -->
                 <div class="hero-quick-row">
@@ -1919,6 +2084,7 @@
     <script src="/static/js/favorites.js"></script>
 <script src="/static/js/recent.js"></script>
 <script src="/static/js/itinerary.js"></script>
+    <script src="/static/js/planning.js"></script>
 <script>
     // ── State ──
     const spots = {{ spots | tojson | safe }};
@@ -3162,5 +3328,95 @@ if ('serviceWorker' in navigator) {
             <img id="foodLightboxImg" src="" style="max-width:90%;max-height:80vh;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
             <div id="foodLightboxName" style="color:#fff;font-size:16px;margin-top:12px;text-align:center;"></div>
         </div>
+
+        <!-- AI 旅行规划表单弹窗 -->
+        <div class="modal-overlay" id="planningModal" style="display:none;">
+            <div class="modal-card planning-modal">
+                <div class="modal-header">
+                    <h3>🤖 AI 帮我规划旅行</h3>
+                    <button class="modal-close" onclick="closePlanningModal()">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>📅 旅行天数</label>
+                        <div class="option-row" id="daysOptions">
+                            <button class="option-btn" data-value="1" onclick="selectOption(this, 'days')">1天</button>
+                            <button class="option-btn active" data-value="2" onclick="selectOption(this, 'days')">2天</button>
+                            <button class="option-btn" data-value="3" onclick="selectOption(this, 'days')">3天</button>
+                            <button class="option-btn" data-value="4" onclick="selectOption(this, 'days')">4天</button>
+                            <button class="option-btn" data-value="5" onclick="selectOption(this, 'days')">5天</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>💰 预算范围（元/人）</label>
+                        <div class="option-row" id="budgetOptions">
+                            <button class="option-btn" data-value="500" onclick="selectOption(this, 'budget')">500以内</button>
+                            <button class="option-btn active" data-value="1000" onclick="selectOption(this, 'budget')">1000左右</button>
+                            <button class="option-btn" data-value="2000" onclick="selectOption(this, 'budget')">2000左右</button>
+                            <button class="option-btn" data-value="3000" onclick="selectOption(this, 'budget')">3000+</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>👥 人数</label>
+                        <div class="stepper-row">
+                            <button class="stepper-btn" onclick="updateStepper('people', -1)">−</button>
+                            <span class="stepper-value" id="peopleValue">2</span>
+                            <button class="stepper-btn" onclick="updateStepper('people', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>🚗 出行方式</label>
+                        <div class="option-row" id="transportOptions">
+                            <button class="option-btn active" data-value="self-drive" onclick="selectOption(this, 'transport')">自驾</button>
+                            <button class="option-btn" data-value="public" onclick="selectOption(this, 'transport')">公交</button>
+                            <button class="option-btn" data-value="taxi" onclick="selectOption(this, 'transport')">打车</button>
+                            <button class="option-btn" data-value="cycling" onclick="selectOption(this, 'transport')">骑行</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>🏨 住宿要求</label>
+                        <div class="option-row" id="accommodationOptions">
+                            <button class="option-btn active" data-value="standard" onclick="selectOption(this, 'accommodation')">标准酒店</button>
+                            <button class="option-btn" data-value="budget" onclick="selectOption(this, 'accommodation')">经济型</button>
+                            <button class="option-btn" data-value="luxury" onclick="selectOption(this, 'accommodation')">高端酒店</button>
+                            <button class="option-btn" data-value="none" onclick="selectOption(this, 'accommodation')">不住宿</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>❤️ 偏好类型（可多选）</label>
+                        <div class="checkbox-row" id="preferencesCheckboxes">
+                            <label class="checkbox-item"><input type="checkbox" value="nature" checked> 自然风光</label>
+                            <label class="checkbox-item"><input type="checkbox" value="ancient"> 人文景观</label>
+                            <label class="checkbox-item"><input type="checkbox" value="park"> 城市公园</label>
+                            <label class="checkbox-item"><input type="checkbox" value="lotus"> 荷塘泛舟</label>
+                            <label class="checkbox-item"><input type="checkbox" value="food"> 美食体验</label>
+                            <label class="checkbox-item"><input type="checkbox" value="education"> 科普教育</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" onclick="closePlanningModal()">取消</button>
+                    <button class="btn-primary" onclick="generateItinerary()">🚀 生成行程</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 行程结果展示弹窗 -->
+        <div class="modal-overlay" id="itineraryResultModal" style="display:none;">
+            <div class="modal-card itinerary-result-modal">
+                <div class="modal-header">
+                    <h3>🗺️ 你的专属行程</h3>
+                    <button class="modal-close" onclick="closeItineraryResultModal()">✕</button>
+                </div>
+                <div class="modal-body" id="itineraryResultBody">
+                    <!-- 动态生成行程内容 -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" onclick="closeItineraryResultModal()">关闭</button>
+                    <button class="btn-primary" onclick="saveItinerary()">💾 保存行程</button>
+                </div>
+            </div>
+        </div>
+
 </body>
 </html>

@@ -1123,6 +1123,220 @@ def get_spot_v3(spot_id):
     return jsonify(spot)
 
 
+# ── V8 AI 旅行规划引擎 API ──────────────────────────────────────
+
+@app.route("/api/plan-itinerary", methods=["POST"])
+def plan_itinerary():
+    """
+    AI 旅行规划引擎
+    输入：days, budget, people, transport, accommodation, preferences
+    输出：itinerary（按天分时段）+ budget_breakdown + tips
+    """
+    try:
+        data = request.get_json(force=True)
+        days = int(data.get('days', 2))
+        budget = int(data.get('budget', 1000))
+        people = int(data.get('people', 2))
+        transport = data.get('transport', 'self-drive')
+        accommodation = data.get('accommodation', 'standard')
+        preferences = data.get('preferences', ['nature'])
+
+        # 读取数据
+        attractions = DataLoader.get_attractions()
+        foods = DataLoader.get_foods()
+        routes = DataLoader.get_routes()
+        hotels = []
+        try:
+            with open('data/hotels.json', 'r', encoding='utf-8') as f:
+                hotels = json.load(f).get('hotels', [])
+        except: pass
+
+        # 按偏好筛选景点（修复逻辑）
+        filtered = [a for a in attractions if any(
+            p in a.get('category_ids', []) for p in preferences
+        )]
+        if not filtered:
+            filtered = list(attractions)  # fallback：全部景点
+
+        # 按评分/等级排序
+        def sort_key(a):
+            level = str(a.get('level', ''))
+            if '5A' in level: return 0
+            if '4A' in level: return 1
+            if '3A' in level: return 2
+            return 3
+        filtered.sort(key=sort_key)
+
+        # 生成行程
+        itinerary = []
+        used_spots = set()
+        used_foods = set()
+
+        for day in range(1, min(days, 5) + 1):
+            day_activities = []
+
+            # 早餐（8:00）
+            day_activities.append({
+                'time': '08:00',
+                'title': '早餐',
+                'description': '推荐当地特色早餐：桂平绿豆沙 + 米粉',
+                'cost': f'¥{15 * people}-{20 * people}'
+            })
+
+            # 上午景点（9:00-12:00）
+            morning_spots = [a for a in filtered if a.get('id') not in used_spots][:2]
+            if morning_spots:
+                spot = morning_spots[0]
+                used_spots.add(spot.get('id'))
+                day_activities.append({
+                    'time': '09:00',
+                    'title': f"游览：{spot.get('name', '景点')}",
+                    'description': spot.get('description', '')[:80] + '...' if len(spot.get('description', '')) > 80 else spot.get('description', ''),
+                    'cost': f"门票：{spot.get('ticket_info', {}).get('price', 0)}元/人" if spot.get('ticket_info') else '门票：免费'
+                })
+
+            # 午餐（12:00）
+            lunch_foods = [f for f in foods if f.get('id') not in used_foods][:2]
+            if lunch_foods:
+                f = lunch_foods[0]
+                used_foods.add(f.get('id'))
+                day_activities.append({
+                    'time': '12:00',
+                    'title': f"午餐：{f.get('name', '当地美食')}",
+                    'description': f.get('description', ''),
+                    'cost': f"¥{f.get('price_per_person', 30)}/人"
+                })
+            else:
+                day_activities.append({
+                    'time': '12:00',
+                    'title': '午餐时间',
+                    'description': '推荐尝试当地特色美食',
+                    'cost': f'¥{30 * people}-{50 * people}'
+                })
+
+            # 下午景点（14:00-17:00）
+            afternoon_spots = [a for a in filtered if a.get('id') not in used_spots][:1]
+            if afternoon_spots:
+                spot = afternoon_spots[0]
+                used_spots.add(spot.get('id'))
+                day_activities.append({
+                    'time': '14:00',
+                    'title': f"游览：{spot.get('name', '景点')}",
+                    'description': spot.get('description', '')[:80] + '...' if len(spot.get('description', '')) > 80 else spot.get('description', ''),
+                    'cost': f"门票：{spot.get('ticket_info', {}).get('price', 0)}元/人" if spot.get('ticket_info') else '门票：免费'
+                })
+
+            # 晚餐（18:00）
+            dinner_foods = [f for f in foods if f.get('id') not in used_foods][:1]
+            if dinner_foods:
+                f = dinner_foods[0]
+                used_foods.add(f.get('id'))
+                day_activities.append({
+                    'time': '18:00',
+                    'title': f"晚餐：{f.get('name', '当地美食')}",
+                    'description': f.get('description', ''),
+                    'cost': f"¥{f.get('price_per_person', 40)}/人"
+                })
+            else:
+                day_activities.append({
+                    'time': '18:00',
+                    'title': '晚餐时间',
+                    'description': '推荐当地特色餐厅',
+                    'cost': f'¥{40 * people}-{60 * people}'
+                })
+
+            itinerary.append({
+                'day': day,
+                'activities': day_activities
+            })
+
+        # 预算估算
+        total_tickets = 0
+        total_dining = 0
+        total_transport = 0
+        total_accommodation = 0
+
+        for day_data in itinerary:
+            for act in day_data.get('activities', []):
+                cost_str = act.get('cost', '')
+                # 简单解析成本
+                if '门票' in cost_str:
+                    try:
+                        price = int(''.join(filter(str.isdigit, cost_str)))
+                        total_tickets += price * people
+                    except: pass
+                if '¥' in cost_str and ('/人' in cost_str or '人' in cost_str):
+                    try:
+                        nums = [int(s) for s in cost_str.split() if s.replace('¥', '').replace('-', '').isdigit()]
+                        if nums:
+                            total_dining += sum(nums) // len(nums) * people
+                    except: pass
+
+        # 交通费用
+        if transport == 'self-drive':
+            total_transport = days * 100  # 油费/过路费
+        elif transport == 'public':
+            total_transport = days * 30 * people
+        elif transport == 'taxi':
+            total_transport = days * 80 * people
+        elif transport == 'cycling':
+            total_transport = 0
+
+        # 住宿费用
+        if accommodation == 'none':
+            total_accommodation = 0
+        elif accommodation == 'budget':
+            total_accommodation = (days - 1) * 120 * people
+        elif accommodation == 'standard':
+            total_accommodation = (days - 1) * 250 * people
+        elif accommodation == 'luxury':
+            total_accommodation = (days - 1) * 500 * people
+
+        # 餐饮费用（重新估算）
+        total_dining = days * 2 * 40 * people  # 2餐/天，40元/人/餐
+
+        total = total_tickets + total_dining + total_transport + total_accommodation
+
+        budget_breakdown = {
+            'tickets': total_tickets,
+            'dining': total_dining,
+            'transport': total_transport,
+            'accommodation': total_accommodation,
+            'total': total
+        }
+
+        # 提示
+        tips = [
+            '建议提前查看景点开放时间',
+            '夏季注意防晒，带好遮阳帽和防晒霜',
+            '部分景点需提前预约，建议提前1-2天预约',
+            '尝试当地美食时，注意辣度选择'
+        ]
+        if transport == 'self-drive':
+            tips.append('自驾游客注意景区停车位，建议早到')
+        if days >= 3:
+            tips.append('多日游建议合理安排体力，避免过度疲劳')
+
+        return jsonify({
+            'itinerary': itinerary,
+            'budget_breakdown': budget_breakdown,
+            'tips': tips,
+            'summary': {
+                'days': days,
+                'people': people,
+                'transport': transport,
+                'accommodation': accommodation,
+                'preferences': preferences
+            }
+        })
+
+    except Exception as e:
+        print(f"规划引擎错误: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+
+
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 5001))
     print("=" * 50)
