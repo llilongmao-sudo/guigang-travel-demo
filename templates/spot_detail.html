@@ -158,7 +158,7 @@
             <span id="checkinBtnText">📍 打卡</span>
         </button>
         <button class="df-btn secondary" id="checkinDetailBtn" onclick="openCheckinDetail()" style="display:none;">
-            <span>📝 详情</span>
+            <span id="checkinDetailBtnText">📝 详情</span>
         </button>
         <button class="df-btn primary" onclick="startAiTour()">
             🤖 AI 智能讲解
@@ -171,7 +171,7 @@
     <div class="cm-overlay" onclick="closeCheckinDetail()"></div>
     <div class="cm-sheet">
         <div class="cm-header">
-            <h3>📝 打卡记录</h3>
+            <h3 id="cmModalTitle">📝 打卡记录</h3>
             <button class="cm-close-btn" onclick="closeCheckinDetail()">✕</button>
         </div>
         <div class="cm-body" id="cmBody">
@@ -298,9 +298,21 @@
     // ── 打卡详情弹窗 ──
     function updateCheckinDetailBtn() {
         const btn = document.getElementById('checkinDetailBtn');
+        const btnText = document.getElementById('checkinDetailBtnText');
+        const modalTitle = document.getElementById('cmModalTitle');
         if (!btn) return;
         const status = CheckinAPI.getStatus(spotData.id);
-        btn.style.display = (status === 'visited' || status === 'want_to_go') ? '' : 'none';
+        if (status === 'visited') {
+            btn.style.display = '';
+            if (btnText) btnText.innerHTML = '📤 分享';
+            if (modalTitle) modalTitle.innerHTML = '📤 我的打卡';
+        } else if (status === 'want_to_go') {
+            btn.style.display = '';
+            if (btnText) btnText.innerHTML = '💬 看看别人怎么说';
+            if (modalTitle) modalTitle.innerHTML = '💬 想去清单';
+        } else {
+            btn.style.display = 'none';
+        }
     }
 
     function openCheckinDetail() {
