@@ -314,143 +314,244 @@
         document.body.style.overflow = '';
     }
 
+    // ── 当前编辑状态 ──
+    let _editingEntryId = null; // null = 新建模式
+
     function renderCheckinModal() {
         const record = CheckinAPI.getRecord(spotData.id);
         const status = record ? record.status : null;
+        const entries = record?.entries || [];
         const container = document.getElementById('cmBody');
-
-        const statusText = status === 'visited' ? '✅ 已去过' : status === 'want_to_go' ? '👀 想去' : '未打卡';
+        const statusText = status === 'visited' ? '已去过' : status === 'want_to_go' ? '想去' : '未打卡';
         const statusColor = status === 'visited' ? '#2e7d32' : status === 'want_to_go' ? '#e65100' : '#999';
 
         let html = `
-            <div class="cm-status-row">
-                <span class="cm-status-badge" style="background:${statusColor}20;color:${statusColor};border:1px solid ${statusColor}40;">${statusText}</span>
-                <span class="cm-date" style="font-size:12px;color:#999;">${record?.updated_at ? new Date(record.updated_at).toLocaleString('zh-CN') : ''}</span>
+            <div class="cm-header-row">
+                <span class="cm-status-pill" style="background:${statusColor};color:#fff;">${statusText}</span>
+                <span class="cm-count-text">共 ${entries.length} 条记录</span>
             </div>
         `;
 
-        // 日期选择（去过时显示）
-        if (status === 'visited') {
-            html += `
-                <div class="cm-field">
-                    <label class="cm-label">📅 打卡日期</label>
-                    <input type="date" class="cm-input" id="cmDate" value="${record?.date || new Date().toISOString().slice(0,10)}" onchange="saveCheckinDate(this.value)">
-                </div>
-            `;
-        }
-
-        // 评分（去过时显示）
-        if (status === 'visited') {
-            const rating = record?.rating || 0;
-            html += `
-                <div class="cm-field">
-                    <label class="cm-label">⭐ 我的评分</label>
-                    <div class="cm-stars" id="cmStars">
-                        ${[1,2,3,4,5].map(n => `<span class="cm-star ${n <= rating ? 'filled' : ''}" onclick="saveCheckinRating(${n})">★</span>`).join('')}
-                        <span class="cm-rating-text" id="cmRatingText">${rating > 0 ? rating + ' 分' : '点击评分'}</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 笔记
-        html += `
-            <div class="cm-field">
-                <label class="cm-label">📝 打卡笔记</label>
-                <textarea class="cm-textarea" id="cmNote" placeholder="记录你的游玩感受、推荐项目、避坑提示..." rows="4" oninput="autoSaveNote()">${record?.note || ''}</textarea>
-                <div class="cm-hint">笔记自动保存到本地</div>
-            </div>
-        `;
-
-        // 照片上传
-        const photos = record?.photos || [];
-        html += `
-            <div class="cm-field">
-                <label class="cm-label">📷 景点照片 (${photos.length}/9)</label>
-                <div class="cm-photos" id="cmPhotos">
-                    ${photos.map((p, i) => `
-                        <div class="cm-photo-item">
-                            <img src="${p.data}" alt="照片${i+1}" onclick="previewPhoto('${p.data}')">
-                            <button class="cm-photo-del" onclick="removeCheckinPhoto(${i})" title="删除">✕</button>
+        // 已有打卡记录列表（卡片形式）
+        if (entries.length > 0) {
+            html += `<div class="cm-entries-list" id="cmEntriesList">`;
+            entries.forEach((entry, idx) => {
+                const photos = entry.photos || [];
+                const notePreview = entry.note ? entry.note.replace(/<[^>]*>/g, '').slice(0, 60) : '';
+                html += `
+                    <div class="cm-entry-card" data-entry-id="${entry.id}">
+                        <div class="cm-entry-top">
+                            <div class="cm-entry-meta">
+                                <span class="cm-entry-date">📅 ${entry.date || '未填日期'}</span>
+                                ${entry.rating ? `<span class="cm-entry-rating">${'★'.repeat(entry.rating)}${'☆'.repeat(5-entry.rating)}</span>` : ''}
+                            </div>
+                            <div class="cm-entry-actions">
+                                <button class="cm-entry-edit-btn" onclick="startEditEntry('${entry.id}')">编辑</button>
+                                <button class="cm-entry-del-btn" onclick="deleteEntry('${entry.id}')">删除</button>
+                            </div>
                         </div>
-                    `).join('')}
-                    ${photos.length < 9 ? `
+                        ${notePreview ? `<div class="cm-entry-note-preview">${notePreview}${entry.note.length>60?'...':''}</div>` : ''}
+                        ${photos.length > 0 ? `
+                            <div class="cm-entry-photos-mini">
+                                ${photos.slice(0,4).map(p => `<img src="${p.data}" onclick="previewPhoto('${p.data}')" onerror="this.style.display='none'">`).join('')}
+                                ${photos.length > 4 ? `<span class="cm-more-photos">+${photos.length-4}</span>` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        // 编辑/新建表单（始终在底部）
+        html += `
+            <div class="cm-form-section" id="cmFormSection">
+                <div class="cm-form-header">
+                    <span class="cm-form-title" id="cmFormTitle">${_editingEntryId ? '编辑记录' : '+ 写一条新记录'}</span>
+                    ${_editingEntryId ? '<button class="cm-cancel-btn" onclick="cancelEditEntry()">取消编辑</button>' : ''}
+                </div>
+                <div class="cm-form-body" id="cmFormBody">
+                    <div class="cm-field">
+                        <label class="cm-label">日期</label>
+                        <input type="date" class="cm-input" id="cmInputDate" value="${new Date().toISOString().slice(0,10)}">
+                    </div>
+                    <div class="cm-field">
+                        <label class="cm-label">评分（选填）</label>
+                        <div class="cm-stars" id="cmInputStars">
+                            ${[1,2,3,4,5].map(n => `<span class="cm-star" data-v="${n}" onclick="setFormStar(${n})">★</span>`).join('')}
+                            <span class="cm-rating-text" id="cmInputRatingText">不评</span>
+                        </div>
+                    </div>
+                    <div class="cm-field">
+                        <label class="cm-label">这次怎么样？（选填）</label>
+                        <textarea class="cm-textarea" id="cmInputNote" placeholder="随便写点什么..." rows="3"></textarea>
+                    </div>
+                    <div class="cm-field">
+                        <label class="cm-label">照片（选填，最多9张）</label>
+                        <div class="cm-photos" id="cmInputPhotos"></div>
                         <label class="cm-photo-add" title="添加照片">
                             <span>+</span>
-                            <input type="file" accept="image/*" capture="environment" hidden onchange="handlePhotoUpload(event)">
+                            <input type="file" accept="image/*" capture="environment" hidden onchange="handleFormPhoto(event)">
                         </label>
-                    ` : ''}
+                    </div>
+                    <div class="cm-form-actions-row">
+                        <button class="cm-submit-btn" id="cmSubmitBtn" onclick="submitEntry()">${_editingEntryId ? '保存修改' : '确认添加'}</button>
+                    </div>
                 </div>
             </div>
         `;
 
         container.innerHTML = html;
+
+        // 如果是编辑模式，回填表单
+        if (_editingEntryId) {
+            populateForm(_editingEntryId);
+        }
     }
 
-    let _noteSaveTimer = null;
-    function autoSaveNote() {
-        clearTimeout(_noteSaveTimer);
-        _noteSaveTimer = setTimeout(() => {
-            const note = document.getElementById('cmNote')?.value || '';
-            CheckinAPI.setNote(spotData.id, note);
-        }, 800);
-    }
+    // ── 表单交互 ──
 
-    function saveCheckinDate(dateStr) {
-        CheckinAPI.setDate(spotData.id, dateStr);
-        showToast('📅 日期已保存');
-    }
+    let _formStars = 0;
+    let _formPhotos = []; // 临时照片数组
 
-    function saveCheckinRating(rating) {
-        CheckinAPI.setRating(spotData.id, rating);
-        document.querySelectorAll('#cmStars .cm-star').forEach((el, i) => {
-            el.classList.toggle('filled', i < rating);
+    function setFormStar(n) {
+        _formStars = (_formStars === n) ? 0 : n; // 点击已选中的取消
+        document.querySelectorAll('#cmInputStars .cm-star').forEach((el, i) => {
+            el.classList.toggle('filled', i < _formStars);
         });
-        document.getElementById('cmRatingText').textContent = rating + ' 分';
-        showToast('⭐ 评分已保存');
+        document.getElementById('cmInputRatingText').textContent = _formStars > 0 ? _formStars + ' 分' : '不评';
     }
 
-    function handlePhotoUpload(event) {
+    function handleFormPhoto(event) {
         const file = event.target.files[0];
         if (!file) return;
-        if (file.size > 5 * 1024 * 1024) { showToast('❌ 图片不能超过5MB'); return; }
+        if (file.size > 5 * 1024 * 1024) { showToast('图片不能超过5MB'); return; }
         const reader = new FileReader();
         reader.onload = function(e) {
             compressImage(e.target.result, 800, 0.8, function(compressed) {
-                const ok = CheckinAPI.addPhoto(spotData.id, compressed);
-                if (ok) { renderCheckinModal(); showToast('📷 照片已添加'); }
-                else { showToast('❌ 最多9张照片'); }
+                if (_formPhotos.length >= 9) { showToast('最多9张'); return; }
+                _formPhotos.push({ data: compressed });
+                renderFormPhotos();
             });
         };
         reader.readAsDataURL(file);
         event.target.value = '';
     }
 
-    function removeCheckinPhoto(index) {
-        if (!confirm('删除这张照片？')) return;
-        CheckinAPI.removePhoto(spotData.id, index);
+    function removeFormPhoto(idx) {
+        _formPhotos.splice(idx, 1);
+        renderFormPhotos();
+    }
+
+    function renderFormPhotos() {
+        const c = document.getElementById('cmInputPhotos');
+        if (!c) return;
+        c.innerHTML = _formPhotos.map((p, i) => `
+            <div class="cm-photo-item"><img src="${p.data}" onclick="previewPhoto('${p.data}')"><button class="cm-photo-del" onclick="removeFormPhoto(${i})">✕</button></div>
+        `).join('');
+    }
+
+    function submitEntry() {
+        const date = document.getElementById('cmInputDate')?.value;
+        const note = document.getElementById('cmInputNote')?.value.trim() || '';
+
+        if (_editingEntryId) {
+            // 更新现有 entry
+            CheckinAPI.updateEntry(spotData.id, _editingEntryId, {
+                date: date,
+                rating: _formStars || null,
+                note: note,
+                photos: _formPhotos.length > 0 ? _formPhotos : undefined
+            });
+            showToast('✅ 已更新');
+            _editingEntryId = null;
+        } else {
+            // 新建 entry
+            CheckinAPI.addEntry(spotData.id, {
+                date: date,
+                rating: _formStars || null,
+                note: note,
+                photos: _formPhotos.length > 0 ? [..._formPhotos] : []
+            });
+            showToast('✅ 已添加');
+        }
+
+        // 重置表单
+        resetForm();
         renderCheckinModal();
-        showToast('照片已删除');
+    }
+
+    function startEditEntry(entryId) {
+        _editingEntryId = entryId;
+        renderCheckinModal();
+        // 滚动到表单
+        setTimeout(() => {
+            document.getElementById('cmFormSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+
+    function cancelEditEntry() {
+        _editingEntryId = null;
+        resetForm();
+        renderCheckinModal();
+    }
+
+    function deleteEntry(entryId) {
+        if (!confirm('确定删除这条打卡记录吗？')) return;
+        CheckinAPI.removeEntry(spotData.id, entryId);
+        // 如果删的是正在编辑的那条，退出编辑模式
+        if (_editingEntryId === entryId) { _editingEntryId = null; resetForm(); }
+        showToast('已删除');
+        renderCheckinModal();
+    }
+
+    function populateForm(entryId) {
+        const record = CheckinAPI.getRecord(spotData.id);
+        const entry = record?.entries?.find(e => e.id === entryId);
+        if (!entry) return;
+
+        const dateEl = document.getElementById('cmInputDate');
+        if (dateEl && entry.date) dateEl.value = entry.date;
+
+        if (entry.rating) {
+            _formStars = entry.rating;
+            document.querySelectorAll('#cmInputStars .cm-star').forEach((el, i) => {
+                el.classList.toggle('filled', i < _formStars);
+            });
+            document.getElementById('cmInputRatingText').textContent = _formStars + ' 分';
+        }
+
+        const noteEl = document.getElementById('cmInputNote');
+        if (noteEl && entry.note) noteEl.value = entry.note;
+
+        // 回填照片
+        _formPhotos = entry.photos ? [...entry.photos] : [];
+        renderFormPhotos();
+    }
+
+    function resetForm() {
+        _formStars = 0;
+        _formPhotos = [];
+        _editingEntryId = null;
     }
 
     function previewPhoto(base64) {
-        const overlay = document.createElement('div');
-        overlay.className = 'photo-preview-overlay';
-        overlay.innerHTML = `<img src="${base64}" onclick="this.parentElement.remove()"><button onclick="this.parentElement.remove()" style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.6);color:#fff;border:none;padding:8px 14px;border-radius:50%;cursor:pointer;font-size:18px;">✕</button>`;
-        overlay.onclick = function(e) { if(e.target===overlay) overlay.remove(); };
-        document.body.appendChild(overlay);
+        const ov = document.createElement('div');
+        ov.className = 'photo-preview-overlay';
+        ov.innerHTML = `<img src="${base64}"><button onclick="this.parentElement.remove()" style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.6);color:#fff;border:none;padding:8px 14px;border-radius:50%;cursor:pointer;font-size:18px;">✕</button>`;
+        ov.onclick = function(e) { if(e.target===ov) ov.remove(); };
+        document.body.appendChild(ov);
     }
 
     function compressImage(base64, maxWidth, quality, callback) {
         const img = new Image();
         img.onload = function() {
-            const canvas = document.createElement('canvas');
+            const cv = document.createElement('canvas');
             let w = img.width, h = img.height;
             if (w > maxWidth) { h = (h * maxWidth) / w; w = maxWidth; }
-            canvas.width = w; canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
-            callback(canvas.toDataURL('image/jpeg', quality));
+            cv.width = w; cv.height = h;
+            cv.getContext('2d').drawImage(img, 0, 0, w, h);
+            callback(cv.toDataURL('image/jpeg', quality));
         };
         img.src = base64;
     }
