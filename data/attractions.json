@@ -909,48 +909,6 @@
       }
     },
     {
-      "id": "danan-guzhen",
-      "name": "大安古建筑群",
-      "area": "平南县大安镇",
-      "category_ids": [
-        "ancient"
-      ],
-      "level": "省级",
-      "highlights": [
-        "大王庙",
-        "粤东会馆",
-        "骑楼老街"
-      ],
-      "best_season": "全年",
-      "ticket": "免费",
-      "open_hours": "全天",
-      "duration_recommended": "2小时",
-      "tags": [
-        "人文",
-        "古建",
-        "免费"
-      ],
-      "description": "保存完好的明清古建筑群，包括大王庙、粤东会馆、骑楼老街等，是研究两广古代商贸文化的重要实物资料。",
-      "tips": [
-        "可结合平南线路游览",
-        "老街小吃值得尝试"
-      ],
-      "image": "/static/images/spots/danan-guzhen.svg",
-      "parking": {
-        "has_parking": false,
-        "notes": "古镇内不准停车，需停镇外"
-      },
-      "opening_hours_detail": {
-        "open": "全天",
-        "notes": "古镇街道全天开放，店铺营业时间8:00-18:00"
-      },
-      "ticket_info": {
-        "price": 0,
-        "type": "免费",
-        "notes": "古镇免费，部分景点收费"
-      }
-    },
-    {
       "id": "dakaihu",
       "name": "达开湖",
       "area": "港北区奇石乡",
