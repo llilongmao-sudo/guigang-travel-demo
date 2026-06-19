@@ -1197,6 +1197,14 @@
         }
         .fav-remove-btn:hover { background: #fcc; }
 
+        /* ── 打卡列表增强 ── */
+        .ci-visited-card { display:flex; align-items:flex-start !important; }
+        .ci-photo-strip { display:flex; gap:3px; width:100%; height:100%; border-radius:8px; overflow:hidden; flex-shrink:0; }
+        .ci-photo-strip img { width:28px; height:28px; object-fit:cover; border-radius:4px; }
+        .ci-photo-count { font-size:10px; color:#fff; background:rgba(0,0,0,0.5); padding:1px 5px; border-radius:8px; margin-left:-12px; margin-top:18px; position:relative; }
+        .ci-note-preview { font-size:11px; color:#888; line-height:1.4; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:200px; }
+        .ci-rating-stars { font-size:12px; color:#ffc107; letter-spacing:0; }
+
         /* ── Modal ── */
         .modal-overlay {
             position: fixed;
@@ -3442,29 +3450,52 @@
         let html = '';
         if (wantToGo.length > 0) {
             html += `<div style="padding:8px 16px 4px;font-size:13px;font-weight:600;color:#e65100;">👀 想去（${wantToGo.length}）</div>`;
-            html += wantToGo.map(r => `
+            html += wantToGo.map(r => {
+                const notePreview = r.note ? `<div class="ci-note-preview">${r.note.slice(0,40)}${r.note.length>40?'...':''}</div>` : '';
+                return `
                 <div class="fav-item" onclick="window.location.href='/spot/${r.id}'">
                     <div class="fav-item-img">👀</div>
                     <div class="fav-item-info">
                         <div class="fav-item-name">${r.name || r.id}</div>
                         <div class="fav-item-meta"><span style="color:#e65100;font-size:12px;">想去</span></div>
+                        ${notePreview}
                     </div>
                     <button class="fav-remove-btn" onclick="event.stopPropagation(); uncheckin('${r.id}')" title="取消打卡">✕</button>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
         if (visited.length > 0) {
             html += `<div style="padding:8px 16px 4px;font-size:13px;font-weight:600;color:#2e7d32;">✅ 去过（${visited.length}）</div>`;
-            html += visited.map(r => `
-                <div class="fav-item" onclick="window.location.href='/spot/${r.id}'">
-                    <div class="fav-item-img">✅</div>
+            html += visited.map(r => {
+                // 照片缩略图
+                let photoThumb = '';
+                if (r.photos && r.photos.length > 0) {
+                    photoThumb = `<div class="ci-photo-strip">${r.photos.slice(0,3).map(p => `<img src="${p.data}" alt="" onerror="this.style.display='none'">`).join('')}</div>${r.photos.length>3?`<span class="ci-photo-count">+${r.photos.length-3}</span>`:''}`;
+                }
+                // 笔记预览
+                const notePreview = r.note ? `<div class="ci-note-preview">${r.note.slice(0,50)}${r.note.length>50?'...':''}</div>` : '';
+                // 评分
+                const ratingStars = r.rating ? `<span class="ci-rating-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>` : '';
+                // 日期
+                const dateStr = r.date ? `<span style="font-size:11px;color:#999;margin-left:auto;">📅 ${r.date}</span>` : '';
+                return `
+                <div class="fav-item ci-visited-card" onclick="window.location.href='/spot/${r.id}'">
+                    <div class="fav-item-img">
+                        ${photoThumb || '✅'}
+                    </div>
                     <div class="fav-item-info">
-                        <div class="fav-item-name">${r.name || r.id}</div>
-                        <div class="fav-item-meta"><span style="color:#2e7d32;font-size:12px;">去过</span></div>
+                        <div class="fav-item-name" style="display:flex;align-items:center;gap:6px;">${r.name || r.id}${ratingStars}${dateStr}</div>
+                        <div class="fav-item-meta">
+                            <span style="color:#2e7d32;font-size:12px;">去过</span>
+                            ${r.rating ? `<span style="font-size:11px;color:#ffc107;margin-left:6px;">⭐${r.rating}</span>` : ''}
+                        </div>
+                        ${notePreview}
                     </div>
                     <button class="fav-remove-btn" onclick="event.stopPropagation(); uncheckin('${r.id}')" title="取消打卡">✕</button>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
         container.innerHTML = html;
     }

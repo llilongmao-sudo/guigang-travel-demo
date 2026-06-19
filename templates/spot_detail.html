@@ -157,9 +157,26 @@
         <button class="df-btn checkin-btn" id="checkinBtn" onclick="cycleCheckin()">
             <span id="checkinBtnText">📍 打卡</span>
         </button>
+        <button class="df-btn secondary" id="checkinDetailBtn" onclick="openCheckinDetail()" style="display:none;">
+            <span>📝 详情</span>
+        </button>
         <button class="df-btn primary" onclick="startAiTour()">
             🤖 AI 智能讲解
         </button>
+    </div>
+</div>
+
+<!-- 打卡详情弹窗 -->
+<div class="checkin-modal" id="checkinModal">
+    <div class="cm-overlay" onclick="closeCheckinDetail()"></div>
+    <div class="cm-sheet">
+        <div class="cm-header">
+            <h3>📝 打卡记录</h3>
+            <button class="cm-close-btn" onclick="closeCheckinDetail()">✕</button>
+        </div>
+        <div class="cm-body" id="cmBody">
+            <!-- 动态渲染 -->
+        </div>
     </div>
 </div>
 
@@ -182,6 +199,7 @@
         // 初始化收藏和打卡状态
         updateFavButton();
         updateCheckinBtn();
+        updateCheckinDetailBtn();
         // 记录浏览
         RecentAPI.add({
             id: spotData.id,
@@ -274,6 +292,167 @@
             showToast('已取消打卡');
         }
         updateCheckinBtn();
+        updateCheckinDetailBtn();
+    }
+
+    // ── 打卡详情弹窗 ──
+    function updateCheckinDetailBtn() {
+        const btn = document.getElementById('checkinDetailBtn');
+        if (!btn) return;
+        const status = CheckinAPI.getStatus(spotData.id);
+        btn.style.display = (status === 'visited' || status === 'want_to_go') ? '' : 'none';
+    }
+
+    function openCheckinDetail() {
+        renderCheckinModal();
+        document.getElementById('checkinModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCheckinDetail() {
+        document.getElementById('checkinModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function renderCheckinModal() {
+        const record = CheckinAPI.getRecord(spotData.id);
+        const status = record ? record.status : null;
+        const container = document.getElementById('cmBody');
+
+        const statusText = status === 'visited' ? '✅ 已去过' : status === 'want_to_go' ? '👀 想去' : '未打卡';
+        const statusColor = status === 'visited' ? '#2e7d32' : status === 'want_to_go' ? '#e65100' : '#999';
+
+        let html = `
+            <div class="cm-status-row">
+                <span class="cm-status-badge" style="background:${statusColor}20;color:${statusColor};border:1px solid ${statusColor}40;">${statusText}</span>
+                <span class="cm-date" style="font-size:12px;color:#999;">${record?.updated_at ? new Date(record.updated_at).toLocaleString('zh-CN') : ''}</span>
+            </div>
+        `;
+
+        // 日期选择（去过时显示）
+        if (status === 'visited') {
+            html += `
+                <div class="cm-field">
+                    <label class="cm-label">📅 打卡日期</label>
+                    <input type="date" class="cm-input" id="cmDate" value="${record?.date || new Date().toISOString().slice(0,10)}" onchange="saveCheckinDate(this.value)">
+                </div>
+            `;
+        }
+
+        // 评分（去过时显示）
+        if (status === 'visited') {
+            const rating = record?.rating || 0;
+            html += `
+                <div class="cm-field">
+                    <label class="cm-label">⭐ 我的评分</label>
+                    <div class="cm-stars" id="cmStars">
+                        ${[1,2,3,4,5].map(n => `<span class="cm-star ${n <= rating ? 'filled' : ''}" onclick="saveCheckinRating(${n})">★</span>`).join('')}
+                        <span class="cm-rating-text" id="cmRatingText">${rating > 0 ? rating + ' 分' : '点击评分'}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 笔记
+        html += `
+            <div class="cm-field">
+                <label class="cm-label">📝 打卡笔记</label>
+                <textarea class="cm-textarea" id="cmNote" placeholder="记录你的游玩感受、推荐项目、避坑提示..." rows="4" oninput="autoSaveNote()">${record?.note || ''}</textarea>
+                <div class="cm-hint">笔记自动保存到本地</div>
+            </div>
+        `;
+
+        // 照片上传
+        const photos = record?.photos || [];
+        html += `
+            <div class="cm-field">
+                <label class="cm-label">📷 景点照片 (${photos.length}/9)</label>
+                <div class="cm-photos" id="cmPhotos">
+                    ${photos.map((p, i) => `
+                        <div class="cm-photo-item">
+                            <img src="${p.data}" alt="照片${i+1}" onclick="previewPhoto('${p.data}')">
+                            <button class="cm-photo-del" onclick="removeCheckinPhoto(${i})" title="删除">✕</button>
+                        </div>
+                    `).join('')}
+                    ${photos.length < 9 ? `
+                        <label class="cm-photo-add" title="添加照片">
+                            <span>+</span>
+                            <input type="file" accept="image/*" capture="environment" hidden onchange="handlePhotoUpload(event)">
+                        </label>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    let _noteSaveTimer = null;
+    function autoSaveNote() {
+        clearTimeout(_noteSaveTimer);
+        _noteSaveTimer = setTimeout(() => {
+            const note = document.getElementById('cmNote')?.value || '';
+            CheckinAPI.setNote(spotData.id, note);
+        }, 800);
+    }
+
+    function saveCheckinDate(dateStr) {
+        CheckinAPI.setDate(spotData.id, dateStr);
+        showToast('📅 日期已保存');
+    }
+
+    function saveCheckinRating(rating) {
+        CheckinAPI.setRating(spotData.id, rating);
+        document.querySelectorAll('#cmStars .cm-star').forEach((el, i) => {
+            el.classList.toggle('filled', i < rating);
+        });
+        document.getElementById('cmRatingText').textContent = rating + ' 分';
+        showToast('⭐ 评分已保存');
+    }
+
+    function handlePhotoUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        if (file.size > 5 * 1024 * 1024) { showToast('❌ 图片不能超过5MB'); return; }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            compressImage(e.target.result, 800, 0.8, function(compressed) {
+                const ok = CheckinAPI.addPhoto(spotData.id, compressed);
+                if (ok) { renderCheckinModal(); showToast('📷 照片已添加'); }
+                else { showToast('❌ 最多9张照片'); }
+            });
+        };
+        reader.readAsDataURL(file);
+        event.target.value = '';
+    }
+
+    function removeCheckinPhoto(index) {
+        if (!confirm('删除这张照片？')) return;
+        CheckinAPI.removePhoto(spotData.id, index);
+        renderCheckinModal();
+        showToast('照片已删除');
+    }
+
+    function previewPhoto(base64) {
+        const overlay = document.createElement('div');
+        overlay.className = 'photo-preview-overlay';
+        overlay.innerHTML = `<img src="${base64}" onclick="this.parentElement.remove()"><button onclick="this.parentElement.remove()" style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.6);color:#fff;border:none;padding:8px 14px;border-radius:50%;cursor:pointer;font-size:18px;">✕</button>`;
+        overlay.onclick = function(e) { if(e.target===overlay) overlay.remove(); };
+        document.body.appendChild(overlay);
+    }
+
+    function compressImage(base64, maxWidth, quality, callback) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            let w = img.width, h = img.height;
+            if (w > maxWidth) { h = (h * maxWidth) / w; w = maxWidth; }
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            callback(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = base64;
     }
 
     // ── AI 讲解 ──
