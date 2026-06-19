@@ -334,8 +334,20 @@
         const status = record ? record.status : null;
         const entries = record?.entries || [];
         const container = document.getElementById('cmBody');
-        const statusText = status === 'visited' ? '已去过' : status === 'want_to_go' ? '想去' : '未打卡';
-        const statusColor = status === 'visited' ? '#2e7d32' : status === 'want_to_go' ? '#e65100' : '#999';
+
+        // ═══════════════════════════════
+        // 「想去」状态 → 社区分享页
+        // ═══════════════════════════════
+        if (status === 'want_to_go') {
+            renderCommunityView(container, entries);
+            return;
+        }
+
+        // ═══════════════════════════════
+        // 「去过」状态 → 我的打卡记录 + 表单
+        // ═══════════════════════════════
+        const statusText = status === 'visited' ? '已去过' : '未打卡';
+        const statusColor = status === 'visited' ? '#2e7d32' : '#999';
 
         let html = `
             <div class="cm-header-row">
@@ -347,7 +359,7 @@
         // 已有打卡记录列表（卡片形式）
         if (entries.length > 0) {
             html += `<div class="cm-entries-list" id="cmEntriesList">`;
-            entries.forEach((entry, idx) => {
+            entries.forEach((entry) => {
                 const photos = entry.photos || [];
                 const notePreview = entry.note ? entry.note.replace(/<[^>]*>/g, '').slice(0, 60) : '';
                 html += `
@@ -376,7 +388,137 @@
         }
 
         // 编辑/新建表单（始终在底部）
+        html += renderFormHTML();
+        container.innerHTML = html;
+
+        if (_editingEntryId) populateForm(_editingEntryId);
+    }
+
+    // ── 社区分享视图（想去状态）──
+
+    function renderCommunityView(container, myEntries) {
+        const spotName = spotData.name || '这里';
+
+        let html = `
+            <!-- 顶部提示 -->
+            <div class="comm-hero">
+                <div class="comm-hero-text">
+                    <span class="comm-hero-icon">🔥</span>
+                    <span>${spotName} 的真实体验</span>
+                </div>
+                <p class="comm-subtitle">看看大家怎么说，帮你决定值不值得去</p>
+            </div>
+
+            <!-- 模拟社区卡片 -->
+            <div class="comm-feed" id="commFeed">
+        `;
+
+        // 生成模拟社区内容（基于景点信息）
+        const feedItems = generateCommunityFeed(spotData);
+        feedItems.forEach(item => {
+            html += renderCommCard(item);
+        });
+
+        html += `</div>`;
+
+        // 底部：我的收藏备注（可选加一条备忘）
         html += `
+            <div class="comm-memo-section">
+                <div class="comm-form-header">
+                    <span class="comm-form-title">📌 给自己留个备忘</span>
+                </div>
+                <textarea class="comm-memo-input" id="commMemoInput" placeholder="比如：想和谁一起去、什么季节去最好..." rows="2"
+                  oninput="autoSaveMemo()">${myEntries.length > 0 && myEntries[0].note ? myEntries[0].note : ''}</textarea>
+                <div class="comm-hint">自动保存到本地</div>
+            </div>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    /** 基于景点数据生成模拟社区内容 */
+    function generateCommunityFeed(spot) {
+        const name = spot?.name || '这个地方';
+        const district = spot?.district || '';
+        const tags = spot?.tags || [];
+
+        // 根据景点类型生成不同风格的评论
+        const isNature = tags.some(t => ['自然','山水','湖泊','森林','公园'].includes(t));
+        const isHistory = tags.some(t => ['历史','文化','古迹','建筑'].includes(t));
+        const isFun = tags.some(t => ['动物','娱乐','亲子'].includes(t));
+
+        const base = [
+            {
+                avatar: '👩', name: '旅行者小A', time: '3天前', rating: 5,
+                text: `${name}真的超出预期！本来只是顺路来看看，结果待了一整天。强烈建议早点去，人少景美拍照绝了。`, photos: [], likes: 128, comments: 12
+            },
+            {
+                avatar: '👨', name: '本地土著老李', time: '1周前', rating: 4,
+                text: `作为${district || '本地'}人，从小玩到大的地方。周末人会比较多，建议工作日来。`, photos: [], likes: 89, comments: 7
+            },
+            {
+                avatar: '👩‍🦰', name: '摄影爱好者CC', time: '2周前', rating: 5,
+                text: `出片率超高！随便拍都好看，尤其是下午三四点的光线。记得带广角镜头。`, photos: [], likes: 256, comments: 31
+            }
+        ];
+
+        if (isHistory) {
+            base[1].text = `历史底蕴很深，建议请个讲解或者提前做功课，不然只能看热闹。建筑保存得不错。`;
+            base.push({ avatar: '🧑', name: '历史迷小王', time: '5天前', rating: 4, text: `喜欢历史的朋友不要错过，每一块砖都有故事。就是停车不太方便。`, photos: [], likes: 67, comments: 9 });
+        } else if (isNature) {
+            base[0].text = `空气太好了！天然氧吧的感觉。走完全程大概需要2-3小时，记得带水和防晒。`;
+            base.push({ avatar: '👩‍🦱', name: '户外达人阿杰', time: '4天前', rating: 5, text: `难度适中，适合全家出动。山顶风景值得爬！`, photos: [], likes: 156, comments: 18 });
+        } else if (isFun) {
+            base[2].text = `孩子玩疯了不想走！互动项目很多，动物们看起来状态不错。建议自带水和零食，里面卖的偏贵。`;
+            base.push({ avatar: '👩', name: '宝妈小陈', time: '6天前', rating: 4, text: `亲子游推荐！有遮阳的地方，也有休息区。周末人多要排队。`, photos: [], likes: 203, comments: 24 });
+        }
+
+        return base;
+    }
+
+    function renderCommCard(item) {
+        const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+        return `
+            <div class="comm-card">
+                <div class="comm-card-header">
+                    <span class="comm-avatar">${item.avatar}</span>
+                    <div class="comm-user-info">
+                        <span class="comm-username">${item.name}</span>
+                        <span class="comm-time">${item.time}</span>
+                    </div>
+                    <span class="comm-stars-inline">${stars}</span>
+                </div>
+                <div class="comm-card-body">${item.text}</div>
+                <div class="comm-card-footer">
+                    <span class="comm-action"><b>👍</b> ${item.likes}</span>
+                    <span class="comm-action"><b>💬</b> ${item.comments}</span>
+                    <span class="comm-action"><b>🔄</b> 分享</span>
+                </div>
+            </div>
+        `;
+    }
+
+    let _memoSaveTimer = null;
+    function autoSaveMemo() {
+        clearTimeout(_memoSaveTimer);
+        _memoSaveTimer = setTimeout(() => {
+            const note = document.getElementById('commMemoInput')?.value.trim() || '';
+            // 存到想去条目的笔记里
+            const record = CheckinAPI.getRecord(spotData.id);
+            if (record) {
+                if (!record.entries || record.entries.length === 0) {
+                    CheckinAPI.addEntry(spotData.id, { note: note });
+                } else {
+                    CheckinAPI.updateEntry(spotData.id, record.entries[0].id, { note: note });
+                }
+            }
+        }, 800);
+    }
+
+    // ── 表单 HTML 模板（去过状态用）──
+
+    function renderFormHTML() {
+        return `
             <div class="cm-form-section" id="cmFormSection">
                 <div class="cm-form-header">
                     <span class="cm-form-title" id="cmFormTitle">${_editingEntryId ? '编辑记录' : '+ 写一条新记录'}</span>
@@ -390,7 +532,7 @@
                                 <span id="cmDateText">今天</span>
                             </div>
                             <div class="cm-date-shortcuts">
-                                <button type="button" class="cm-date-btn ${!_editingEntryId ? 'active' : ''}" data-type="today" onclick="pickDate('today')">今天</button>
+                                <button type="button" class="cm-date-btn active" data-type="today" onclick="pickDate('today')">今天</button>
                                 <button type="button" class="cm-date-btn" data-type="yesterday" onclick="pickDate('yesterday')">昨天</button>
                                 <button type="button" class="cm-date-btn" data-type="week" onclick="pickDate('week')">一周前</button>
                             </div>
@@ -422,13 +564,6 @@
                 </div>
             </div>
         `;
-
-        container.innerHTML = html;
-
-        // 如果是编辑模式，回填表单
-        if (_editingEntryId) {
-            populateForm(_editingEntryId);
-        }
     }
 
     // ── 表单交互 ──
