@@ -160,6 +160,126 @@
         "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
         "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
       ]
+    },
+    "longtansi": {
+      "name": "龙潭国家森林公园",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "baishishan": {
+      "name": "桂平白石山",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "tongguwan": {
+      "name": "铜鼓湾温泉度假区",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "yuanboyuan": {
+      "name": "贵港园博园",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "danan-guzhen": {
+      "name": "大安古建筑群",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "dakaihu": {
+      "name": "达开湖",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "qinnangongyuan": {
+      "name": "覃塘公园",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "shanzhongcu": {
+      "name": "山边村草坪屯",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "longhuagongyuan": {
+      "name": "龙凰公园",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "pingnanxianbowuguan": {
+      "name": "平南县博物馆",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "guipingguijizhi": {
+      "name": "桂平地质公园",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "xishanquan": {
+      "name": "西山泉汽车露营基地",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "zhoujiang": {
+      "name": "郁江沿岸风光带",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "yuanboyuan-hehua": {
+      "name": "园博园荷花节",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
+    },
+    "shigongsi": {
+      "name": "石达开铜像",
+      "image_urls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+      ]
     }
   }
 }

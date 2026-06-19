@@ -25,12 +25,9 @@ class DataLoader:
     
     @classmethod
     def get_attractions(cls, reload: bool = False) -> List[Dict]:
-        """获取所有景点数据（优先加载 V2）"""
+        """获取所有景点数据"""
         if cls._attractions is None or reload:
-            # 优先加载 V2 版本
-            data = cls._load_json('attractions_v2.json')
-            if not data or not data.get('attractions'):
-                data = cls._load_json('attractions.json')
+            data = cls._load_json('attractions.json')
             cls._attractions = data.get('attractions', [])
         return cls._attractions
     
