@@ -154,6 +154,9 @@
         <button class="df-btn secondary" onclick="toggleFavorite()">
             <span id="favBtnText">🤍 收藏</span>
         </button>
+        <button class="df-btn checkin-btn" id="checkinBtn" onclick="cycleCheckin()">
+            <span id="checkinBtnText">📍 打卡</span>
+        </button>
         <button class="df-btn primary" onclick="startAiTour()">
             🤖 AI 智能讲解
         </button>
@@ -164,6 +167,7 @@
 <div class="toast" id="toast"></div>
 
 <script src="/static/js/favorites.js"></script>
+<script src="/static/js/checkin.js"></script>
 <script src="/static/js/recent.js"></script>
 <script>
     // ── 数据 ──
@@ -175,8 +179,9 @@
         initGallery(spotData);
         // 初始化评分星星
         renderRating(spotData.rating);
-        // 初始化收藏状态
+        // 初始化收藏和打卡状态
         updateFavButton();
+        updateCheckinBtn();
         // 记录浏览
         RecentAPI.add({
             id: spotData.id,
@@ -236,6 +241,39 @@
         if (favBtn) favBtn.textContent = faved ? '❤️' : '🤍';
         if (favBtn) favBtn.classList.toggle('favorited', faved);
         if (favText) favText.textContent = faved ? '❤️ 已收藏' : '🤍 收藏';
+    }
+
+    // ── 打卡功能（使用 CheckinAPI） ──
+    function updateCheckinBtn() {
+        const status = CheckinAPI.getStatus(spotData.id);
+        const btn = document.getElementById('checkinBtn');
+        const text = document.getElementById('checkinBtnText');
+        if (!btn) return;
+        btn.classList.remove('checked-visited', 'checked-want');
+        if (status === 'visited') {
+            btn.classList.add('checked-visited');
+            if (text) text.textContent = '✅ 去过';
+        } else if (status === 'want_to_go') {
+            btn.classList.add('checked-want');
+            if (text) text.textContent = '👀 想去';
+        } else {
+            if (text) text.textContent = '📍 打卡';
+        }
+    }
+
+    function cycleCheckin() {
+        const status = CheckinAPI.cycleStatus({
+            id: spotData.id,
+            name: spotData.name
+        });
+        if (status === 'want_to_go') {
+            showToast('👀 标记为「想去」');
+        } else if (status === 'visited') {
+            showToast('✅ 标记为「去过」');
+        } else {
+            showToast('已取消打卡');
+        }
+        updateCheckinBtn();
     }
 
     // ── AI 讲解 ──

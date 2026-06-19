@@ -850,6 +850,24 @@
             padding: 1px 8px;
             border-radius: 8px;
         }
+        .drawer-item .spot-fav-btn {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            align-self: center;
+        }
+        .drawer-item .spot-fav-btn:active {
+            transform: scale(1.3);
+        }
         .tag.nature { background: #e8f5e9; color: #2d8a4e; }
         .tag.culture { background: #fff3e0; color: #e65100; }
         .tag.park { background: #e3f2fd; color: #1565c0; }
@@ -1036,6 +1054,28 @@
             font-family: inherit;
         }
         .fav-close-btn:hover { background: #e0e0e0; }
+        /* ── 收藏/打卡 Tab ── */
+        .fav-tabs {
+            display: flex;
+            border-bottom: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+        .fav-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: #999;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .fav-tab.active {
+            color: #2d8a4e;
+            border-bottom-color: #2d8a4e;
+        }
+        .fav-tab:active { opacity: 0.7; }
         .fav-sheet-actions {
             padding: 10px 20px;
             flex-shrink: 0;
@@ -1999,10 +2039,14 @@
     <div class="fav-overlay" onclick="closeFavoritesPanel()"></div>
     <div class="fav-sheet">
         <div class="fav-sheet-header">
-            <h3>❤️ 我的收藏</h3>
+            <h3 id="favPanelTitle">❤️ 我的收藏</h3>
             <button class="fav-close-btn" onclick="closeFavoritesPanel()">✕</button>
         </div>
-        <div class="fav-sheet-actions">
+        <div class="fav-tabs">
+            <div class="fav-tab active" data-tab="favorites" onclick="switchFavTab('favorites')">❤️ 收藏</div>
+            <div class="fav-tab" data-tab="checkin" onclick="switchFavTab('checkin')">📍 打卡</div>
+        </div>
+        <div class="fav-sheet-actions" id="favActions">
             <button class="fav-clear-all" onclick="clearAllFavorites()">🗑️ 清空所有</button>
         </div>
         <div class="fav-sheet-body" id="favList">
@@ -2107,6 +2151,7 @@
 
 <script src="/static/js/preferences.js"></script>
     <script src="/static/js/favorites.js"></script>
+    <script src="/static/js/checkin.js"></script>
 <script src="/static/js/recent.js"></script>
 <script src="/static/js/itinerary.js"></script>
     <script src="/static/js/planning.js"></script>
@@ -2546,6 +2591,7 @@
                     <span class="tag ${(s.category === '自然风光' ? 'nature' : s.category === '人文景观' ? 'culture' : s.category === '城市公园' ? 'park' : 'free')}">${s.category || '景点'}</span>
                     ${s.district ? `<span class="tag" style="background:#e3f2fd;color:#1565c0;">${s.district}</span>` : ''}
                 </div>
+                <button class="spot-fav-btn" onclick="event.stopPropagation(); toggleListFav(event, '${s.id}','${s.name}','${s.district || ''}')">${FavoritesAPI.isFavorited(s.id) ? '❤️' : '♡'}</button>
             </div>
         `).join('');
     }
@@ -2594,6 +2640,7 @@
                     <span class="tag ${(s.category === '自然景观' ? 'nature' : s.category === '人文景观' ? 'culture' : s.category === '城市公园' ? 'park' : 'free')}">${s.category || '景点'}</span>
                     ${s.district ? `<span class="tag" style="background:#e3f2fd;color:#1565c0;">${s.district}</span>` : ''}
                 </div>
+                <button class="spot-fav-btn" onclick="event.stopPropagation(); toggleListFav(event, '${s.id}','${s.name}','${s.district || ''}')">${FavoritesAPI.isFavorited(s.id) ? '❤️' : '♡'}</button>
             </div>
         `).join('');
     }
@@ -3338,6 +3385,94 @@
             badge.textContent = count;
             badge.style.display = count > 0 ? 'flex' : 'none';
         }
+    }
+
+    // ── 列表收藏按钮 ──
+    function toggleListFav(e, id, name, district) {
+        e.stopPropagation();
+        const btn = e.currentTarget;
+        if (FavoritesAPI.isFavorited(id)) {
+            FavoritesAPI.remove(id);
+            btn.textContent = '♡';
+            showToast('已取消收藏');
+        } else {
+            FavoritesAPI.add({ id, name, district });
+            btn.textContent = '❤️';
+            showToast('已收藏');
+        }
+        updateFavBadge();
+    }
+
+    // ── 收藏/打卡 Tab 切换 ──
+    let currentFavTab = 'favorites';
+
+    function switchFavTab(tab) {
+        currentFavTab = tab;
+        document.querySelectorAll('.fav-tab').forEach(el => {
+            el.classList.toggle('active', el.dataset.tab === tab);
+        });
+        const title = document.getElementById('favPanelTitle');
+        const actions = document.getElementById('favActions');
+        if (tab === 'favorites') {
+            if (title) title.textContent = '❤️ 我的收藏';
+            if (actions) actions.style.display = '';
+            renderFavoritesList();
+        } else {
+            if (title) title.textContent = '📍 打卡记录';
+            if (actions) actions.style.display = 'none';
+            renderCheckinList();
+        }
+    }
+
+    function renderCheckinList() {
+        const container = document.getElementById('favList');
+        const records = CheckinAPI.getAll();
+        if (records.length === 0) {
+            container.innerHTML = `
+                <div class="fav-empty">
+                    <div class="fav-empty-emoji">📍</div>
+                    <p>还没有打卡记录~</p>
+                    <div class="fav-empty-hint">浏览景点时点击打卡即可记录</div>
+                </div>
+            `;
+            return;
+        }
+        const visited = records.filter(r => r.status === 'visited');
+        const wantToGo = records.filter(r => r.status === 'want_to_go');
+        let html = '';
+        if (wantToGo.length > 0) {
+            html += `<div style="padding:8px 16px 4px;font-size:13px;font-weight:600;color:#e65100;">👀 想去（${wantToGo.length}）</div>`;
+            html += wantToGo.map(r => `
+                <div class="fav-item" onclick="window.location.href='/spot/${r.id}'">
+                    <div class="fav-item-img">👀</div>
+                    <div class="fav-item-info">
+                        <div class="fav-item-name">${r.name || r.id}</div>
+                        <div class="fav-item-meta"><span style="color:#e65100;font-size:12px;">想去</span></div>
+                    </div>
+                    <button class="fav-remove-btn" onclick="event.stopPropagation(); uncheckin('${r.id}')" title="取消打卡">✕</button>
+                </div>
+            `).join('');
+        }
+        if (visited.length > 0) {
+            html += `<div style="padding:8px 16px 4px;font-size:13px;font-weight:600;color:#2e7d32;">✅ 去过（${visited.length}）</div>`;
+            html += visited.map(r => `
+                <div class="fav-item" onclick="window.location.href='/spot/${r.id}'">
+                    <div class="fav-item-img">✅</div>
+                    <div class="fav-item-info">
+                        <div class="fav-item-name">${r.name || r.id}</div>
+                        <div class="fav-item-meta"><span style="color:#2e7d32;font-size:12px;">去过</span></div>
+                    </div>
+                    <button class="fav-remove-btn" onclick="event.stopPropagation(); uncheckin('${r.id}')" title="取消打卡">✕</button>
+                </div>
+            `).join('');
+        }
+        container.innerHTML = html;
+    }
+
+    function uncheckin(spotId) {
+        CheckinAPI.setStatus(spotId, '', null);
+        renderCheckinList();
+        showToast('已取消打卡');
     }
 </script>
 <script>
