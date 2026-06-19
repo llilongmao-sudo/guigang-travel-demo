@@ -820,6 +820,30 @@ body {
 .cm-photo-add { width:64px; height:64px; border:2px dashed #ddd; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#ccc; font-size:24px; transition:all 0.2s; background:#fafafa; -webkit-tap-highlight-color:transparent; }
 .cm-photo-add:active { border-color:#2d8a4e; color:#2d8a4e; background:#f0faf3; }
 
+/* ── 自定义日期选择器 ── */
+.cm-date-picker { }
+.cm-date-display { display:inline-flex; align-items:center; padding:10px 14px; background:#fff; border:1.5px solid #eee; border-radius:10px; font-size:15px; font-weight:500; color:#333; cursor:pointer; min-width:100px; transition:border-color 0.2s; -webkit-tap-highlight-color:transparent; user-select:none; }
+.cm-date-display:active, .cm-date-display:focus { border-color:#2d8a4e; outline:none; }
+.cm-date-shortcuts { display:flex; gap:6px; margin-top:8px; }
+.cm-date-btn { padding:5px 12px; border:1px solid #eee; border-radius:20px; background:#fff; font-size:13px; color:#666; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:all 0.15s; }
+.cm-date-btn.active { background:#2d8a4e; color:#fff; border-color:#2d8a4e; }
+.cm-date-btn:active { transform:scale(0.95); }
+
+/* 小日历弹层 */
+.cm-calendar { margin-top:10px; background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.1); overflow:hidden; animation:calFadeIn 0.15s ease; }
+@keyframes calFadeIn { from{opacity:0;transform:translateY(-4px);} to{opacity:1;transform:translateY(0);} }
+.cal-head { display:flex; align-items:center; justify-content:center; gap:16px; padding:10px 14px; background:#fafafa; border-bottom:1px solid #f0f0f0; }
+.cal-month { font-size:13px; font-weight:600; color:#333; }
+.cal-arrow { background:none; border:none; font-size:18px; cursor:pointer; color:#999; padding:2px 8px; border-radius:4px; }
+.cal-arrow:active { background:#eee; }
+.cal-weekdays { display:grid; grid-template-columns:repeat(7,1fr); text-align:center; padding:8px 0 4px; font-size:11px; color:#bbb; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; padding:4px 8px 12px; }
+.cal-empty { height:32px; }
+.cal-day { display:flex; align-items:center; justify-content:center; height:32px; border-radius:50%; font-size:13px; color:#444; cursor:pointer; transition:all 0.12s; -webkit-tap-highlight-color:transparent; }
+.cal-day:hover { background:#f0f0f0; }
+.cal-day.today { color:#2d8a4e; font-weight:700; }
+.cal-day.selected { background:#2d8a4e; color:#fff; font-weight:600; }
+
 /* 提交按钮 */
 .cm-form-actions-row { padding-top:8px; text-align:right; }
 .cm-submit-btn { background:#2d8a4e; color:#fff; border:none; padding:10px 28px; border-radius:12px; font-size:14px; font-weight:600; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:opacity 0.15s; }

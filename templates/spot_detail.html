@@ -373,7 +373,17 @@
                 <div class="cm-form-body" id="cmFormBody">
                     <div class="cm-field">
                         <label class="cm-label">日期</label>
-                        <input type="date" class="cm-input" id="cmInputDate" value="${new Date().toISOString().slice(0,10)}">
+                        <div class="cm-date-picker" id="cmDatePicker">
+                            <div class="cm-date-display" onclick="toggleDateCalendar()">
+                                <span id="cmDateText">今天</span>
+                            </div>
+                            <div class="cm-date-shortcuts">
+                                <button type="button" class="cm-date-btn ${!_editingEntryId ? 'active' : ''}" data-type="today" onclick="pickDate('today')">今天</button>
+                                <button type="button" class="cm-date-btn" data-type="yesterday" onclick="pickDate('yesterday')">昨天</button>
+                                <button type="button" class="cm-date-btn" data-type="week" onclick="pickDate('week')">一周前</button>
+                            </div>
+                            <input type="hidden" id="cmInputDate" value="${new Date().toISOString().slice(0,10)}">
+                        </div>
                     </div>
                     <div class="cm-field">
                         <label class="cm-label">评分（选填）</label>
@@ -511,7 +521,11 @@
         if (!entry) return;
 
         const dateEl = document.getElementById('cmInputDate');
-        if (dateEl && entry.date) dateEl.value = entry.date;
+        if (dateEl && entry.date) {
+            dateEl.value = entry.date;
+            updateDateDisplay(entry.date);
+            updateDateBtnState(entry.date);
+        }
 
         if (entry.rating) {
             _formStars = entry.rating;
@@ -533,7 +547,134 @@
         _formStars = 0;
         _formPhotos = [];
         _editingEntryId = null;
+        // 重置日期为今天
+        const today = new Date().toISOString().slice(0, 10);
+        document.getElementById('cmInputDate').value = today;
+        updateDateDisplay(today);
+        updateDateBtnState(today);
     }
+
+    // ── 自定义日期选择器 ──
+
+    let _dateCalOpen = false;
+
+    function toggleDateCalendar() {
+        _dateCalOpen = !_dateCalOpen;
+        renderDateCalendar();
+    }
+
+    /** 快捷按钮选日期 */
+    function pickDate(type) {
+        const d = new Date();
+        if (type === 'yesterday') d.setDate(d.getDate() - 1);
+        else if (type === 'week') d.setDate(d.getDate() - 7);
+        const val = d.toISOString().slice(0, 10);
+        document.getElementById('cmInputDate').value = val;
+        updateDateDisplay(val);
+        updateDateBtnState(val);
+        // 关闭日历（如果开着）
+        _dateCalOpen = false;
+        const cal = document.getElementById('cmDateCal');
+        if (cal) cal.remove();
+    }
+
+    function updateDateDisplay(dateStr) {
+        const el = document.getElementById('cmDateText');
+        if (!el) return;
+        const today = new Date().toISOString().slice(0, 10);
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        if (dateStr === today) el.textContent = '今天';
+        else if (dateStr === yesterday) el.textContent = '昨天';
+        else {
+            const d = new Date(dateStr + 'T00:00:00');
+            el.textContent = (d.getMonth() + 1) + '月' + d.getDate() + '日';
+        }
+    }
+
+    function updateDateBtnState(dateStr) {
+        const today = new Date().toISOString().slice(0, 10);
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        document.querySelectorAll('.cm-date-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        if (dateStr === today) document.querySelector('.cm-date-btn[data-type="today"]')?.classList.add('active');
+        else if (dateStr === yesterday) document.querySelector('.cm-date-btn[data-type="yesterday"]')?.classList.add('active');
+    }
+
+    function renderDateCalendar() {
+        // 移除已有日历
+        const existing = document.getElementById('cmDateCal');
+        if (existing) { existing.remove(); return; }
+        if (!_dateCalOpen) return;
+
+        const picker = document.getElementById('cmDatePicker');
+        if (!picker) return;
+
+        const val = document.getElementById('cmInputDate').value || new Date().toISOString().slice(0, 10);
+        const baseDate = new Date(val + 'T00:00:00');
+        const y = baseDate.getFullYear();
+        const m = baseDate.getMonth(); // 0-based
+
+        // 当月第一天是周几（0=周日）
+        const firstDay = new Date(y, m, 1).getDay();
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const today = new Date().toISOString().slice(0, 10);
+
+        let cells = '';
+        // 空白填充
+        for (let i = 0; i < firstDay; i++) cells += '<span class="cm-cal-empty"></span>';
+        // 日期格子
+        for (let d = 1; d <= daysInMonth; d++) {
+            const ds = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+            const isToday = ds === today;
+            const isSelected = ds === val;
+            cells += `<span class="cm-cal-day${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" onclick="pickCalDay('${ds}')">${d}</span>`;
+        }
+
+        const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+        const cal = document.createElement('div');
+        cal.id = 'cmDateCal';
+        cal.className = 'cm-calendar';
+        cal.innerHTML = `
+            <div class="cal-head">
+                <button type="button" class="cal-arrow" onclick="calMonth(-1)">‹</button>
+                <span class="cal-month">${y}年 ${monthNames[m]}</span>
+                <button type="button" class="cal-arrow" onclick="calMonth(1)">›</button>
+            </div>
+            <div class="cal-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+            <div class="cal-grid">${cells}</div>
+        `;
+
+        picker.appendChild(cal);
+    }
+
+    window.pickCalDay = function(ds) {
+        document.getElementById('cmInputDate').value = ds;
+        updateDateDisplay(ds);
+        updateDateBtnState(ds);
+        _dateCalOpen = false;
+        const cal = document.getElementById('cmDateCal');
+        if (cal) cal.remove();
+    };
+
+    window.calMonth = function(delta) {
+        const val = document.getElementById('cmInputDate').value || new Date().toISOString().slice(0, 10);
+        const d = new Date(val + 'T00:00:00');
+        d.setMonth(d.getMonth() + delta);
+        const nv = d.toISOString().slice(0, 10);
+        document.getElementById('cmInputDate').value = nv;
+        renderDateCalendar();
+    };
+
+    // 点击外部关闭日历
+    document.addEventListener('click', function(e) {
+        if (_dateCalOpen && !e.target.closest('#cmDatePicker')) {
+            _dateCalOpen = false;
+            const cal = document.getElementById('cmDateCal');
+            if (cal) cal.remove();
+        }
+    });
 
     function previewPhoto(base64) {
         const ov = document.createElement('div');
