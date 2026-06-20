@@ -48,8 +48,8 @@
           "location": "贵港市区",
           "description": "自驾或包车出发",
           "spot_id": "donghu",
-          "lat": null,
-          "lng": null
+          "lat": 23.096634,
+          "lng": 109.595615
         },
         {
           "step": 2,
@@ -70,8 +70,8 @@
           "location": "覃塘农家乐",
           "description": "推荐：莲藕排骨汤、炸荷花、莲子羹",
           "spot_id": "qinnangongyuan",
-          "lat": null,
-          "lng": null
+          "lat": 23.045678,
+          "lng": 109.512345
         },
         {
           "step": 4,
@@ -353,8 +353,8 @@
           "location": "贵港市区",
           "description": "推荐：桥圩鸭肉粉、港北夜市",
           "spot_id": "donghu",
-          "lat": null,
-          "lng": null
+          "lat": 23.096634,
+          "lng": 109.595615
         }
       ],
       "food": [
@@ -435,8 +435,8 @@
           "location": "贵港市区",
           "description": "推荐：东龙米粽、酸料",
           "spot_id": "donghu",
-          "lat": null,
-          "lng": null
+          "lat": 23.096634,
+          "lng": 109.595615
         },
         {
           "step": 3,
@@ -468,8 +468,8 @@
           "location": "贵港市区",
           "description": "必尝贵港酸料（灵魂美食）",
           "spot_id": "donghu",
-          "lat": null,
-          "lng": null
+          "lat": 23.096634,
+          "lng": 109.595615
         },
         {
           "step": 6,
@@ -620,8 +620,8 @@
           "location": "平南县",
           "description": "推荐：白切狗肉、白切三黄鸡",
           "spot_id": "pingnanxianbowuguan",
-          "lat": null,
-          "lng": null
+          "lat": 23.533456,
+          "lng": 110.412345
         },
         {
           "step": 7,
@@ -668,8 +668,8 @@
           "location": "平南县城",
           "description": "平南鱼生是当地一绝",
           "spot_id": "pingnanxianbowuguan",
-          "lat": null,
-          "lng": null
+          "lat": 23.533456,
+          "lng": 110.412345
         },
         {
           "step": 11,
