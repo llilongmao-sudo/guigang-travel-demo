@@ -1911,7 +1911,7 @@
                         <span>📍</span>
                         <span>地图</span>
                     </button>
-                    <button class="hero-quick-btn" onclick="quickAsk('贵港有什么特色美食？')">
+                    <button class="hero-quick-btn" onclick="openFoodPanel()">
                         <span>🍜</span>
                         <span>美食</span>
                     </button>
@@ -2067,6 +2067,26 @@
     </div>
 </div>
 
+<!-- Food Panel (Bottom Sheet) -->
+<div class="food-panel" id="foodPanel">
+    <div class="food-overlay" onclick="closeFoodPanel()"></div>
+    <div class="food-sheet">
+        <div class="food-sheet-header">
+            <h3>🍜 贵港美食</h3>
+            <button class="food-close-btn" onclick="closeFoodPanel()">✕</button>
+        </div>
+        <div class="food-cat-tabs" id="foodCatTabs">
+            <div class="food-cat-tab active" data-cat="combos" onclick="switchFoodTab('combos')">🍱 场景套餐</div>
+            <div class="food-cat-tab" data-cat="musttry" onclick="switchFoodTab('musttry')">⭐ 必吃推荐</div>
+            <div class="food-cat-tab" data-cat="district" onclick="switchFoodTab('district')">📍 按区域</div>
+            <div class="food-cat-tab" data-cat="all" onclick="switchFoodTab('all')">📋 全部美食</div>
+        </div>
+        <div class="food-sheet-body" id="foodPanelBody">
+            <div class="food-empty"><div class="fe-emoji">🍜</div><p>加载中...</p></div>
+        </div>
+    </div>
+</div>
+
 <!-- Feedback Modal -->
 <div class="modal-overlay" id="feedbackModal">
     <div class="modal-box">
@@ -2163,6 +2183,155 @@
 <script src="/static/js/recent.js"></script>
 <script src="/static/js/itinerary.js"></script>
     <script src="/static/js/planning.js"></script>
+    // ======== Food Panel ========
+    var foodPanelLoaded = false;
+    function openFoodPanel() {
+        document.getElementById('foodPanel').classList.add('active');
+        if (!foodPanelLoaded) { switchFoodTab('combos'); foodPanelLoaded = true; } else { switchFoodTab('combos'); }
+    }
+    function closeFoodPanel() {
+        document.getElementById('foodPanel').classList.remove('active');
+    }
+
+    function switchFoodTab(tab) {
+        var tabs = document.querySelectorAll('.food-cat-tab');
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.toggle('active', tabs[i].dataset.cat === tab);
+        }
+        if (tab === 'combos') renderFoodCombos();
+        else if (tab === 'musttry') renderMustTryFoods();
+        else if (tab === 'district') renderFoodByDistrict();
+        else if (tab === 'all') renderAllFoods();
+    }
+
+    function renderFoodCombos() {
+        var body = document.getElementById('foodPanelBody');
+        body.innerHTML = '<div class="food-empty"><div class="fe-emoji">🍱</div><p>加载中...</p></div>';
+        fetch('/api/meal-combos')
+            .then(function(r) { return r.json(); })
+            .then(function(combos) {
+                if (!combos.length) {
+                    body.innerHTML = '<div class="food-empty"><div class="fe-emoji">🍱</div><p>暂无套餐</p></div>';
+                    return;
+                }
+                var html = '<div class="combo-grid">';
+                for (var i = 0; i < combos.length; i++) {
+                    var c = combos[i];
+                    var tags = '';
+                    var ids = c.food_ids || [];
+                    for (var j = 0; j < Math.min(5, ids.length); j++) {
+                        var parts = ids[j].split('-');
+                        tags += '<span class="food-tag">' + parts[parts.length-1] + '</span>';
+                    }
+                    html += '<div class="combo-card-wide" onclick="showComboDetailInPanel(\'' + c.id + '\')">' +
+                        '<div class="combo-card-wide-header" style="background:' + c.color + '">' +
+                        '<span class="c-icon">' + c.icon + '</span>' +
+                        '<span class="c-name">' + c.name + '</span>' +
+                        '<span class="c-price">' + c.price_range + '</span></div>' +
+                        '<div class="combo-card-wide-body">' +
+                        '<div class="c-desc">' + c.description + '</div>' +
+                        '<div class="c-foods">' + tags + '</div></div></div>';
+                }
+                html += '</div>';
+                body.innerHTML = html;
+            })
+            .catch(function() {
+                body.innerHTML = '<div class="food-empty"><div class="fe-emoji">😅</div><p>加载失败</p></div>';
+            });
+    }
+
+    function showComboDetailInPanel(comboId) {
+        closeFoodPanel();
+        fetch('/api/meal-combos/' + comboId)
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                var foods = (data.foods_detail || []).map(function(f) {
+                    return f.emoji + ' ' + f.name + ' (' + f.price_range + ')';
+                }).join('\\n');
+                var msg = '🍽️ ' + data.icon + ' ' + data.name + '\\n\\n' +
+                    data.description + '\\n\\n📋 包含美食:\\n' + foods +
+                    '\\n\\n💡 搭配思路:\\n' + data.pairing_logic +
+                    '\\n\\n💰 预算: ' + data.price_range + '\\n⏰ 最佳时段: ' + data.best_time;
+                appendMessage(msg, 'bot');
+                switchToChat();
+            });
+    }
+
+    function renderMustTryFoods() {
+        var body = document.getElementById('foodPanelBody');
+        var foods = [];
+        for (var i = 0; i < FOODS_DATA.length; i++) {
+            if (FOODS_DATA[i].must_try) foods.push(FOODS_DATA[i]);
+        }
+        if (!foods.length) {
+            body.innerHTML = '<div class="food-empty"><div class="fe-emoji">⭐</div><p>暂无推荐</p></div>';
+            return;
+        }
+        var html = '<div class="food-grid">';
+        for (var i = 0; i < foods.length; i++) {
+            html += renderFoodItem(foods[i]);
+        }
+        html += '</div>';
+        body.innerHTML = html;
+    }
+
+    function renderFoodByDistrict() {
+        var body = document.getElementById('foodPanelBody');
+        var districtMap = {};
+        var districtOrder = ['港北区', '港南区', '覃塘区', '桂平市', '平南县', '其他'];
+        for (var i = 0; i < FOODS_DATA.length; i++) {
+            var f = FOODS_DATA[i];
+            var area = f.area || '其他';
+            if (!districtMap[area]) districtMap[area] = [];
+            districtMap[area].push(f);
+        }
+        var html = '<div class="district-list">';
+        for (var d = 0; d < districtOrder.length; d++) {
+            var dist = districtOrder[d];
+            if (districtMap[dist] && districtMap[dist].length) {
+                html += '<div class="district-group"><div class="dg-header">📍 ' + dist + '</div><div class="dg-items">';
+                for (var j = 0; j < districtMap[dist].length; j++) {
+                    html += renderFoodItem(districtMap[dist][j]);
+                }
+                html += '</div></div>';
+            }
+        }
+        html += '</div>';
+        body.innerHTML = html;
+    }
+
+    function renderAllFoods() {
+        var body = document.getElementById('foodPanelBody');
+        var html = '<div class="food-grid">';
+        for (var i = 0; i < FOODS_DATA.length; i++) {
+            html += renderFoodItem(FOODS_DATA[i]);
+        }
+        html += '</div>';
+        body.innerHTML = html;
+    }
+
+    function renderFoodItem(f) {
+        var badges = '';
+        if (f.must_try) badges += '<span class="food-item-badge">必吃</span>';
+        if (f.signature) badges += '<span class="food-item-badge signature">招牌</span>';
+        var emoji = f.emoji || '🍽️';
+        var price = f.price_range || '';
+        return '<div class="food-item" onclick="showFoodDetailFromPanel(\'' + f.id + '\')">' +
+            '<div class="food-item-img">' + emoji + '</div>' +
+            '<div class="food-item-info">' +
+            '<div class="food-item-name">' + f.name + '</div>' +
+            '<div class="food-item-price">' + price + '</div>' +
+            '<div class="food-item-badges">' + badges + '</div>' +
+            '</div></div>';
+    }
+
+    function showFoodDetailFromPanel(foodId) {
+        closeFoodPanel();
+        showFoodDetail(foodId);
+    }
+
+
+</script>
 <script>
     // ── State ──
     const spots = {{ spots | tojson | safe }};
