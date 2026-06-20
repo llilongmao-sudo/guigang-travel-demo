@@ -316,6 +316,9 @@
     }
 
     function openCheckinDetail() {
+        _editingEntryId = null;
+        _formPhotos = [];
+        _formStars = 0;
         renderCheckinModal();
         document.getElementById('checkinModal').classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -421,18 +424,6 @@
 
         html += `</div>`;
 
-        // 底部：我的收藏备注（可选加一条备忘）
-        html += `
-            <div class="comm-memo-section">
-                <div class="comm-form-header">
-                    <span class="comm-form-title">📌 给自己留个备忘</span>
-                </div>
-                <textarea class="comm-memo-input" id="commMemoInput" placeholder="比如：想和谁一起去、什么季节去最好..." rows="2"
-                  oninput="autoSaveMemo()">${myEntries.length > 0 && myEntries[0].note ? myEntries[0].note : ''}</textarea>
-                <div class="comm-hint">自动保存到本地</div>
-            </div>
-        `;
-
         container.innerHTML = html;
     }
 
@@ -498,23 +489,6 @@
         `;
     }
 
-    let _memoSaveTimer = null;
-    function autoSaveMemo() {
-        clearTimeout(_memoSaveTimer);
-        _memoSaveTimer = setTimeout(() => {
-            const note = document.getElementById('commMemoInput')?.value.trim() || '';
-            // 存到想去条目的笔记里
-            const record = CheckinAPI.getRecord(spotData.id);
-            if (record) {
-                if (!record.entries || record.entries.length === 0) {
-                    CheckinAPI.addEntry(spotData.id, { note: note });
-                } else {
-                    CheckinAPI.updateEntry(spotData.id, record.entries[0].id, { note: note });
-                }
-            }
-        }, 800);
-    }
-
     // ── 表单 HTML 模板（去过状态用）──
 
     function renderFormHTML() {
@@ -555,7 +529,7 @@
                         <div class="cm-photos" id="cmInputPhotos"></div>
                         <label class="cm-photo-add" title="添加照片">
                             <span>+</span>
-                            <input type="file" accept="image/*" capture="environment" hidden onchange="handleFormPhoto(event)">
+                            <input type="file" accept="image/*" multiple hidden onchange="handleFormPhoto(event)">
                         </label>
                     </div>
                     <div class="cm-form-actions-row">
