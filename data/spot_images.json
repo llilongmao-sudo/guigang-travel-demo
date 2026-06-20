@@ -8,36 +8,39 @@
     "donghu": {
       "name": "东湖公园",
       "image_urls": [
-        "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=800&q=80",
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&q=80",
-        "https://images.unsplash.com/photo-1471696035574180-96c066d5a59b?w=800&q=80"
-      ]
+        "/static/images/spots/donghu/1.png",
+        "/static/images/spots/donghu/2.png",
+        "/static/images/spots/donghu/3.png"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "museum": {
       "name": "贵港博物馆",
       "image_urls": [
-        "https://images.unsplash.com/photo-1565711561500-49678a10ba48?w=800&q=80",
-        "https://images.unsplash.com/photo-1554904155-05ddb6b92a86?w=800&q=80",
-        "https://images.unsplash.com/photo-1513475382585-d06e58db468f?w=800&q=80"
-      ]
+        "/static/images/spots/museum/1.jpg",
+        "/static/images/spots/museum/2.jpg",
+        "/static/images/spots/museum/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "jiulinghu": {
       "name": "九凌湖",
       "image_urls": [
-        "https://images.unsplash.com/photo-1501788507822-eb9b57b1067d?w=800&q=80",
-        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5b1?w=800&q=80",
-        "https://images.unsplash.com/photo-1502164980784-f81af1580096?w=800&q=80"
-      ]
+        "/static/images/spots/jiulinghu/1.jpg",
+        "/static/images/spots/jiulinghu/2.jpg",
+        "/static/images/spots/jiulinghu/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "longtoushan": {
       "name": "龙头山",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1502164980784-f81af1580096?w=800&q=80",
-        "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80"
-      ]
+        "/static/images/spots/longtoushan/1.jpg",
+        "/static/images/spots/longtoushan/2.jpg",
+        "/static/images/spots/longtoushan/3.jpg",
+        "/static/images/spots/longtoushan/4.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "beidishan": {
       "name": "北帝山",
@@ -53,26 +56,29 @@
     "wuyuan": {
       "name": "吾园",
       "image_urls": [
-        "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&q=80",
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&q=80",
-        "https://images.unsplash.com/photo-1471696035574180-96c066d5a59b?w=800&q=80"
-      ]
+        "/static/images/spots/wuyuan/1.jpg",
+        "/static/images/spots/wuyuan/2.jpg",
+        "/static/images/spots/wuyuan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "xishan": {
       "name": "桂平西山",
       "image_urls": [
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80",
-        "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80"
-      ]
+        "/static/images/spots/xishan/1.jpg",
+        "/static/images/spots/xishan/2.jpg",
+        "/static/images/spots/xishan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "datengxia": {
       "name": "大藤峡",
       "image_urls": [
-        "https://images.unsplash.com/photo-1439066615861-d1ae4d8cfd00?w=800&q=80",
-        "https://images.unsplash.com/photo-1501788507822-eb9b57b1067d?w=800&q=80",
-        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5b1?w=800&q=80"
-      ]
+        "/static/images/spots/datengxia/1.jpg",
+        "/static/images/spots/datengxia/2.jpg",
+        "/static/images/spots/datengxia/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "xiongsen-animal": {
       "name": "平南雄森动物大世界",
@@ -107,171 +113,191 @@
     "hemeitantang": {
       "name": "荷美覃塘",
       "image_urls": [
-        "https://images.unsplash.com/photo-1471696035574180-96c066d5a59b?w=800&q=80",
-        "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&q=80",
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&q=80",
-        "https://images.unsplash.com/photo-1502164980784-f81af1580096?w=800&q=80"
-      ]
+        "/static/images/spots/hemeitantang/1.jpg",
+        "/static/images/spots/hemeitantang/2.jpg",
+        "/static/images/spots/hemeitantang/3.jpg",
+        "/static/images/spots/hemeitantang/4.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "pingtianshan": {
       "name": "平天山",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/pingtianshan/1.jpg",
+        "/static/images/spots/pingtianshan/2.jpg",
+        "/static/images/spots/pingtianshan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "nanshansi": {
       "name": "南山寺",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/nanshansi/1.jpg",
+        "/static/images/spots/nanshansi/2.jpg",
+        "/static/images/spots/nanshansi/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "jintian": {
       "name": "金田起义遗址",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/jintian/1.jpg",
+        "/static/images/spots/jintian/2.jpg",
+        "/static/images/spots/jintian/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "guipin-laostreet": {
       "name": "桂平老街骑楼",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/guipin-laostreet/1.jpg",
+        "/static/images/spots/guipin-laostreet/2.jpg",
+        "/static/images/spots/guipin-laostreet/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "macaojiang": {
       "name": "澳门江生态公园",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
+        "/static/images/spots/macaojiang/1.jpg",
+        "/static/images/spots/macaojiang/2.jpg",
+        "/static/images/spots/macaojiang/3.jpg"
       ]
     },
     "nature-museum": {
       "name": "贵港自然博物馆",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/nature-museum/1.jpg",
+        "/static/images/spots/nature-museum/2.jpg",
+        "/static/images/spots/nature-museum/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "longtansi": {
       "name": "龙潭国家森林公园",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/longtansi/1.jpg",
+        "/static/images/spots/longtansi/2.jpg",
+        "/static/images/spots/longtansi/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "baishishan": {
       "name": "桂平白石山",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/baishishan/1.jpg",
+        "/static/images/spots/baishishan/2.jpg",
+        "/static/images/spots/baishishan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "tongguwan": {
       "name": "铜鼓湾温泉度假区",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/tongguwan/1.jpg",
+        "/static/images/spots/tongguwan/2.jpg",
+        "/static/images/spots/tongguwan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "yuanboyuan": {
       "name": "贵港园博园",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/yuanboyuan/1.jpg",
+        "/static/images/spots/yuanboyuan/2.jpg",
+        "/static/images/spots/yuanboyuan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "dakaihu": {
       "name": "达开湖",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/dakaihu/1.jpg",
+        "/static/images/spots/dakaihu/2.jpg",
+        "/static/images/spots/dakaihu/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "qinnangongyuan": {
       "name": "覃塘公园",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/qinnangongyuan/1.jpg",
+        "/static/images/spots/qinnangongyuan/2.jpg",
+        "/static/images/spots/qinnangongyuan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "shanzhongcu": {
       "name": "山边村草坪屯",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/shanzhongcu/1.jpg",
+        "/static/images/spots/shanzhongcu/2.jpg",
+        "/static/images/spots/shanzhongcu/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "longhuagongyuan": {
       "name": "龙凰公园",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/longhuagongyuan/1.jpg",
+        "/static/images/spots/longhuagongyuan/2.jpg",
+        "/static/images/spots/longhuagongyuan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "pingnanxianbowuguan": {
       "name": "平南县博物馆",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/pingnanxianbowuguan/1.jpg",
+        "/static/images/spots/pingnanxianbowuguan/2.jpg",
+        "/static/images/spots/pingnanxianbowuguan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "guipingguijizhi": {
       "name": "桂平地质公园",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/guipingguijizhi/1.jpg",
+        "/static/images/spots/guipingguijizhi/2.jpg",
+        "/static/images/spots/guipingguijizhi/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "xishanquan": {
       "name": "西山泉汽车露营基地",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/xishanquan/1.jpg",
+        "/static/images/spots/xishanquan/2.jpg",
+        "/static/images/spots/xishanquan/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "zhoujiang": {
       "name": "郁江沿岸风光带",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/zhoujiang/1.jpg",
+        "/static/images/spots/zhoujiang/2.jpg",
+        "/static/images/spots/zhoujiang/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "yuanboyuan-hehua": {
       "name": "园博园荷花节",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/yuanboyuan-hehua/1.jpg",
+        "/static/images/spots/yuanboyuan-hehua/2.jpg",
+        "/static/images/spots/yuanboyuan-hehua/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     },
     "shigongsi": {
       "name": "石达开铜像",
       "image_urls": [
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80"
-      ]
+        "/static/images/spots/shigongsi/1.jpg",
+        "/static/images/spots/shigongsi/2.jpg",
+        "/static/images/spots/shigongsi/3.jpg"
+      ],
+      "updated_at": "2026-06-20 12:05:07"
     }
   }
 }
