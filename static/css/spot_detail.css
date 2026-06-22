@@ -952,3 +952,64 @@ body {
     .spot-title-overlay h1 { font-size: 22px; }
     .quick-info { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── 美食面板详情按钮 ── */
+.food-item { display: flex !important; align-items: center !important; }
+.food-item-main { flex: 1; display: flex; align-items: center; gap: 12px; cursor: pointer; min-width: 0; }
+.food-item-detail-btn {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border: 1px solid #e0e0e0;
+    background: #fafafa;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #888;
+    transition: all 0.2s;
+    margin-left: 8px;
+}
+.food-item-detail-btn:hover { background: #2d8a4e; color: #fff; border-color: #2d8a4e; }
+.food-item-detail-btn:active { transform: scale(0.9); }
+
+/* ── 路线弹窗详情链接 ── */
+.rmh-detail-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: #2d8a4e;
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.rmh-detail-btn:hover { background: #1b5e20; transform: translateY(-1px); }
+.rmh-detail-btn:active { transform: scale(0.96); }
+
+/* ── 首页卡片详情按钮（通用） ── */
+.gh-card-detail-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: rgba(45,138,78,0.9);
+    color: #fff;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.gh-card-detail-btn:hover { background: #1b5e20; transform: scale(1.1); }
+.gh-card-detail-btn:active { transform: scale(0.9); }
+.food-card { position: relative; }
+.food-card-inner { cursor: pointer; }
+.route-card { position: relative; }
+.route-detail-btn { z-index: 3; }

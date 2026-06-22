@@ -2317,13 +2317,15 @@
         if (f.signature) badges += '<span class="food-item-badge signature">招牌</span>';
         var emoji = f.emoji || '🍽️';
         var price = f.price_range || '';
-        return '<div class="food-item" onclick="showFoodDetailFromPanel(\'' + f.id + '\')">' +
+        return '<div class="food-item">' +
+            '<div class="food-item-main" onclick="showFoodDetailFromPanel(\'' + f.id + '\')">' +
             '<div class="food-item-img">' + emoji + '</div>' +
             '<div class="food-item-info">' +
             '<div class="food-item-name">' + f.name + '</div>' +
             '<div class="food-item-price">' + price + '</div>' +
             '<div class="food-item-badges">' + badges + '</div>' +
-            '</div></div>';
+            '</div></div>' +
+            '<button class="food-item-detail-btn" onclick="window.location.href=\'/food/' + f.id + '\'" title="查看详情">➜</button></div>';
     }
 
     function showFoodDetailFromPanel(foodId) {
@@ -2434,7 +2436,8 @@
             if (!foods.length) { section.style.display = 'none'; return; }
             section.style.display = 'block';
             container.innerHTML = foods.map(f => `
-                <div class="food-card" onclick="quickAsk('${f.name}有什么好吃的？怎么点？')">
+                <div class="food-card">
+                    <div class="food-card-inner" onclick="quickAsk('${f.name}有什么好吃的？怎么点？')">
                     <div class="food-card-img">
                         <img src="${f.image || '/static/images/placeholder.svg'}" alt="${f.name}" onerror="this.parentElement.innerHTML='<div style=&quot;font-size:48px;text-align:center;padding:18px 0;&quot;>${f.emoji||'🍽️'}</div>'">
                     </div>
@@ -2444,6 +2447,8 @@
                         ${f.must_try ? '<span class="food-card-tag must-try">必吃</span>' : ''}
                         <span class="food-card-tag">${f.flavor || f.tags[0] || ''}</span>
                     </div>
+                    </div>
+                    <a class="gh-card-detail-btn" href="/food/${f.id}" title="查看详情">➜</a>
                 </div>
             `).join('');
         } catch(e) { console.warn('Food load failed:', e); }
@@ -3402,6 +3407,7 @@
             const colors = typeColors[r.type] || typeColors['经典'];
             return `
                 <div class="route-card" onclick="openRouteModal('${r.id}')">
+                    <a class="gh-card-detail-btn route-detail-btn" href="/route/${r.id}" onclick="event.stopPropagation()" title="查看详情">➜</a>
                     <div class="route-cover" style="background:${colors.bg};display:flex;align-items:center;justify-content:center;font-size:48px;color:${colors.text};opacity:0.9;">
                         ${r.type === '经典' ? '🏔️' : r.type === '摄影' ? '📸' : r.type === '亲子' ? '👨‍👩‍👧' : '🚗'}
                     </div>
@@ -3426,6 +3432,21 @@
         document.getElementById('rmhIcon').textContent = route.type === '经典' ? '🏔️' : route.type === '摄影' ? '📸' : route.type === '亲子' ? '👨‍👩‍👧' : '🚗';
         document.getElementById('rmhName').textContent = route.name;
         document.getElementById('rmhDesc').textContent = route.description;
+        // Append 'complete details' link to header
+        (function() {
+            var link = document.getElementById('rmhDetailLink');
+            if (!link) {
+                var h = document.getElementById('routeModalHeader');
+                if (h) {
+                    link = document.createElement('a');
+                    link.id = 'rmhDetailLink';
+                    link.className = 'rmh-detail-btn';
+                    link.textContent = '完整路线详情 ➜';
+                    h.appendChild(link);
+                }
+            }
+            if (link) link.href = '/route/' + route.id;
+        })();
         document.getElementById('rmhTags').innerHTML = `
             <span class="rmh-tag">${route.type}</span>
             <span class="rmh-tag">⏱ ${route.duration}</span>

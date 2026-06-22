@@ -96,22 +96,49 @@ class DataLoader:
         results = {
             'attractions': [],
             'routes': [],
-            'categories': []
+            'categories': [],
+            'foods': [],
         }
         
+        def _match(fields, source):
+            """Return True if query matches any of the given fields in source."""
+            for field in fields:
+                val = source.get(field)
+                if val is None:
+                    continue
+                if isinstance(val, list):
+                    for item in val:
+                        if isinstance(item, str) and query in item.lower():
+                            return True
+                elif isinstance(val, str) and query in val.lower():
+                    return True
+            return False
+        
         # 搜索景点
+        spot_fields = ['name', 'description', 'location', 'alias', 'best_season',
+                       'history', 'tips', 'ticket', 'area', 'duration_recommended']
+        searched_spot_ids = set()
         for a in cls.get_attractions():
-            if query in a.get('name', '').lower():
+            if a.get('id') in searched_spot_ids:
+                continue
+            if _match(spot_fields, a):
                 results['attractions'].append(a)
-            elif query in ' '.join(a.get('tags', [])).lower():
+                searched_spot_ids.add(a.get('id'))
+            # 也搜 tags 和 highlights（它们是列表）
+            elif query in ' '.join(a.get('tags', [])).lower() or query in ' '.join(a.get('highlights', [])).lower():
                 results['attractions'].append(a)
+                searched_spot_ids.add(a.get('id'))
         
         # 搜索路线
+        route_fields = ['name', 'short_name', 'description', 'theme', 'best_season', 'best_season_note']
         for r in cls.get_routes():
-            if query in r.get('name', '').lower():
+            if _match(route_fields, r):
                 results['routes'].append(r)
-            elif query in r.get('short_name', '').lower():
+            elif query in ' '.join(r.get('tags', [])).lower() or query in ' '.join(r.get('highlights', [])).lower():
                 results['routes'].append(r)
+        
+        # 搜索美食（复用已有的 search_food）
+        results['foods'] = cls.search_food(query)
         
         return results
     
@@ -187,13 +214,59 @@ class DataLoader:
         query = query.lower()
         foods = cls.get_foods()
         results = []
+        seen_ids = set()
         for f in foods:
-            if query in f.get('name', '').lower():
-                results.append(f)
-            elif query in ' '.join(f.get('tags', [])).lower():
-                results.append(f)
-            elif query in f.get('area', '').lower():
-                results.append(f)
+            fid = f.get('id', '')
+            if fid in seen_ids:
+                continue
+            
+            # 搜索多个字段
+            name = f.get('name', '').lower()
+            if query in name:
+                results.append(f); seen_ids.add(fid); continue
+            
+            desc = f.get('description', '').lower()
+            if query in desc:
+                results.append(f); seen_ids.add(fid); continue
+            
+            area = f.get('area', '').lower()
+            if query in area:
+                results.append(f); seen_ids.add(fid); continue
+            
+            tags_str = ' '.join(f.get('tags', [])).lower()
+            if query in tags_str:
+                results.append(f); seen_ids.add(fid); continue
+            
+            flavor = f.get('flavor', '').lower()
+            if query in flavor:
+                results.append(f); seen_ids.add(fid); continue
+            
+            history = f.get('history', '').lower()
+            if query in history:
+                results.append(f); seen_ids.add(fid); continue
+            
+            ingredients = ' '.join(f.get('ingredients', [])).lower()
+            if query in ingredients:
+                results.append(f); seen_ids.add(fid); continue
+            
+            pair_with = ' '.join(f.get('pair_with', [])).lower()
+            if query in pair_with:
+                results.append(f); seen_ids.add(fid); continue
+            
+            category = f.get('category', '').lower()
+            if query in category:
+                results.append(f); seen_ids.add(fid); continue
+            
+            where = f.get('where_to_find', '').lower()
+            if query in where:
+                results.append(f); seen_ids.add(fid); continue
+            
+            # 搜索店铺名
+            for shop in f.get('shops', []):
+                shop_name = shop.get('name', '').lower()
+                if query in shop_name:
+                    results.append(f); seen_ids.add(fid); break
+                    
         return results
 
 

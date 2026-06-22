@@ -1,7 +1,0 @@
- elif query in f.get('area', '').lower():
-                results.append(f)
-        return results
-
-def get_stats(cls) -> Dict:
-        """获取数据统计"""
- 
