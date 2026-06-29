@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{{ route.name }} - 贵港旅游智能助手</title>
     <link rel="stylesheet" href="/static/css/spot_detail.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <meta name="theme-color" content="#2d8a4e">
+    <style>
+        /* Map section */
+        .route-map-section { padding: 0 16px 14px; }
+        .route-map-container {
+            width: 100%; height: 280px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+    </style>
 </head>
 <body>
 <div class="detail-page" id="app">
@@ -130,6 +141,12 @@
         </div>
         {% endif %}
 
+        <!-- 路线地图 -->
+        <div class="section-title"><span class="st-icon">🗺️</span> 路线地图</div>
+        <div class="route-map-section">
+            <div class="route-map-container" id="routeMap"></div>
+        </div>
+
         <!-- 推荐美食 -->
         {% if route_food %}
         <div class="section-title"><span class="st-icon">🍜</span> 推荐美食</div>
@@ -178,11 +195,77 @@
     </div>
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
     function goBack() {
         if (history.length > 1) history.back();
         else window.location.href = '/';
     }
+
+    // ── Route Map ──
+    (function() {
+        var spots = {{ itinerary | tojson | safe }}.filter(function(s) {
+            return s.type !== 'transit' && s.lat && s.lng;
+        });
+
+        if (spots.length === 0) {
+            document.getElementById('routeMap').innerHTML =
+                '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-size:14px;">暂无地图数据</div>';
+            return;
+        }
+
+        // Calc center
+        var lats = spots.map(function(s) { return s.lat; });
+        var lngs = spots.map(function(s) { return s.lng; });
+        var centerLat = (Math.min.apply(null, lats) + Math.max.apply(null, lats)) / 2;
+        var centerLng = (Math.min.apply(null, lngs) + Math.max.apply(null, lngs)) / 2;
+
+        var map = L.map('routeMap', {
+            center: [centerLat, centerLng],
+            zoom: 12,
+            zoomControl: true,
+            attributionControl: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        }).addTo(map);
+
+        // Add numbered markers
+        var markers = [];
+        spots.forEach(function(s, i) {
+            var numIcon = L.divIcon({
+                className: 'route-marker-icon',
+                html: '<div style="background:#2d8a4e;color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3);">' + (i + 1) + '</div>',
+                iconSize: [26, 26],
+                iconAnchor: [13, 13]
+            });
+
+            var popup = '<b>' + s.title + '</b>';
+            if (s.location) popup += '<br><span style="color:#888;font-size:12px;">' + s.location + '</span>';
+            if (s.spot_id) popup += '<br><a href="/spot/' + s.spot_id + '" style="color:#2d8a4e;font-size:12px;">查看详情 →</a>';
+
+            var marker = L.marker([s.lat, s.lng], { icon: numIcon }).addTo(map).bindPopup(popup);
+            markers.push([s.lat, s.lng]);
+        });
+
+        // Draw route polyline
+        if (markers.length > 1) {
+            L.polyline(markers, {
+                color: '#2d8a4e',
+                weight: 3,
+                opacity: 0.7,
+                dashArray: '8 4'
+            }).addTo(map);
+        }
+
+        // Fit bounds
+        var bounds = L.latLngBounds(markers);
+        map.fitBounds(bounds.pad(0.1));
+
+        // Trigger resize after DOM settles (fixes tile loading in hidden containers)
+        setTimeout(function() { map.invalidateSize(); }, 200);
+    })();
 </script>
 </body>
 </html>

@@ -3419,7 +3419,7 @@
 
                 // 从 itinerary 提取景点名称
                 const spotNames = (r.itinerary || [])
-                    .filter(s => s.type === 'visit')
+                    .filter(s => s.spot_id)
                     .map(s => s.title);
 
                 return {

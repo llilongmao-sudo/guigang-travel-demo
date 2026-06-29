@@ -1,167 +1,167 @@
-=== 路线 location/title → 景点匹配映射表 ===
+=== POI匹配映射表 (v2) ===
 
-路线: guigang-1d-lotus | step 1
+[skipped (transit)] guigang-1d-lotus step 1
   title:     出发前往覃塘区
   location:  贵港市区
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-lotus | step 2
+[matched] guigang-1d-lotus step 2
   title:     荷美覃塘
   location:  覃塘区龙凤村
-  匹配景点:  qintang_hetang  (lat=23.08, lng=109.45)
+  → hemeitantang  (lat=23.08, lng=109.45)
 
-路线: guigang-1d-lotus | step 3
+[skipped (transit)] guigang-1d-lotus step 3
   title:     午餐：覃塘莲藕宴
   location:  覃塘农家乐
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-lotus | step 4
+[matched] guigang-1d-lotus step 4
   title:     九凌湖
   location:  覃塘区石卡镇
-  匹配景点:  jiulingshan  (lat=23.18, lng=109.52)
+  → jiulinghu  (lat=23.18, lng=109.52)
 
-路线: guigang-1d-lotus | step 5
+[skipped (transit)] guigang-1d-lotus step 5
   title:     返程
   location:  九凌湖 → 贵港市区
-  匹配景点:  jiulingshan  (lat=23.18, lng=109.52)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-buddha | step 1
+[skipped (transit)] guigang-1d-buddha step 1
   title:     出发前往桂平
   location:  贵港市区 → 桂平市
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-buddha | step 2
+[matched] guigang-1d-buddha step 2
   title:     桂平西山
   location:  桂平市
-  匹配景点:  guiping_old_street  (lat=23.38, lng=110.08)
+  → xishan  (lat=23.375, lng=110.075)
 
-路线: guigang-1d-buddha | step 3
+[skipped (transit)] guigang-1d-buddha step 3
   title:     午餐：西山素斋 / 罗秀米粉
   location:  桂平市区
-  匹配景点:  guiping_old_street  (lat=23.38, lng=110.08)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-buddha | step 4
+[matched] guigang-1d-buddha step 4
   title:     大藤峡游船
   location:  桂平市大藤峡
-  匹配景点:  dategxia  (lat=23.45, lng=109.95)
+  → datengxia  (lat=23.45, lng=109.95)
 
-路线: guigang-1d-buddha | step 5
+[skipped (transit)] guigang-1d-buddha step 5
   title:     返程
   location:  桂平 → 贵港市区
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-grassland | step 1
+[skipped (transit)] guigang-1d-grassland step 1
   title:     出发（看日出方案）
   location:  贵港市区 → 港北区龙头山
-  匹配景点:  longtoushan  (lat=23.15, lng=109.58)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-grassland | step 2
+[matched] guigang-1d-grassland step 2
   title:     龙头山栈道徒步
   location:  龙头山
-  匹配景点:  longtoushan  (lat=23.15, lng=109.58)
+  → longtoushan  (lat=23.15, lng=109.58)
 
-路线: guigang-1d-grassland | step 3
+[skipped (transit)] guigang-1d-grassland step 3
   title:     山顶野餐
   location:  龙头山山顶
-  匹配景点:  longtoushan  (lat=23.15, lng=109.58)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-grassland | step 4
+[matched] guigang-1d-grassland step 4
   title:     草甸拍照 + 观云海
   location:  龙头山草甸
-  匹配景点:  longtoushan  (lat=23.15, lng=109.58)
+  → longtoushan  (lat=23.15, lng=109.58)
 
-路线: guigang-1d-grassland | step 5
+[skipped (transit)] guigang-1d-grassland step 5
   title:     下山
   location:  龙头山 → 贵港市区
-  匹配景点:  longtoushan  (lat=23.15, lng=109.58)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-grassland | step 6
+[skipped (transit)] guigang-1d-grassland step 6
   title:     回市区晚餐
   location:  贵港市区
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-family | step 1
+[matched] guigang-1d-family step 1
   title:     吾园
   location:  贵港市区
-  匹配景点:  wuyuan  (lat=23.12, lng=109.6)
+  → wuyuan  (lat=23.12, lng=109.6)
 
-路线: guigang-1d-family | step 2
+[skipped (transit)] guigang-1d-family step 2
   title:     午餐：贵港老字号粉店
   location:  贵港市区
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-family | step 3
+[matched] guigang-1d-family step 3
   title:     贵港博物馆
   location:  贵港市区
-  匹配景点:  museum  (lat=23.11, lng=109.602)
+  → museum  (lat=23.11, lng=109.602)
 
-路线: guigang-1d-family | step 4
+[matched] guigang-1d-family step 4
   title:     东湖公园
   location:  贵港市区
-  匹配景点:  donghu  (lat=23.113, lng=109.598)
+  → donghu  (lat=23.096634, lng=109.595615)
 
-路线: guigang-1d-family | step 5
+[skipped (transit)] guigang-1d-family step 5
   title:     晚餐：酸料+鸭肉粉
   location:  贵港市区
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-1d-family | step 6
+[matched] guigang-1d-family step 6
   title:     郁江夜游
   location:  郁江沿岸
-  匹配景点:  yujiang  (lat=23.108, lng=109.6)
+  → donghu  (lat=23.096634, lng=109.595615)
 
-路线: guigang-2d-beidi | step 1
+[skipped (transit)] guigang-2d-beidi step 1
   title:     出发前往平南北帝山
   location:  贵港市区 → 平南县北帝山
-  匹配景点:  beidishan  (lat=23.55, lng=110.15)
+  → None  (lat=None, lng=None)
 
-路线: guigang-2d-beidi | step 2
+[matched] guigang-2d-beidi step 2
   title:     北帝山主峰徒步
   location:  平南北帝山
-  匹配景点:  beidishan  (lat=23.55, lng=110.15)
+  → beidishan  (lat=23.55, lng=110.15)
 
-路线: guigang-2d-beidi | step 3
+[skipped (transit)] guigang-2d-beidi step 3
   title:     午餐：山下农家乐
   location:  北帝山脚下
-  匹配景点:  beidishan  (lat=23.55, lng=110.15)
+  → None  (lat=None, lng=None)
 
-路线: guigang-2d-beidi | step 4
+[matched] guigang-2d-beidi step 4
   title:     北帝山漂流
   location:  北帝山漂流点
-  匹配景点:  beidishan  (lat=23.55, lng=110.15)
+  → beidishan  (lat=23.55, lng=110.15)
 
-路线: guigang-2d-beidi | step 5
+[matched] guigang-2d-beidi step 5
   title:     入住山下民宿
   location:  北帝山附近
-  匹配景点:  beidishan  (lat=23.55, lng=110.15)
+  → beidishan  (lat=23.55, lng=110.15)
 
-路线: guigang-2d-beidi | step 6
+[skipped (transit)] guigang-2d-beidi step 6
   title:     晚餐
   location:  平南县
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-2d-beidi | step 7
+[skipped (transit)] guigang-2d-beidi step 7
   title:     看星空
   location:  民宿附近
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-2d-beidi | step 8
+[skipped (transit)] guigang-2d-beidi step 8
   title:     早餐 + 出发
   location:  民宿 → 平南县城
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-2d-beidi | step 9
+[matched] guigang-2d-beidi step 9
   title:     平南雄森动物大世界 / 浔江风光
   location:  平南县
-  匹配景点:  xiongsen  (lat=23.52, lng=110.3)
+  → xiongsen-animal  (lat=23.52, lng=110.3)
 
-路线: guigang-2d-beidi | step 10
+[skipped (transit)] guigang-2d-beidi step 10
   title:     午餐：平南鱼生
   location:  平南县城
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 
-路线: guigang-2d-beidi | step 11
+[skipped (transit)] guigang-2d-beidi step 11
   title:     返程
   location:  平南 → 贵港市区
-  匹配景点:  None  (lat=None, lng=None)
+  → None  (lat=None, lng=None)
 

@@ -46,10 +46,7 @@
           "title": "出发前往覃塘区",
           "type": "transit",
           "location": "贵港市区",
-          "description": "自驾或包车出发",
-          "spot_id": "donghu",
-          "lat": 23.096634,
-          "lng": 109.595615
+          "description": "自驾或包车出发"
         },
         {
           "step": 2,
@@ -58,7 +55,7 @@
           "type": "attraction",
           "location": "覃塘区龙凤村",
           "description": "千亩荷田、竹筏、拍照打卡",
-          "spot_id": "qintang_hetang",
+          "spot_id": "hemeitantang",
           "lat": 23.08,
           "lng": 109.45
         },
@@ -68,10 +65,7 @@
           "title": "午餐：覃塘莲藕宴",
           "type": "food",
           "location": "覃塘农家乐",
-          "description": "推荐：莲藕排骨汤、炸荷花、莲子羹",
-          "spot_id": "qinnangongyuan",
-          "lat": 23.045678,
-          "lng": 109.512345
+          "description": "推荐：莲藕排骨汤、炸荷花、莲子羹"
         },
         {
           "step": 4,
@@ -80,7 +74,7 @@
           "type": "attraction",
           "location": "覃塘区石卡镇",
           "description": "划船、看地下泉眼、环湖骑行（4A景区）",
-          "spot_id": "jiulingshan",
+          "spot_id": "jiulinghu",
           "lat": 23.18,
           "lng": 109.52
         },
@@ -90,10 +84,7 @@
           "title": "返程",
           "type": "transit",
           "location": "九凌湖 → 贵港市区",
-          "description": "约40分钟车程",
-          "spot_id": "jiulingshan",
-          "lat": 23.18,
-          "lng": 109.52
+          "description": "约40分钟车程"
         }
       ],
       "food": [
@@ -166,10 +157,7 @@
           "title": "出发前往桂平",
           "type": "transit",
           "location": "贵港市区 → 桂平市",
-          "description": "车程约1小时",
-          "spot_id": null,
-          "lat": null,
-          "lng": null
+          "description": "车程约1小时"
         },
         {
           "step": 2,
@@ -178,9 +166,9 @@
           "type": "attraction",
           "location": "桂平市",
           "description": "4A景区，路线：龙华寺 → 乳泉 → 中山飞阁 → 洗石庵（需爬2-3h）",
-          "spot_id": "guiping_old_street",
-          "lat": 23.38,
-          "lng": 110.08
+          "spot_id": "xishan",
+          "lat": 23.375,
+          "lng": 110.075
         },
         {
           "step": 3,
@@ -188,10 +176,7 @@
           "title": "午餐：西山素斋 / 罗秀米粉",
           "type": "food",
           "location": "桂平市区",
-          "description": "二选一：山上素斋体验禅意 / 下山吃桂平罗秀米粉",
-          "spot_id": "guiping_old_street",
-          "lat": 23.38,
-          "lng": 110.08
+          "description": "二选一：山上素斋体验禅意 / 下山吃桂平罗秀米粉"
         },
         {
           "step": 4,
@@ -200,7 +185,7 @@
           "type": "attraction",
           "location": "桂平市大藤峡",
           "description": "广西小三峡风光 + 太平天国历史讲解",
-          "spot_id": "dategxia",
+          "spot_id": "datengxia",
           "lat": 23.45,
           "lng": 109.95
         },
@@ -210,10 +195,7 @@
           "title": "返程",
           "type": "transit",
           "location": "桂平 → 贵港市区",
-          "description": "约1小时车程",
-          "spot_id": null,
-          "lat": null,
-          "lng": null
+          "description": "约1小时车程"
         }
       ],
       "food": [
@@ -296,10 +278,7 @@
           "title": "出发（看日出方案）",
           "type": "transit",
           "location": "贵港市区 → 港北区龙头山",
-          "description": "建议自驾/拼车；如看日落则14:00出发",
-          "spot_id": "longtoushan",
-          "lat": 23.15,
-          "lng": 109.58
+          "description": "建议自驾/拼车；如看日落则14:00出发"
         },
         {
           "step": 2,
@@ -318,10 +297,7 @@
           "title": "山顶野餐",
           "type": "food",
           "location": "龙头山山顶",
-          "description": "自带食物（山顶小卖部贵且选择少）",
-          "spot_id": "longtoushan",
-          "lat": 23.15,
-          "lng": 109.58
+          "description": "自带食物（山顶小卖部贵且选择少）"
         },
         {
           "step": 4,
@@ -340,10 +316,7 @@
           "title": "下山",
           "type": "transit",
           "location": "龙头山 → 贵港市区",
-          "description": "约1.5小时",
-          "spot_id": "longtoushan",
-          "lat": 23.15,
-          "lng": 109.58
+          "description": "约1.5小时"
         },
         {
           "step": 6,
@@ -351,10 +324,7 @@
           "title": "回市区晚餐",
           "type": "food",
           "location": "贵港市区",
-          "description": "推荐：桥圩鸭肉粉、港北夜市",
-          "spot_id": "donghu",
-          "lat": 23.096634,
-          "lng": 109.595615
+          "description": "推荐：桥圩鸭肉粉、港北夜市"
         }
       ],
       "food": [
@@ -433,10 +403,7 @@
           "title": "午餐：贵港老字号粉店",
           "type": "food",
           "location": "贵港市区",
-          "description": "推荐：东龙米粽、酸料",
-          "spot_id": "donghu",
-          "lat": 23.096634,
-          "lng": 109.595615
+          "description": "推荐：东龙米粽、酸料"
         },
         {
           "step": 3,
@@ -457,8 +424,8 @@
           "location": "贵港市区",
           "description": "市区最大城市公园，划船/游乐场/放风筝",
           "spot_id": "donghu",
-          "lat": 23.113,
-          "lng": 109.598
+          "lat": 23.096634,
+          "lng": 109.595615
         },
         {
           "step": 5,
@@ -466,10 +433,7 @@
           "title": "晚餐：酸料+鸭肉粉",
           "type": "food",
           "location": "贵港市区",
-          "description": "必尝贵港酸料（灵魂美食）",
-          "spot_id": "donghu",
-          "lat": 23.096634,
-          "lng": 109.595615
+          "description": "必尝贵港酸料（灵魂美食）"
         },
         {
           "step": 6,
@@ -478,9 +442,9 @@
           "type": "activity",
           "location": "郁江沿岸",
           "description": "看夜景、吹江风",
-          "spot_id": "yujiang",
-          "lat": 23.108,
-          "lng": 109.6
+          "spot_id": "donghu",
+          "lat": 23.096634,
+          "lng": 109.595615
         }
       ],
       "food": [
@@ -558,10 +522,7 @@
           "title": "出发前往平南北帝山",
           "type": "transit",
           "location": "贵港市区 → 平南县北帝山",
-          "description": "车程约2小时",
-          "spot_id": "beidishan",
-          "lat": 23.55,
-          "lng": 110.15
+          "description": "车程约2小时"
         },
         {
           "step": 2,
@@ -582,10 +543,7 @@
           "title": "午餐：山下农家乐",
           "type": "food",
           "location": "北帝山脚下",
-          "description": "推荐：白切三黄鸡、五指毛桃汤",
-          "spot_id": "beidishan",
-          "lat": 23.55,
-          "lng": 110.15
+          "description": "推荐：白切三黄鸡、五指毛桃汤"
         },
         {
           "step": 4,
@@ -618,10 +576,7 @@
           "title": "晚餐",
           "type": "food",
           "location": "平南县",
-          "description": "推荐：白切狗肉、白切三黄鸡",
-          "spot_id": "pingnanxianbowuguan",
-          "lat": 23.533456,
-          "lng": 110.412345
+          "description": "推荐：白切狗肉、白切三黄鸡"
         },
         {
           "step": 7,
@@ -630,10 +585,7 @@
           "title": "看星空",
           "type": "activity",
           "location": "民宿附近",
-          "description": "光污染少，银河可见",
-          "spot_id": null,
-          "lat": null,
-          "lng": null
+          "description": "光污染少，银河可见"
         },
         {
           "step": 8,
@@ -642,10 +594,7 @@
           "title": "早餐 + 出发",
           "type": "transit",
           "location": "民宿 → 平南县城",
-          "description": "",
-          "spot_id": null,
-          "lat": null,
-          "lng": null
+          "description": ""
         },
         {
           "step": 9,
@@ -655,7 +604,7 @@
           "type": "attraction",
           "location": "平南县",
           "description": "二选一：动物园（亲子）/ 浔江沿岸拍照",
-          "spot_id": "xiongsen",
+          "spot_id": "xiongsen-animal",
           "lat": 23.52,
           "lng": 110.3
         },
@@ -666,10 +615,7 @@
           "title": "午餐：平南鱼生",
           "type": "food",
           "location": "平南县城",
-          "description": "平南鱼生是当地一绝",
-          "spot_id": "pingnanxianbowuguan",
-          "lat": 23.533456,
-          "lng": 110.412345
+          "description": "平南鱼生是当地一绝"
         },
         {
           "step": 11,
@@ -678,10 +624,7 @@
           "title": "返程",
           "type": "transit",
           "location": "平南 → 贵港市区",
-          "description": "约2小时车程",
-          "spot_id": null,
-          "lat": null,
-          "lng": null
+          "description": "约2小时车程"
         }
       ],
       "food": [
