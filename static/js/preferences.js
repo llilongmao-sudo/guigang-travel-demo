@@ -1,3 +1,6 @@
+/**
+ * PreferencesAPI - 用户偏好模块（V8 云端同步版）
+ */
 const PreferencesAPI = {
     STORAGE_KEY: 'guigang_preferences',
     TYPES: [
@@ -8,25 +11,52 @@ const PreferencesAPI = {
         { id: 'camping', name: '露营', icon: '⛺', desc: '户外露营体验' },
         { id: 'culture', name: '历史文化', icon: '🏛️', desc: '人文古迹探索' },
     ],
+
     get() {
         try {
             return JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || null;
         } catch { return null; }
     },
+
     save(interests) {
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify({
+        const data = {
             interests,
             selected_at: new Date().toISOString(),
             version: '1.0'
-        }));
+        };
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+
+        // 服务端同步
+        if (AuthUI.isLoggedIn()) {
+            fetch('/api/user/preferences', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ interests })
+            }).catch(() => {});
+        }
     },
+
+    /** 从服务端加载偏好（登录后调用） */
+    async loadFromServer() {
+        if (!AuthUI.isLoggedIn()) return;
+        try {
+            const resp = await fetch('/api/user/preferences');
+            const data = await resp.json();
+            if (data.interests?.length > 0) {
+                this.save(data.interests);
+            }
+        } catch(e) {}
+    },
+
     hasSelected() {
         return this.get() !== null;
     },
+
     getInterests() {
         const data = this.get();
         return data ? data.interests : [];
     },
+
     getInterestLabels() {
         const interests = this.getInterests();
         return interests.map(id => {

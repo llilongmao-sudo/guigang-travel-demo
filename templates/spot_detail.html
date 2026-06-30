@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{{ spot.name }} - 贵港旅游智能助手</title>
     <link rel="stylesheet" href="/static/css/spot_detail.css">
+    <link rel="stylesheet" href="/static/css/auth.css">
     <meta name="theme-color" content="#2d8a4e">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -183,6 +184,7 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+<script src="/static/js/auth.js"></script>
 <script src="/static/js/favorites.js"></script>
 <script src="/static/js/checkin.js"></script>
 <script src="/static/js/recent.js"></script>
@@ -192,6 +194,9 @@
 
     // ── 初始化 ──
     document.addEventListener('DOMContentLoaded', function() {
+        // 初始化用户系统
+        AuthUI.init();
+
         // 初始化图片轮播
         initGallery(spotData);
         // 初始化评分星星
@@ -237,19 +242,21 @@
     }
 
     function toggleFavorite() {
-        const nowFav = FavoritesAPI.toggle({
+        const spot = {
             id: spotData.id,
             name: spotData.name,
             image_url: spotData.image_url || '',
             ticket_price: spotData.ticket_price || '',
             district: spotData.district || ''
+        };
+        FavoritesAPI.toggle(spot).then(function(nowFav) {
+            if (nowFav) {
+                showToast('❤️ 已收藏');
+            } else {
+                showToast('已取消收藏');
+            }
+            updateFavButton();
         });
-        if (nowFav) {
-            showToast('❤️ 已收藏');
-        } else {
-            showToast('已取消收藏');
-        }
-        updateFavButton();
     }
 
     function updateFavButton() {

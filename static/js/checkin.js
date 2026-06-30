@@ -1,7 +1,10 @@
 /**
- * CheckinAPI - 打卡功能模块 v3
- * 使用 localStorage 持久化，key: guigang_checkins
- * v3: 支持多次打卡（entries数组），每次打卡独立笔记/照片/评分/日期
+ * CheckinAPI - 打卡功能模块（V8 云端同步版）
+ * - 已登录：双写 LocalStorage + 服务端 API
+ * - 未登录：纯 LocalStorage
+ * 
+ * LocalStorage 格式: [{id, name, status, entries, updated_at}]
+ * 服务端格式: {spotId: {spot_name, status, entries, updated_at}}
  */
 const CheckinAPI = {
     STORAGE_KEY: 'guigang_checkins',
@@ -13,27 +16,70 @@ const CheckinAPI = {
 
     _save(records) {
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(records));
+        // 异步同步到服务端
+        this._syncToServer(records);
     },
 
-    /** 获取景点记录（不存在则返回 null） */
+    /** 同步当前数据到服务端 */
+    _syncToServer(records) {
+        if (!AuthUI.isLoggedIn()) return;
+        const data = {};
+        records.forEach(r => {
+            data[r.id] = {
+                spot_name: r.name || '',
+                status: r.status || 'none',
+                entries: r.entries || [],
+                updated_at: r.updated_at || new Date().toISOString()
+            };
+        });
+        fetch('/api/user/checkins', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                spot_id: Object.keys(data)[0] || '__batch__', // dummy
+                spot_name: '__batch__',
+                status: '__batch__',
+                entries: [],
+                _batch: data
+            })
+        }).catch(() => {});
+    },
+
+    /** 批量覆盖同步（用于首次登录合并） */
+    _batchUpload(records) {
+        if (!AuthUI.isLoggedIn() || !records || records.length === 0) return;
+        const data = {};
+        records.forEach(r => {
+            data[r.id] = {
+                spot_name: r.name || '',
+                status: r.status || 'none',
+                entries: r.entries || [],
+                updated_at: r.updated_at || new Date().toISOString()
+            };
+        });
+        fetch('/api/user/checkins/sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ checkins: data })
+        }).catch(() => {});
+    },
+
+    /** 获取景点记录 */
     getRecord(spotId) {
         return this.getAll().find(r => r.id === spotId) || null;
     },
 
-    /** 获取当前状态 */
     getStatus(spotId) {
         const r = this.getRecord(spotId);
         return r ? r.status : null;
     },
 
-    /** 设置状态 + 创建/更新记录 */
     setStatus(spotId, name, status) {
         if (!spotId) return false;
         let records = this.getAll();
         let idx = records.findIndex(r => r.id === spotId);
 
         if (status === null) {
-            // 取消打卡 — 删除整条
             if (idx !== -1) records.splice(idx, 1);
         } else {
             const entry = { id: spotId, name: name || '', status, updated_at: new Date().toISOString(), entries: [] };
@@ -44,12 +90,24 @@ const CheckinAPI = {
                 records.push(entry);
             }
         }
-
         this._save(records);
+
+        // 单条同步
+        if (AuthUI.isLoggedIn()) {
+            fetch('/api/user/checkins', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    spot_id: spotId,
+                    spot_name: name || '',
+                    status: status || 'none',
+                    entries: (idx !== -1 && records[idx] ? records[idx].entries : []) || []
+                })
+            }).catch(() => {});
+        }
         return true;
     },
 
-    /** 循环切换状态 */
     cycleStatus(spot) {
         if (!spot?.id) return null;
         const cur = this.getStatus(spot.id);
@@ -58,9 +116,6 @@ const CheckinAPI = {
         return next;
     },
 
-    // ── 多次打卡 entries 操作 ──
-
-    /** 新增一条打卡记录（含笔记/照片/评分/日期） */
     addEntry(spotId, data) {
         const record = this.getRecord(spotId);
         if (!record) return false;
@@ -73,20 +128,17 @@ const CheckinAPI = {
             created_at: new Date().toISOString()
         };
         record.entries = record.entries || [];
-        record.entries.unshift(entry); // 最新的在前
+        record.entries.unshift(entry);
         record.updated_at = new Date().toISOString();
-        // 同步更新主记录的快捷字段
         if (!record.date) record.date = entry.date;
         if (!record.rating && entry.rating) record.rating = entry.rating;
 
         const records = this.getAll();
-        const idx = records.findIndex(r => r.id === spotId);
-        records[idx] = record;
+        records[records.findIndex(r => r.id === spotId)] = record;
         this._save(records);
         return entry.id;
     },
 
-    /** 更新某条 entry */
     updateEntry(spotId, entryId, data) {
         const record = this.getRecord(spotId);
         if (!record?.entries) return false;
@@ -100,7 +152,6 @@ const CheckinAPI = {
         return true;
     },
 
-    /** 删除某条 entry */
     removeEntry(spotId, entryId) {
         const record = this.getRecord(spotId);
         if (!record?.entries) return false;
@@ -112,7 +163,6 @@ const CheckinAPI = {
         return true;
     },
 
-    /** 给某条 entry 添加照片 */
     addPhotoToEntry(spotId, entryId, base64Data) {
         const record = this.getRecord(spotId);
         if (!record?.entries) return false;
@@ -121,28 +171,23 @@ const CheckinAPI = {
         if (!entry.photos) entry.photos = [];
         if (entry.photos.length >= 9) return false;
         entry.photos.push({ data: base64Data, added_at: new Date().toISOString() });
-
         const records = this.getAll();
         records[records.findIndex(r => r.id === spotId)] = record;
         this._save(records);
         return true;
     },
 
-    /** 删除某条 entry 的某张照片 */
     removePhotoFromEntry(spotId, entryId, photoIdx) {
         const record = this.getRecord(spotId);
         if (!record?.entries) return false;
         const entry = record.entries.find(e => e.id === entryId);
         if (!entry?.photos?.[photoIdx]) return false;
         entry.photos.splice(photoIdx, 1);
-
         const records = this.getAll();
         records[records.findIndex(r => r.id === spotId)] = record;
         this._save(records);
         return true;
     },
-
-    // ── 查询 ──
 
     getByStatus(status) { return this.getAll().filter(r => r.status === status); },
     count() { return this.getAll().length; },

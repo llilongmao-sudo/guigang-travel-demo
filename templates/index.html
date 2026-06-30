@@ -1902,6 +1902,7 @@
         /* Route card detail button extra boost */
         .route-detail-btn { z-index: 5 !important; }
     </style>
+    <link rel="stylesheet" href="/static/css/auth.css">
 </head>
 <body>
 <div class="app" id="app">
@@ -2233,6 +2234,7 @@
     <div class="suggestion" id="weatherSuggest">正在获取天气数据...</div>
 </div>
 
+<script src="/static/js/auth.js"></script>
 <script src="/static/js/preferences.js"></script>
     <script src="/static/js/favorites.js"></script>
     <script src="/static/js/checkin.js"></script>
@@ -3855,6 +3857,16 @@ if ('serviceWorker' in navigator) {
                 </div>
             </div>
         </div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+    // 初始化用户系统
+    document.addEventListener('DOMContentLoaded', function() {
+        AuthUI.init();
+    });
+</script>
 
 </body>
 </html>

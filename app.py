@@ -7,10 +7,19 @@
 import os
 import json
 import random
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, session
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash
 
 from knowledge_base_v4 import SCENIC_SPOTS, TRAVEL_TIPS, CATEGORY_INDEX, DISTRICT_STATS
 from data_loader import DataLoader
+from auth import (
+    init_db, register_user, authenticate, get_user_by_id,
+    get_user_favorites, set_user_favorite, remove_user_favorite, batch_sync_favorites,
+    get_user_recent_views, add_user_recent_view, clear_user_recent_views,
+    get_user_preferences, set_user_preferences,
+    get_user_checkins, set_user_checkin, batch_sync_checkins
+)
 
 
 # 加载景点多图数据
@@ -29,6 +38,52 @@ except Exception as _e:
     _SPOT_IMAGES = {}
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "guigang-travel-secret-key-2024")
+
+# Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = None  # SPA 应用，不需要重定向
+
+
+class User:
+    """Flask-Login 适配的用户包装器"""
+    def __init__(self, user_dict):
+        self.id = str(user_dict["id"])
+        self._data = user_dict
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
+    def to_dict(self):
+        return self._data
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    try:
+        user_dict = get_user_by_id(int(user_id))
+        if user_dict:
+            return User(user_dict)
+    except Exception:
+        pass
+    return None
+
+
+# 初始化用户数据库
+init_db()
 
 # ── V2景点数据适配器（对齐前端字段名） ───────────────────────────────────
 _CATEGORY_MAP = {
@@ -1362,6 +1417,247 @@ def plan_itinerary():
         return jsonify({'error': str(e)}), 500
 
 
+
+
+# ── V8 用户认证 API ────────────────────────────────────────
+
+@app.route("/api/auth/register", methods=["POST"])
+def auth_register():
+    data = request.get_json()
+    username = data.get("username", "").strip()
+    password = data.get("password", "").strip()
+    email = data.get("email", "").strip()
+    nickname = data.get("nickname", "").strip()
+
+    user_dict, error = register_user(username, password, email, nickname)
+    if error:
+        return jsonify({"success": False, "error": error}), 400
+
+    user = User(user_dict)
+    login_user(user, remember=True)
+
+    return jsonify({
+        "success": True,
+        "user": user.to_dict()
+    })
+
+
+@app.route("/api/auth/login", methods=["POST"])
+def auth_login():
+    data = request.get_json()
+    username = data.get("username", "").strip()
+    password = data.get("password", "").strip()
+
+    if not username or not password:
+        return jsonify({"success": False, "error": "用户名和密码不能为空"}), 400
+
+    user_dict = authenticate(username, password)
+    if not user_dict:
+        return jsonify({"success": False, "error": "用户名或密码错误"}), 401
+
+    user = User(user_dict)
+    login_user(user, remember=True)
+
+    # 登录后返回用户数据和同步标记，前端判断是否需要合并 LocalStorage
+    return jsonify({
+        "success": True,
+        "user": user.to_dict(),
+        "need_sync": True
+    })
+
+
+@app.route("/api/auth/logout", methods=["POST"])
+@login_required
+def auth_logout():
+    logout_user()
+    return jsonify({"success": True})
+
+
+@app.route("/api/auth/status")
+def auth_status():
+    if current_user.is_authenticated:
+        return jsonify({
+            "logged_in": True,
+            "user": current_user.to_dict()
+        })
+    return jsonify({"logged_in": False})
+
+
+@app.route("/api/auth/update-profile", methods=["POST"])
+@login_required
+def update_profile():
+    """更新用户昵称"""
+    data = request.get_json()
+    nickname = data.get("nickname", "").strip()
+    if nickname:
+        import sqlite3
+        conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), "data", "users.db"))
+        conn.execute("UPDATE users SET nickname = ? WHERE id = ?",
+                     (nickname, int(current_user.id)))
+        conn.commit()
+        conn.close()
+        current_user._data["nickname"] = nickname
+    return jsonify({"success": True, "user": current_user.to_dict()})
+
+
+# ── V8 用户数据同步 API ────────────────────────────────────────
+
+def _require_auth():
+    """API 鉴权辅助：未登录返回 401"""
+    if not current_user.is_authenticated:
+        return jsonify({"error": "请先登录"}), 401
+    return None
+
+
+# --- 收藏 ---
+
+@app.route("/api/user/favorites", methods=["GET", "POST", "DELETE"])
+def user_favorites():
+    auth_err = _require_auth()
+    if auth_err:
+        return auth_err
+
+    uid = int(current_user.id)
+
+    if request.method == "GET":
+        favs = get_user_favorites(uid)
+        return jsonify({"favorites": favs})
+
+    elif request.method == "POST":
+        data = request.get_json()
+        spot_id = data.get("spot_id")
+        spot_name = data.get("spot_name", "")
+        spot_data = data.get("spot_data", {})
+        if not spot_id:
+            return jsonify({"error": "缺少 spot_id"}), 400
+        set_user_favorite(uid, spot_id, spot_name, spot_data)
+        return jsonify({"success": True})
+
+    elif request.method == "DELETE":
+        spot_id = request.args.get("spot_id")
+        if not spot_id:
+            return jsonify({"error": "缺少 spot_id"}), 400
+        remove_user_favorite(uid, int(spot_id))
+        return jsonify({"success": True})
+
+
+@app.route("/api/user/favorites/sync", methods=["POST"])
+def sync_favorites():
+    """首次登录时批量同步 LocalStorage 收藏到服务端"""
+    auth_err = _require_auth()
+    if auth_err:
+        return auth_err
+
+    data = request.get_json()
+    favorites = data.get("favorites", [])
+    if favorites:
+        batch_sync_favorites(int(current_user.id), favorites)
+    # 返回服务端合并后的数据
+    server_favs = get_user_favorites(int(current_user.id))
+    return jsonify({"success": True, "favorites": server_favs})
+
+
+# --- 最近浏览 ---
+
+@app.route("/api/user/recent", methods=["GET", "POST", "DELETE"])
+def user_recent():
+    auth_err = _require_auth()
+    if auth_err:
+        return auth_err
+
+    uid = int(current_user.id)
+
+    if request.method == "GET":
+        views = get_user_recent_views(uid)
+        return jsonify({"recent_views": views})
+
+    elif request.method == "POST":
+        data = request.get_json()
+        spot_id = data.get("spot_id")
+        spot_name = data.get("spot_name", "")
+        spot_data = data.get("spot_data", {})
+        if not spot_id:
+            return jsonify({"error": "缺少 spot_id"}), 400
+        add_user_recent_view(uid, spot_id, spot_name, spot_data)
+        return jsonify({"success": True})
+
+    elif request.method == "DELETE":
+        clear_user_recent_views(uid)
+        return jsonify({"success": True})
+
+
+# --- 偏好 ---
+
+@app.route("/api/user/preferences", methods=["GET", "POST"])
+def user_preferences():
+    auth_err = _require_auth()
+    if auth_err:
+        return auth_err
+
+    uid = int(current_user.id)
+
+    if request.method == "GET":
+        prefs = get_user_preferences(uid)
+        return jsonify(prefs)
+
+    elif request.method == "POST":
+        data = request.get_json()
+        interests = data.get("interests", [])
+        set_user_preferences(uid, interests)
+        return jsonify({"success": True, "interests": interests})
+
+
+# --- 打卡 ---
+
+@app.route("/api/user/checkins", methods=["GET", "POST"])
+def user_checkins():
+    auth_err = _require_auth()
+    if auth_err:
+        return auth_err
+
+    uid = int(current_user.id)
+
+    if request.method == "GET":
+        checkins = get_user_checkins(uid)
+        return jsonify({"checkins": checkins})
+
+    elif request.method == "POST":
+        data = request.get_json()
+        # 支持批量同步（_batch 是 {spotId: {spot_name, status, entries, updated_at}}）
+        batch = data.get("_batch")
+        if batch and isinstance(batch, dict):
+            for spot_id_str, info in batch.items():
+                set_user_checkin(
+                    uid, int(spot_id_str),
+                    info.get("spot_name", ""),
+                    info.get("status", "none"),
+                    info.get("entries", [])
+                )
+            return jsonify({"success": True, "synced": len(batch)})
+
+        spot_id = data.get("spot_id")
+        spot_name = data.get("spot_name", "")
+        status = data.get("status", "none")
+        entries = data.get("entries", [])
+        if not spot_id:
+            return jsonify({"error": "缺少 spot_id"}), 400
+        set_user_checkin(uid, spot_id, spot_name, status, entries)
+        return jsonify({"success": True})
+
+
+@app.route("/api/user/checkins/sync", methods=["POST"])
+def sync_checkins():
+    """首次登录时批量同步 LocalStorage 打卡到服务端"""
+    auth_err = _require_auth()
+    if auth_err:
+        return auth_err
+
+    data = request.get_json()
+    checkins = data.get("checkins", {})
+    if checkins:
+        batch_sync_checkins(int(current_user.id), checkins)
+    server_checkins = get_user_checkins(int(current_user.id))
+    return jsonify({"success": True, "checkins": server_checkins})
 
 
 # ── V8 行程管理页面 ────────────────────────────────────────

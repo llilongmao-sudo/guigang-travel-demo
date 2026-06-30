@@ -1,29 +1,41 @@
 /**
- * RecentAPI - 最近浏览记录模块
- * 使用 localStorage 持久化，key: guigang_recent_views
- * 提供给 index.html 和 spot_detail.html 共同使用
+ * RecentAPI - 最近浏览模块（V8 云端同步版）
+ * - 已登录：双写 LocalStorage + 服务端 API
+ * - 未登录：纯 LocalStorage
  */
 const RecentAPI = {
     STORAGE_KEY: 'guigang_recent_views',
-    MAX_ITEMS: 20,
 
-    /** 获取全部浏览记录，按 viewed_at 降序 */
-    getAll() {
+    async getAll() {
+        if (AuthUI.isLoggedIn()) {
+            try {
+                const resp = await fetch('/api/user/recent');
+                const data = await resp.json();
+                if (data.recent_views) {
+                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data.recent_views));
+                    return data.recent_views;
+                }
+            } catch(e) {}
+        }
         try {
-            const list = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]');
-            return list.sort((a, b) => new Date(b.viewed_at) - new Date(a.viewed_at));
+            return JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]');
         } catch (e) {
             return [];
         }
     },
 
-    /** 添加/更新浏览记录（去重，更新 viewed_at，超限移除最旧） */
+    getAllSync() {
+        try {
+            return JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]');
+        } catch (e) {
+            return [];
+        }
+    },
+
     add(spot) {
-        if (!spot || !spot.id) return false;
-        let views = this.getAll();
-        // 去重：移除已有同 ID 记录
+        if (!spot || !spot.id) return;
+        let views = this.getAllSync();
         views = views.filter(v => v.id !== spot.id);
-        // 新记录插入最前
         views.unshift({
             id: spot.id,
             name: spot.name || '',
@@ -32,25 +44,33 @@ const RecentAPI = {
             district: spot.district || '',
             viewed_at: new Date().toISOString()
         });
-        // 超限移除最旧
-        if (views.length > this.MAX_ITEMS) {
-            views = views.slice(0, this.MAX_ITEMS);
+        if (views.length > 20) views = views.slice(0, 20);
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(views));
+
+        // 服务端同步
+        if (AuthUI.isLoggedIn()) {
+            fetch('/api/user/recent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    spot_id: spot.id,
+                    spot_name: spot.name || '',
+                    spot_data: spot
+                })
+            }).catch(() => {});
         }
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(views));
-        return true;
     },
 
-    /** 删除单条浏览记录 */
-    remove(spotId) {
-        let views = this.getAll();
-        views = views.filter(v => v.id !== spotId);
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(views));
-        return true;
-    },
-
-    /** 清空所有浏览记录 */
     clear() {
         localStorage.removeItem(this.STORAGE_KEY);
-        return true;
+        if (AuthUI.isLoggedIn()) {
+            fetch('/api/user/recent', { method: 'DELETE' }).catch(() => {});
+        }
+    },
+
+    remove(spotId) {
+        const views = this.getAllSync().filter(v => v.id !== spotId);
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(views));
+        // 服务端不单独删除（下次浏览会覆盖）
     }
 };
